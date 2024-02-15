@@ -33,8 +33,9 @@ bloque
 
 sentencia
     : 'read' defAccess ';'
-	| 'print' defAccess ';'
-	| 'printsp' defAccess ';'
+	| 'print' expr? ';'
+	| 'println' expr? ';'
+	| 'printsp' expr? ';'
 	| 'return' expr? ';'
 	| invoke ';'
     | asign
