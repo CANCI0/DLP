@@ -37,11 +37,10 @@ sentencia
 	| 'println' expr? ';'
 	| 'printsp' expr? ';'
 	| 'return' expr? ';'
-	| invoke ';'
+	| invoke ';'?
     | asign
     | 'while' '(' expr ')' bloque
 	| 'if' '(' expr ')' bloque ('else' bloque)?
-	| IDENT '(' expr (',' expr)* ')'
     ;
 
 asign

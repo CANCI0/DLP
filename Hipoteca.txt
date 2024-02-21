@@ -1,7 +1,7 @@
 /*
  Hipoteca.txt v1.3
 
-- Programa de ejemplo que muestra las características del lenguaje
+- Programa de ejemplo que muestra las caracterï¿½sticas del lenguaje
 - La sintaxis tiene que ser obligatoriamente la que se muestra en este ejemplo
 
 */
@@ -50,6 +50,6 @@ main() {
 
 	println letraHipoteca(precioVivienda, mesesHipoteca, interes);
 
-//	Con los datos anteriores deberían salir (redondeando) 743 euros de letra al mes
+//	Con los datos anteriores deberï¿½an salir (redondeando) 743 euros de letra al mes
 
 }
