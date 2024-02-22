@@ -7,12 +7,12 @@ program
     ;
 
 definicion
-    : 'var' IDENT ':' ( '[' INT_LITERAL ']' )* tipo ';'
+    : 'var' IDENT ':' tipo ';'
     | 'struct' IDENT '{' (definicion_tipo ';')* '}'
     ;
 
 definicion_tipo
-    : IDENT ':' ( '[' INT_LITERAL ']' )* tipo
+    : IDENT ':' tipo
     ;
 
 funcion
@@ -23,13 +23,21 @@ parametros
     : definicion_tipo (',' definicion_tipo)*
     ;
 
+defVars
+	: defVar*
+	;
+
 defVar
-    : 'var' IDENT ':' ( '[' INT_LITERAL ']' )*  tipo ';'
+    : 'var' IDENT ':' tipo ';'
     ;
 
 bloque
-    : '{' (defVar)* (sentencia)* '}'
+    : '{' defVars sentencias '}'
     ;
+
+sentencias
+	: sentencia*
+	;
 
 sentencia
     : 'read' defAccess ';'
@@ -88,5 +96,6 @@ tipo
 	: 'int'
 	| 'float'
 	| 'char'
+	| '[' INT_LITERAL ']' tipo
 	| IDENT
 	;
