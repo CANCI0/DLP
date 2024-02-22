@@ -58,6 +58,7 @@ asign
 expr
     : literal
 	| invoke
+	| IDENT
 	| expr '[' expr ']'
 	| expr '.' IDENT
 	| expr ('*' | '/') expr
