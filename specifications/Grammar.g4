@@ -40,7 +40,7 @@ sentencias
 	;
 
 sentencia
-    : 'read' defAccess ';'
+    : 'read' expr ';'
 	| 'print' expr? ';'
 	| 'println' expr? ';'
 	| 'printsp' expr? ';'
@@ -52,19 +52,14 @@ sentencia
     ;
 
 asign
-	: defAccess '=' expr ';'
-	;
-
-defAccess
-	: IDENT
-	| defAccess '[' expr ']'
-	| defAccess '.' IDENT
+	: expr '=' expr ';'
 	;
 
 expr
     : literal
-    | defAccess
 	| invoke
+	| expr '[' expr ']'
+	| expr '.' IDENT
 	| expr ('*' | '/') expr
 	| expr ('+' | '-') expr
 	| expr ('>=' | '<=' | '>' | '<') expr
