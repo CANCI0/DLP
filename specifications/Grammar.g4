@@ -20,11 +20,19 @@ def
     ;
 
 function
-    : IDENT '(' parameters? ')' (':' type)? block
+    : IDENT '(' params ')' (':' type)? '{' block '}' 
     ;
 
-parameters
-    : def_type (',' def_type)*
+params
+    : (param (',' param)*)?  
+	;
+
+param
+    : IDENT ':' type
+	;
+
+block
+    :  defVars sentences 
     ;
 
 defVars
@@ -33,10 +41,6 @@ defVars
 
 defVar
     : 'var' IDENT ':' type ';'
-    ;
-
-block
-    : '{' defVars sentences '}'
     ;
 
 sentences
@@ -50,17 +54,15 @@ sentence
 	| 'printsp' expr? ';'
 	| 'return' expr? ';'
 	| invoke ';'?
-    | asign
-    | 'while' '(' expr ')' block
-	| 'if' '(' expr ')' block ('else' block)?
+    | expr '=' expr ';'
+    | 'while' '(' expr ')' '{' block '}' 
+	| 'if' '(' expr ')' '{' block '}' ('else' '{' block '}')?
     ;
 
-asign
-	: expr '=' expr ';'
-	;
-
 expr
-    : literal
+    : INT_LITERAL
+    | REAL_LITERAL
+    | CHAR_LITERAL
 	| invoke
 	| IDENT
 	| expr '[' expr ']'
@@ -71,26 +73,16 @@ expr
 	| expr ('==' | '!=' ) expr
 	| expr ('&&') expr
 	| expr ('||') expr
-	| cast? '(' expr ')'
+	| ('<' type '>')? '(' expr ')'
     ;
 
 invoke 
-	: IDENT '(' invokeParams? ')'
+	: IDENT '(' invokeParams ')'
 	;
 
 invokeParams
-	: expr (',' expr)*
+	: (expr (',' expr)*)?
 	;
-
-cast
-	: '<' type '>'
-	;
-
-literal
-    : INT_LITERAL
-    | REAL_LITERAL
-    | CHAR_LITERAL
-    ;
 
 type
 	: 'int'
