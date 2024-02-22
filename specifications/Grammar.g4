@@ -3,12 +3,17 @@ grammar Grammar;
 import Lexer;
 
 program
-    : (def_type | function)* EOF
+    : definitions EOF
     ;
 
-def_type
+definitions	
+	: definition*
+	;
+
+definition
     : 'var' IDENT ':' type ';'
     | 'struct' IDENT '{' defs '}'
+	| IDENT '(' params ')' (':' type)? '{' block '}' 
     ;
 
 defs
@@ -17,10 +22,6 @@ defs
 
 def
     : IDENT ':' type ';'
-    ;
-
-function
-    : IDENT '(' params ')' (':' type)? '{' block '}' 
     ;
 
 params

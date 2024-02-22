@@ -39,7 +39,6 @@ struct Persona {
 
 // Combinaci�n de Arrays y Structs -------------
 var f:[6] Persona;
-
 struct Empresa {
 	cif:[9] char;
 	empleados:[10] Persona;
