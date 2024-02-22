@@ -3,24 +3,28 @@ grammar Grammar;
 import Lexer;
 
 program
-    : (definicion | funcion)* EOF
+    : (def_type | function)* EOF
     ;
 
-definicion
-    : 'var' IDENT ':' tipo ';'
-    | 'struct' IDENT '{' (definicion_tipo ';')* '}'
+def_type
+    : 'var' IDENT ':' type ';'
+    | 'struct' IDENT '{' defs '}'
     ;
 
-definicion_tipo
-    : IDENT ':' tipo
+defs
+	: def*
+	;
+
+def
+    : IDENT ':' type ';'
     ;
 
-funcion
-    : IDENT '(' parametros? ')' (':' tipo)? bloque
+function
+    : IDENT '(' parameters? ')' (':' type)? block
     ;
 
-parametros
-    : definicion_tipo (',' definicion_tipo)*
+parameters
+    : def_type (',' def_type)*
     ;
 
 defVars
@@ -28,18 +32,18 @@ defVars
 	;
 
 defVar
-    : 'var' IDENT ':' tipo ';'
+    : 'var' IDENT ':' type ';'
     ;
 
-bloque
-    : '{' defVars sentencias '}'
+block
+    : '{' defVars sentences '}'
     ;
 
-sentencias
-	: sentencia*
+sentences
+	: sentence*
 	;
 
-sentencia
+sentence
     : 'read' expr ';'
 	| 'print' expr? ';'
 	| 'println' expr? ';'
@@ -47,8 +51,8 @@ sentencia
 	| 'return' expr? ';'
 	| invoke ';'?
     | asign
-    | 'while' '(' expr ')' bloque
-	| 'if' '(' expr ')' bloque ('else' bloque)?
+    | 'while' '(' expr ')' block
+	| 'if' '(' expr ')' block ('else' block)?
     ;
 
 asign
@@ -79,7 +83,7 @@ invokeParams
 	;
 
 cast
-	: '<' tipo '>'
+	: '<' type '>'
 	;
 
 literal
@@ -88,10 +92,10 @@ literal
     | CHAR_LITERAL
     ;
 
-tipo
+type
 	: 'int'
 	| 'float'
 	| 'char'
-	| '[' INT_LITERAL ']' tipo
+	| '[' INT_LITERAL ']' type
 	| IDENT
 	;
