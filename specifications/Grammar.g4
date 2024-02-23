@@ -2,93 +2,91 @@ grammar Grammar;
 
 import Lexer;
 
-program
-    : definitions EOF
+program returns[Program ast]
+    : definitions EOF 																		{ $ast = new Program($definitions.list); }
     ;
 
-definitions	
-	: definition*
+definitions	returns[List<Definition> list = new ArrayList<Definition>()]
+	: (definition { $list.add($definition.ast); })*
 	;
 
-definition
-    : 'var' IDENT ':' type ';'
-    | 'struct' IDENT '{' defs '}'
-	| IDENT '(' params ')' (':' type)? '{' block '}' 
+definition returns[Definition ast]
+    : varDefinition																			{ $ast = $varDefinition.ast}
+    | 'struct' IDENT '{' attrDefinitions '}'												{ $ast = new StructDefinition($IDENT, $attrDefinitions.list)}
+	| IDENT '(' params ')' (':' type)? '{' varDefinitions statements '}' 					{ $ast = new FunctionDefinition($IDENT, $params.list, $type.ast?, $varDefinitions.list, $statements.list); }
     ;
 
-defs
-	: def*
+attrDefinitions returns[List<AttrDefinition> list = new ArrayList<AttrDefinition>()]
+	: (attrDefinition { $list.add($attrDefinition.ast); })*
 	;
 
-def
-    : IDENT ':' type ';'
+attrDefinition returns[AttrDefinition ast]
+    : IDENT ':' type ';'																	{ $ast = new AttrDefinition($IDENT, $type.ast); }
     ;
 
-params
-    : (param (',' param)*)?  
+params returns[List<Param> list = new ArrayList<Param>()]
+    : (param { $list.add($param.ast); } (',' param { $list.add($param.ast); })*)?
 	;
 
-param
-    : IDENT ':' type
+param returns[Param ast]
+    : IDENT ':' type																		{ $ast = new Param($IDENT, $type.ast)}
 	;
 
-block
-    :  defVars sentences 
+varDefinitions returns[List<VarDefinition> list = new ArrayList<VarDefinition>()]
+	: (varDefinition { $list.add($varDefinition.ast); })*
+	;
+
+varDefinition returns[VarDefinition ast]
+    : 'var' IDENT ':' type ';'																{ $ast = new VarDefinition($IDENT, $type.ast); }
     ;
 
-defVars
-	: defVar*
+statements returns[List<Statement> list = new ArrayList<Statement>()]
+	: (statement { $list.add($statement.ast); })*
 	;
 
-defVar
-    : 'var' IDENT ':' type ';'
+statement returns[Statement ast]
+    : 'read' expression ';'																	{ $ast = new Read($expression.ast); }
+	| 'print' expression? ';'																{ $ast = new Print($expression.ctx != null ? $expression.ast : null); }
+	| 'println' expression? ';'																{ $ast = new Println($expression.ctx != null ? $expression.ast : null); }
+	| 'printsp' expression? ';'																{ $ast = new Printsp($expression.ctx != null ? $expression.ast : null); }
+	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); }
+	| functionCall ';'?																		{ $ast = $functionCall.ast}	
+    | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
+    | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
+	| 'if' '(' expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?			{ $ast = new If($expression.ast, $tr.list, $fs.list); }
     ;
 
-sentences
-	: sentence*
-	;
-
-sentence
-    : 'read' expr ';'
-	| 'print' expr? ';'
-	| 'println' expr? ';'
-	| 'printsp' expr? ';'
-	| 'return' expr? ';'
-	| invoke ';'?
-    | expr '=' expr ';'
-    | 'while' '(' expr ')' '{' block '}' 
-	| 'if' '(' expr ')' '{' block '}' ('else' '{' block '}')?
+expression returns[Expression ast]
+    : INT_LITERAL																			{ $ast = new IntLiteral($INT_LITERAL); }
+    | REAL_LITERAL																			{ $ast = new RealLiteral($REAL_LITERAL); }
+    | CHAR_LITERAL																			{ $ast = new CharLiteral($CHAR_LITERAL); }
+	| functionCall																			{ $ast = $functionCall.ast; }
+	| IDENT																					{ $ast = new Variable($IDENT); }
+	| expression1=expression '[' expression2=expression ']'									{ $ast = new ArrayAccess($expression1.ast, $expression2.ast); }
+	| expression '.' IDENT																	{ $ast = new FieldAccess($expression.ast, $IDENT); }
+	| '!' expression																		{ $ast = new Not($expression.ast); }
+	| left=expression op=('*' | '/' | '%') right=expression									{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| left=expression op=('+' | '-') right=expression										{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| left=expression op=('>=' | '<=' | '>' | '<') right=expression							{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| left=expression op=('==' | '!=' )right=expression										{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| left=expression op='&&' right=expression												{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| left=expression op='||' right=expression												{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
+	| '(' expression ')'																	{ $ast = $expression.ast; }
+	| '<' type '>' '(' expression ')'														{ $ast = new Cast($type.ast, $expression.ast); }
     ;
 
-expr
-    : INT_LITERAL
-    | REAL_LITERAL
-    | CHAR_LITERAL
-	| invoke
-	| IDENT
-	| expr '[' expr ']'
-	| expr '.' IDENT
-	| expr ('*' | '/') expr
-	| expr ('+' | '-') expr
-	| expr ('>=' | '<=' | '>' | '<') expr
-	| expr ('==' | '!=' ) expr
-	| expr ('&&') expr
-	| expr ('||') expr
-	| ('<' type '>')? '(' expr ')'
-    ;
-
-invoke 
-	: IDENT '(' invokeParams ')'
+functionCall returns[functionCall ast]
+	: IDENT '(' functionCallParams ')'														{$ast = new functionCall($IDENT, $functionCallParams.list)}	
 	;
 
-invokeParams
-	: (expr (',' expr)*)?
+functionCallParams returns[List<Expression> list = new ArrayList<Expression>()]
+	: (expression { $list.add($expression.ast); } (',' expression { $list.add($expression.ast); })*)?							
 	;
 
-type
-	: 'int'
-	| 'float'
-	| 'char'
-	| '[' INT_LITERAL ']' type
-	| IDENT
+type returns[Type ast]
+	: 'int'																					{ $ast = new IntType(); }
+	| 'real'																				{ $ast = new RealType(); }
+	| 'char'																				{ $ast = new CharType(); }
+	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType(); }
+	| IDENT																					{ $ast = new IdentType(); }
 	;
