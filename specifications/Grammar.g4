@@ -11,8 +11,8 @@ definitions	returns[List<Definition> list = new ArrayList<Definition>()]
 	;
 
 definition returns[Definition ast]
-    : varDefinition																			{ $ast = $varDefinition.ast}
-    | 'struct' IDENT '{' attrDefinitions '}'												{ $ast = new StructDefinition($IDENT, $attrDefinitions.list)}
+    : varDefinition																			{ $ast = $varDefinition.ast; }
+    | 'struct' IDENT '{' attrDefinitions '}'												{ $ast = new StructDefinition($IDENT, $attrDefinitions.list); }
 	| IDENT '(' params ')' (':' type)? '{' varDefinitions statements '}' 					{ $ast = new FunctionDefinition($IDENT, $params.list, $type.ast?, $varDefinitions.list, $statements.list); }
     ;
 
@@ -29,7 +29,7 @@ params returns[List<Param> list = new ArrayList<Param>()]
 	;
 
 param returns[Param ast]
-    : IDENT ':' type																		{ $ast = new Param($IDENT, $type.ast)}
+    : IDENT ':' type																		{ $ast = new Param($IDENT, $type.ast); }
 	;
 
 varDefinitions returns[List<VarDefinition> list = new ArrayList<VarDefinition>()]
@@ -76,7 +76,7 @@ expression returns[Expression ast]
     ;
 
 functionCall returns[functionCall ast]
-	: IDENT '(' functionCallParams ')'														{$ast = new functionCall($IDENT, $functionCallParams.list)}	
+	: IDENT '(' functionCallParams ')'														{$ast = new FunctionCall($IDENT, $functionCallParams.list); }	
 	;
 
 functionCallParams returns[List<Expression> list = new ArrayList<Expression>()]
@@ -87,6 +87,6 @@ type returns[Type ast]
 	: 'int'																					{ $ast = new IntType(); }
 	| 'real'																				{ $ast = new RealType(); }
 	| 'char'																				{ $ast = new CharType(); }
-	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType(); }
+	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL); }
 	| IDENT																					{ $ast = new IdentType(); }
 	;

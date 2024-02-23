@@ -20,10 +20,11 @@ print:statement -> expression;
 println:statement -> expression;
 printsp:statement -> expression;
 return:statement -> expression;
-functionCall:statement,expression -> string expression*;
 assignment:statement -> left:expression right:expression;
 while:statement -> expression statement*;
 if:statement -> expression tr:statement* fs:statement*;
+
+functionCall:expression,statement -> string expression*;
 
 intLiteral:expression -> int;
 realLiteral:expression -> float;
@@ -38,5 +39,5 @@ cast:expression -> type expression;
 intType:type -> ;
 realType:type -> ;
 charType:type -> ;
-arratType:type -> ;
-IdentType:type -> ;
+arrayType:type -> ;
+identType:type -> ;
