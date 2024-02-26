@@ -24,7 +24,7 @@ type returns[Type ast]
     :                                     { $ast = new IntType(); }                              
     |                                     { $ast = new RealType(); }                             
     |                                     { $ast = new CharType(); }                             
-    |                                     { $ast = new ArrayType(); }                            
+    | INT_LITERAL                         { $ast = new ArrayType($INT_LITERAL); }                
     |                                     { $ast = new IdentType(); }                            
 	;
 
@@ -49,12 +49,11 @@ statement returns[Statement ast]
     | left=expression right=expression    { $ast = new Assignment($left.ast, $right.ast); }      
     | expression statements+=statement*   { $ast = new While($expression.ast, $statements); }    
     | expression tr+=statement* fs+=statement* { $ast = new If($expression.ast, $tr, $fs); }          
-    | name=IDENT expressions+=expression* { $ast = new FunctionCall($name, $expressions); }      
+    | name=IDENT expressions+=expression* { $ast = new FunctionCallStatement($name, $expressions); }
 	;
 
 expression returns[Expression ast]
-    : name=IDENT expressions+=expression* { $ast = new FunctionCall($name, $expressions); }      
-    | INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
+    : INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
     | FLOAT_LITERAL                       { $ast = new RealLiteral($FLOAT_LITERAL); }            
     | CHAR_LITERAL                        { $ast = new CharLiteral($CHAR_LITERAL); }             
     | expr1=expression expr2=expression   { $ast = new ArrayAccess($expr1.ast, $expr2.ast); }    
@@ -63,6 +62,7 @@ expression returns[Expression ast]
     | left=expression operator=IDENT right=expression { $ast = new Arithmetic($left.ast, $operator, $right.ast); }
     | name=IDENT                          { $ast = new Variable($name); }                        
     | type expression                     { $ast = new Cast($type.ast, $expression.ast); }       
+    | name=IDENT expressions+=expression* { $ast = new FunctionCallExpression($name, $expressions); }
 	;
 
 

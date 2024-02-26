@@ -12,7 +12,6 @@ import ast.*;
 import ast.definition.*;
 import ast.statement.*;
 import ast.expression.*;
-import ast.expression.FunctionCall;
 import ast.type.*;
 
 // %% User Declarations -------------
@@ -108,9 +107,9 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(FunctionCall functionCall, Object param) {
+	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FunctionCall)' has been invoked but it has not been implemented.");
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FunctionCallStatement)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
@@ -165,6 +164,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	public Object visit(Cast cast, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Cast)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FunctionCallExpression)' has been invoked but it has not been implemented.");
 	}
 
 	@Override

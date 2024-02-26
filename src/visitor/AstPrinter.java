@@ -17,7 +17,6 @@ import ast.*;
 import ast.definition.*;
 import ast.statement.*;
 import ast.expression.*;
-import ast.expression.FunctionCall;
 import ast.type.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -302,16 +301,16 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
-	public Object visit(FunctionCall functionCall, Object param) {
+	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNonNodeChild(indent + 1, "name", "String", functionCall.getName());
-        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", functionCall.getExpressions());
+        printNonNodeChild(indent + 1, "name", "String", functionCallStatement.getName());
+        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", functionCallStatement.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, functionCall, "name", "expressions");
+		printUnknownFields(indent + 1, functionCallStatement, "name", "expressions");
 		return null;
 	}
 
@@ -438,6 +437,20 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
+	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNonNodeChild(indent + 1, "name", "String", functionCallExpression.getName());
+        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", functionCallExpression.getExpressions());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, functionCallExpression, "name", "expressions");
+		return null;
+	}
+
+	@Override
 	public Object visit(IntType intType, Object param) {
 
 		int indent = ((Integer)param);
@@ -479,9 +492,10 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNonNodeChild(indent + 1, "intValue", "int", arrayType.getIntValue());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, arrayType, "");
+		printUnknownFields(indent + 1, arrayType, "intValue");
 		return null;
 	}
 

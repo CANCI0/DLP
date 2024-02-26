@@ -10,7 +10,6 @@ import ast.*;
 import ast.definition.*;
 import ast.statement.*;
 import ast.expression.*;
-import ast.expression.FunctionCall;
 import ast.type.*;
 
 // %% User Declarations -------------
@@ -49,7 +48,7 @@ public interface Visitor {
 
 	public Object visit(If ifValue, Object param);
 
-	public Object visit(FunctionCall functionCall, Object param);
+	public Object visit(FunctionCallStatement functionCallStatement, Object param);
 
 	public Object visit(IntLiteral intLiteral, Object param);
 
@@ -68,6 +67,8 @@ public interface Visitor {
 	public Object visit(Variable variable, Object param);
 
 	public Object visit(Cast cast, Object param);
+
+	public Object visit(FunctionCallExpression functionCallExpression, Object param);
 
 	public Object visit(IntType intType, Object param);
 

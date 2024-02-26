@@ -216,12 +216,12 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class FunctionCall(String name, List<Expression> expressions)
+	// class FunctionCallStatement(String name, List<Expression> expressions)
 	@Override
-	public Object visit(FunctionCall functionCall, Object param) {
+	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
-		// functionCall.getExpressions().forEach(expression -> expression.accept(this, param));
-		super.visit(functionCall, param);
+		// functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
+		super.visit(functionCallStatement, param);
 
 		return null;
 	}
@@ -307,6 +307,16 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
+	// class FunctionCallExpression(String name, List<Expression> expressions)
+	@Override
+	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
+
+		// functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
+		super.visit(functionCallExpression, param);
+
+		return null;
+	}
+
 	// class IntType()
 	@Override
 	public Object visit(IntType intType, Object param) {
@@ -328,7 +338,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class ArrayType()
+	// class ArrayType(int intValue)
 	@Override
 	public Object visit(ArrayType arrayType, Object param) {
 

@@ -120,12 +120,11 @@ If o-[#404040,thickness=2]-  Expression : expression >
 If o-[#404040,thickness=2]- "✱" Statement : tr >
 If o-[#404040,thickness=2]- "✱" Statement : fs >
 
-class FunctionCall {
+class FunctionCallStatement {
 	+String name
 }
-Expression <|-[#808080]- FunctionCall
-Statement <|-[#808080]- FunctionCall
-FunctionCall o-[#404040,thickness=2]- "✱" Expression : expressions >
+Statement <|-[#808080]- FunctionCallStatement
+FunctionCallStatement o-[#404040,thickness=2]- "✱" Expression : expressions >
 
 class IntLiteral {
 	+int intValue
@@ -177,6 +176,12 @@ Expression <|-[#808080]- Cast
 Cast o-[#404040,thickness=2]-  Type : type >
 Cast o-[#404040,thickness=2]-  Expression : expression >
 
+class FunctionCallExpression {
+	+String name
+}
+Expression <|-[#808080]- FunctionCallExpression
+FunctionCallExpression o-[#404040,thickness=2]- "✱" Expression : expressions >
+
 class IntType {
 }
 Type <|-[#808080]- IntType
@@ -190,6 +195,7 @@ class CharType {
 Type <|-[#808080]- CharType
 
 class ArrayType {
+	+int intValue
 }
 Type <|-[#808080]- ArrayType
 
