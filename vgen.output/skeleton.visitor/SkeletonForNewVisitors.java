@@ -55,9 +55,10 @@ Por tanto, hay tres opciones a la hora de implementar cada visit:
 
 import visitor.DefaultVisitor;
 import ast.*;
-import ast.type.*;
+import ast.definition.*;
 import ast.statement.*;
 import ast.expression.*;
+import ast.type.*;
 
 
 public class SkeletonForNewVisitors extends DefaultVisitor {
@@ -68,18 +69,17 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 
     // Visit Methods --------------------------------------------------------------
 
-	// class Program(List<VarDefinition> varDefinitions, List<Statement> statements)
+	// class Program(List<Definition> definitions)
 	@Override
 	public Object visit(Program program, Object param) {
 
-		// program.getVarDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
-		// program.getStatements().forEach(statement -> statement.accept(this, param));
+		// program.getDefinitions().forEach(definition -> definition.accept(this, param));
 		super.visit(program, param);
 
 		return null;
 	}
 
-	// class VarDefinition(Type type, String name)
+	// class VarDefinition(String name, Type type)
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {
 
@@ -89,16 +89,55 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class IntType()
+	// class StructDefinition(String name, List<AttrDefinition> attrDefinitions)
 	@Override
-	public Object visit(IntType intType, Object param) {
+	public Object visit(StructDefinition structDefinition, Object param) {
+
+		// structDefinition.getAttrDefinitions().forEach(attrDefinition -> attrDefinition.accept(this, param));
+		super.visit(structDefinition, param);
 
 		return null;
 	}
 
-	// class FloatType()
+	// class FunctionDefinition(String name, List<Param> params, Optional<Type> type, List<VarDefinition> varDefinitions, List<Statement> statements)
 	@Override
-	public Object visit(FloatType floatType, Object param) {
+	public Object visit(FunctionDefinition functionDefinition, Object param) {
+
+		// functionDefinition.getParams().forEach(param_ -> param_.accept(this, param));
+		// functionDefinition.getType().ifPresent(type -> type.accept(this, param));
+		// functionDefinition.getVarDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
+		// functionDefinition.getStatements().forEach(statement -> statement.accept(this, param));
+		super.visit(functionDefinition, param);
+
+		return null;
+	}
+
+	// class Param(String name, Type type)
+	@Override
+	public Object visit(Param param_, Object param) {
+
+		// param_.getType().accept(this, param);
+		super.visit(param_, param);
+
+		return null;
+	}
+
+	// class AttrDefinition(String name, Type type)
+	@Override
+	public Object visit(AttrDefinition attrDefinition, Object param) {
+
+		// attrDefinition.getType().accept(this, param);
+		super.visit(attrDefinition, param);
+
+		return null;
+	}
+
+	// class Read(Expression expression)
+	@Override
+	public Object visit(Read read, Object param) {
+
+		// read.getExpression().accept(this, param);
+		super.visit(read, param);
 
 		return null;
 	}
@@ -113,6 +152,36 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
+	// class Println(Expression expression)
+	@Override
+	public Object visit(Println println, Object param) {
+
+		// println.getExpression().accept(this, param);
+		super.visit(println, param);
+
+		return null;
+	}
+
+	// class Printsp(Expression expression)
+	@Override
+	public Object visit(Printsp printsp, Object param) {
+
+		// printsp.getExpression().accept(this, param);
+		super.visit(printsp, param);
+
+		return null;
+	}
+
+	// class Return(Expression expression)
+	@Override
+	public Object visit(Return returnValue, Object param) {
+
+		// returnValue.getExpression().accept(this, param);
+		super.visit(returnValue, param);
+
+		return null;
+	}
+
 	// class Assignment(Expression left, Expression right)
 	@Override
 	public Object visit(Assignment assignment, Object param) {
@@ -120,6 +189,91 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		// assignment.getLeft().accept(this, param);
 		// assignment.getRight().accept(this, param);
 		super.visit(assignment, param);
+
+		return null;
+	}
+
+	// class While(Expression expression, List<Statement> statements)
+	@Override
+	public Object visit(While whileValue, Object param) {
+
+		// whileValue.getExpression().accept(this, param);
+		// whileValue.getStatements().forEach(statement -> statement.accept(this, param));
+		super.visit(whileValue, param);
+
+		return null;
+	}
+
+	// class If(Expression expression, List<Statement> tr, List<Statement> fs)
+	@Override
+	public Object visit(If ifValue, Object param) {
+
+		// ifValue.getExpression().accept(this, param);
+		// ifValue.getTr().forEach(statement -> statement.accept(this, param));
+		// ifValue.getFs().forEach(statement -> statement.accept(this, param));
+		super.visit(ifValue, param);
+
+		return null;
+	}
+
+	// class FunctionCall(String name, List<Expression> expressions)
+	@Override
+	public Object visit(FunctionCall functionCall, Object param) {
+
+		// functionCall.getExpressions().forEach(expression -> expression.accept(this, param));
+		super.visit(functionCall, param);
+
+		return null;
+	}
+
+	// class IntLiteral(int intValue)
+	@Override
+	public Object visit(IntLiteral intLiteral, Object param) {
+
+		return null;
+	}
+
+	// class RealLiteral(float floatValue)
+	@Override
+	public Object visit(RealLiteral realLiteral, Object param) {
+
+		return null;
+	}
+
+	// class CharLiteral(char charValue)
+	@Override
+	public Object visit(CharLiteral charLiteral, Object param) {
+
+		return null;
+	}
+
+	// class ArrayAccess(Expression expr1, Expression expr2)
+	@Override
+	public Object visit(ArrayAccess arrayAccess, Object param) {
+
+		// arrayAccess.getExpr1().accept(this, param);
+		// arrayAccess.getExpr2().accept(this, param);
+		super.visit(arrayAccess, param);
+
+		return null;
+	}
+
+	// class FieldAccess(Expression expression, String name)
+	@Override
+	public Object visit(FieldAccess fieldAccess, Object param) {
+
+		// fieldAccess.getExpression().accept(this, param);
+		super.visit(fieldAccess, param);
+
+		return null;
+	}
+
+	// class Not(Expression expression)
+	@Override
+	public Object visit(Not not, Object param) {
+
+		// not.getExpression().accept(this, param);
+		super.visit(not, param);
 
 		return null;
 	}
@@ -142,16 +296,48 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class IntLiteral(int intValue)
+	// class Cast(Type type, Expression expression)
 	@Override
-	public Object visit(IntLiteral intLiteral, Object param) {
+	public Object visit(Cast cast, Object param) {
+
+		// cast.getType().accept(this, param);
+		// cast.getExpression().accept(this, param);
+		super.visit(cast, param);
 
 		return null;
 	}
 
-	// class FloatLiteral(float floatValue)
+	// class IntType()
 	@Override
-	public Object visit(FloatLiteral floatLiteral, Object param) {
+	public Object visit(IntType intType, Object param) {
+
+		return null;
+	}
+
+	// class RealType()
+	@Override
+	public Object visit(RealType realType, Object param) {
+
+		return null;
+	}
+
+	// class CharType()
+	@Override
+	public Object visit(CharType charType, Object param) {
+
+		return null;
+	}
+
+	// class ArrayType()
+	@Override
+	public Object visit(ArrayType arrayType, Object param) {
+
+		return null;
+	}
+
+	// class IdentType()
+	@Override
+	public Object visit(IdentType identType, Object param) {
 
 		return null;
 	}

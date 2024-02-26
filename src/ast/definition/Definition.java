@@ -1,8 +1,8 @@
 // Generated with VGen 2.0.0
 
-package ast.type;
+package ast.definition;
 
-import visitor.Visitor;
+import ast.*;
 
 // %% User Declarations -------------
 
@@ -11,25 +11,11 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	intType: type -> 
-	type -> 
+	definition -> 
 */
-public class IntType extends AbstractType  {
+public interface Definition extends AST {
 
 
-
-    // ----------------------------------
-    // Helper methods
-
-    @Override
-    public Object accept(Visitor v, Object param) {
-        return v.visit(this, param);
-    }
-
-    @Override
-    public String toString() {
-        return "IntType{" + "}";
-    }
 
 
     // %% User Members -------------------------

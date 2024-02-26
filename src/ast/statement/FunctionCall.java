@@ -1,7 +1,11 @@
 // Generated with VGen 2.0.0
 
-package ast.expression;
+package ast.statement;
 
+import ast.expression.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -12,43 +16,50 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	variable: expression -> name:string
+	functionCall: statement, expression -> name:string expressions:expression*
+	statement -> 
 	expression -> 
 */
-public class Variable extends AbstractExpression  {
+public class FunctionCall extends AbstractStatement  implements Expression {
 
     // ----------------------------------
     // Instance Variables
 
-	// variable: expression -> string
+	// functionCall: statement, expression -> string expression*
 	private String name;
+	private List<Expression> expressions;
 
     // ----------------------------------
     // Constructors
 
-	public Variable(String name) {
+	public FunctionCall(String name, List<Expression> expressions) {
 		super();
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		updatePositions(name);
+		if (expressions == null)
+			expressions = new ArrayList<>();
+		this.expressions = expressions;
+
+		updatePositions(name, expressions);
 	}
 
-	public Variable(Object name) {
+	public FunctionCall(Object name, Object expressions) {
 		super();
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-		updatePositions(name);
+        this.expressions = castList(expressions, unwrapIfContext.andThen(Expression.class::cast));
+		updatePositions(name, expressions);
 	}
 
 
     // ----------------------------------
-    // variable: expression -> string
+    // functionCall: statement, expression -> string expression*
 
 	// Child 'string' 
 
@@ -64,6 +75,24 @@ public class Variable extends AbstractExpression  {
     }
 
 
+	// Child 'expression*' 
+
+	public void setExpressions(List<Expression> expressions) {
+		if (expressions == null)
+			expressions = new ArrayList<>();
+		this.expressions = expressions;
+
+	}
+
+    public List<Expression> getExpressions() {
+        return expressions;
+    }
+
+    public Stream<Expression> expressions() {
+        return expressions.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -74,7 +103,7 @@ public class Variable extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Variable{" + " name=" + this.getName() + "}";
+        return "FunctionCall{" + " name=" + this.getName() + " expressions=" + this.getExpressions() + "}";
     }
 
 

@@ -12,21 +12,21 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	print: statement -> expression:expression
+	println: statement -> expression:expression
 	statement -> 
 */
-public class Print extends AbstractStatement  {
+public class Println extends AbstractStatement  {
 
     // ----------------------------------
     // Instance Variables
 
-	// print: statement -> expression
+	// println: statement -> expression
 	private Expression expression;
 
     // ----------------------------------
     // Constructors
 
-	public Print(Expression expression) {
+	public Println(Expression expression) {
 		super();
 
 		if (expression == null)
@@ -36,7 +36,7 @@ public class Print extends AbstractStatement  {
 		updatePositions(expression);
 	}
 
-	public Print(Object expression) {
+	public Println(Object expression) {
 		super();
 
         if (expression == null)
@@ -48,7 +48,7 @@ public class Print extends AbstractStatement  {
 
 
     // ----------------------------------
-    // print: statement -> expression
+    // println: statement -> expression
 
 	// Child 'expression' 
 
@@ -74,7 +74,7 @@ public class Print extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Print{" + " expression=" + this.getExpression() + "}";
+        return "Println{" + " expression=" + this.getExpression() + "}";
     }
 
 

@@ -11,10 +11,10 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	intType: type -> 
+	identType: type -> 
 	type -> 
 */
-public class IntType extends AbstractType  {
+public class IdentType extends AbstractType  {
 
 
 
@@ -28,7 +28,7 @@ public class IntType extends AbstractType  {
 
     @Override
     public String toString() {
-        return "IntType{" + "}";
+        return "IdentType{" + "}";
     }
 
 

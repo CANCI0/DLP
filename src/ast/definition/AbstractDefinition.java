@@ -1,8 +1,8 @@
 // Generated with VGen 2.0.0
 
-package ast.type;
+package ast.definition;
 
-import visitor.Visitor;
+import ast.*;
 
 // %% User Declarations -------------
 
@@ -10,27 +10,12 @@ import visitor.Visitor;
 
 // %% -------------------------------
 
-
 /*
-	floatType: type -> 
-	type -> 
+	definition -> 
 */
-public class FloatType extends AbstractType  {
+public abstract class AbstractDefinition extends AbstractAST implements Definition {
 
 
-
-    // ----------------------------------
-    // Helper methods
-
-    @Override
-    public Object accept(Visitor v, Object param) {
-        return v.visit(this, param);
-    }
-
-    @Override
-    public String toString() {
-        return "FloatType{" + "}";
-    }
 
 
     // %% User Members -------------------------
@@ -38,5 +23,4 @@ public class FloatType extends AbstractType  {
         // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
-
 }

@@ -39,5 +39,5 @@ cast:expression -> type expression;
 intType:type -> ;
 realType:type -> ;
 charType:type -> ;
-arrayType:type -> ;
+arrayType:type -> int;
 identType:type -> ;

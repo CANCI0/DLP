@@ -1,8 +1,8 @@
 // Generated with VGen 2.0.0
 
-package ast.statement;
+package ast.expression;
 
-import ast.expression.*;
+import ast.type.*;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -12,43 +12,66 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	print: statement -> expression:expression
-	statement -> 
+	cast: expression -> type:type expression:expression
+	expression -> 
 */
-public class Print extends AbstractStatement  {
+public class Cast extends AbstractExpression  {
 
     // ----------------------------------
     // Instance Variables
 
-	// print: statement -> expression
+	// cast: expression -> type expression
+	private Type type;
 	private Expression expression;
 
     // ----------------------------------
     // Constructors
 
-	public Print(Expression expression) {
+	public Cast(Type type, Expression expression) {
 		super();
+
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
 
 		if (expression == null)
 			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = expression;
 
-		updatePositions(expression);
+		updatePositions(type, expression);
 	}
 
-	public Print(Object expression) {
+	public Cast(Object type, Object expression) {
 		super();
+
+        if (type == null)
+            throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = (Type) type;
 
         if (expression == null)
             throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = (Expression) expression;
 
-		updatePositions(expression);
+		updatePositions(type, expression);
 	}
 
 
     // ----------------------------------
-    // print: statement -> expression
+    // cast: expression -> type expression
+
+	// Child 'type' 
+
+	public void setType(Type type) {
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
+
+	}
+
+    public Type getType() {
+        return type;
+    }
+
 
 	// Child 'expression' 
 
@@ -74,7 +97,7 @@ public class Print extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Print{" + " expression=" + this.getExpression() + "}";
+        return "Cast{" + " type=" + this.getType() + " expression=" + this.getExpression() + "}";
     }
 
 

@@ -12,43 +12,66 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	variable: expression -> name:string
+	fieldAccess: expression -> expression:expression name:string
 	expression -> 
 */
-public class Variable extends AbstractExpression  {
+public class FieldAccess extends AbstractExpression  {
 
     // ----------------------------------
     // Instance Variables
 
-	// variable: expression -> string
+	// fieldAccess: expression -> expression string
+	private Expression expression;
 	private String name;
 
     // ----------------------------------
     // Constructors
 
-	public Variable(String name) {
+	public FieldAccess(Expression expression, String name) {
 		super();
+
+		if (expression == null)
+			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.expression = expression;
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		updatePositions(name);
+		updatePositions(expression, name);
 	}
 
-	public Variable(Object name) {
+	public FieldAccess(Object expression, Object name) {
 		super();
+
+        if (expression == null)
+            throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.expression = (Expression) expression;
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-		updatePositions(name);
+		updatePositions(expression, name);
 	}
 
 
     // ----------------------------------
-    // variable: expression -> string
+    // fieldAccess: expression -> expression string
+
+	// Child 'expression' 
+
+	public void setExpression(Expression expression) {
+		if (expression == null)
+			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.expression = expression;
+
+	}
+
+    public Expression getExpression() {
+        return expression;
+    }
+
 
 	// Child 'string' 
 
@@ -74,7 +97,7 @@ public class Variable extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Variable{" + " name=" + this.getName() + "}";
+        return "FieldAccess{" + " expression=" + this.getExpression() + " name=" + this.getName() + "}";
     }
 
 

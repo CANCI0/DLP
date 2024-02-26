@@ -2,7 +2,7 @@
 
 package ast;
 
-import ast.statement.*;
+import ast.definition.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -14,81 +14,56 @@ import visitor.Visitor;
 
 // %% -------------------------------
 
-
 /*
-	program -> varDefinitions:varDefinition* statements:statement*
+	program -> definitions:definition*
 */
 public class Program extends AbstractAST  {
 
     // ----------------------------------
     // Instance Variables
 
-	// program -> varDefinition* statement*
-	private List<VarDefinition> varDefinitions;
-	private List<Statement> statements;
+	// program -> definition*
+	private List<Definition> definitions;
 
     // ----------------------------------
     // Constructors
 
-	public Program(List<VarDefinition> varDefinitions, List<Statement> statements) {
+	public Program(List<Definition> definitions) {
 		super();
 
-		if (varDefinitions == null)
-			varDefinitions = new ArrayList<>();
-		this.varDefinitions = varDefinitions;
+		if (definitions == null)
+			definitions = new ArrayList<>();
+		this.definitions = definitions;
 
-		if (statements == null)
-			statements = new ArrayList<>();
-		this.statements = statements;
-
-		updatePositions(varDefinitions, statements);
+		updatePositions(definitions);
 	}
 
-	public Program(Object varDefinitions, Object statements) {
+	public Program(Object definitions) {
 		super();
 
-        this.varDefinitions = castList(varDefinitions, unwrapIfContext.andThen(VarDefinition.class::cast));
-        this.statements = castList(statements, unwrapIfContext.andThen(Statement.class::cast));
-		updatePositions(varDefinitions, statements);
+        this.definitions = castList(definitions, unwrapIfContext.andThen(Definition.class::cast));
+		updatePositions(definitions);
 	}
 
 
     // ----------------------------------
-    // program -> varDefinition* statement*
+    // program -> definition*
 
-	// Child 'varDefinition*' 
+	// Child 'definition*' 
 
-	public void setVarDefinitions(List<VarDefinition> varDefinitions) {
-		if (varDefinitions == null)
-			varDefinitions = new ArrayList<>();
-		this.varDefinitions = varDefinitions;
-
-	}
-
-    public List<VarDefinition> getVarDefinitions() {
-        return varDefinitions;
-    }
-
-    public Stream<VarDefinition> varDefinitions() {
-        return varDefinitions.stream();
-    }
-
-
-	// Child 'statement*' 
-
-	public void setStatements(List<Statement> statements) {
-		if (statements == null)
-			statements = new ArrayList<>();
-		this.statements = statements;
+	public void setDefinitions(List<Definition> definitions) {
+		if (definitions == null)
+			definitions = new ArrayList<>();
+		this.definitions = definitions;
 
 	}
 
-    public List<Statement> getStatements() {
-        return statements;
+    public List<Definition> getDefinitions() {
+        return definitions;
     }
 
-    public Stream<Statement> statements() {
-        return statements.stream();
+    public Stream<Definition> definitions() {
+        return definitions.stream();
     }
 
 
@@ -102,7 +77,7 @@ public class Program extends AbstractAST  {
 
     @Override
     public String toString() {
-        return "Program{" + " varDefinitions=" + this.getVarDefinitions() + " statements=" + this.getStatements() + "}";
+        return "Program{" + " definitions=" + this.getDefinitions() + "}";
     }
 
 
@@ -111,5 +86,4 @@ public class Program extends AbstractAST  {
         // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
-
 }

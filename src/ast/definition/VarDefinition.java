@@ -1,7 +1,8 @@
 // Generated with VGen 2.0.0
 
-package ast.expression;
+package ast.definition;
 
+import ast.type.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -12,43 +13,52 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	variable: expression -> name:string
-	expression -> 
+	varDefinition: definition -> name:string type:type
+	definition -> 
 */
-public class Variable extends AbstractExpression  {
+public class VarDefinition extends AbstractDefinition  {
 
     // ----------------------------------
     // Instance Variables
 
-	// variable: expression -> string
+	// varDefinition: definition -> string type
 	private String name;
+	private Type type;
 
     // ----------------------------------
     // Constructors
 
-	public Variable(String name) {
+	public VarDefinition(String name, Type type) {
 		super();
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		updatePositions(name);
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
+
+		updatePositions(name, type);
 	}
 
-	public Variable(Object name) {
+	public VarDefinition(Object name, Object type) {
 		super();
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-		updatePositions(name);
+        if (type == null)
+            throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = (Type) type;
+
+		updatePositions(name, type);
 	}
 
 
     // ----------------------------------
-    // variable: expression -> string
+    // varDefinition: definition -> string type
 
 	// Child 'string' 
 
@@ -64,6 +74,20 @@ public class Variable extends AbstractExpression  {
     }
 
 
+	// Child 'type' 
+
+	public void setType(Type type) {
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
+
+	}
+
+    public Type getType() {
+        return type;
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -74,7 +98,7 @@ public class Variable extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Variable{" + " name=" + this.getName() + "}";
+        return "VarDefinition{" + " name=" + this.getName() + " type=" + this.getType() + "}";
     }
 
 

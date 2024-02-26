@@ -1,7 +1,11 @@
 // Generated with VGen 2.0.0
 
-package ast.expression;
+package ast.definition;
 
+import ast.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -12,43 +16,49 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	variable: expression -> name:string
-	expression -> 
+	structDefinition: definition -> name:string attrDefinitions:attrDefinition*
+	definition -> 
 */
-public class Variable extends AbstractExpression  {
+public class StructDefinition extends AbstractDefinition  {
 
     // ----------------------------------
     // Instance Variables
 
-	// variable: expression -> string
+	// structDefinition: definition -> string attrDefinition*
 	private String name;
+	private List<AttrDefinition> attrDefinitions;
 
     // ----------------------------------
     // Constructors
 
-	public Variable(String name) {
+	public StructDefinition(String name, List<AttrDefinition> attrDefinitions) {
 		super();
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		updatePositions(name);
+		if (attrDefinitions == null)
+			attrDefinitions = new ArrayList<>();
+		this.attrDefinitions = attrDefinitions;
+
+		updatePositions(name, attrDefinitions);
 	}
 
-	public Variable(Object name) {
+	public StructDefinition(Object name, Object attrDefinitions) {
 		super();
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-		updatePositions(name);
+        this.attrDefinitions = castList(attrDefinitions, unwrapIfContext.andThen(AttrDefinition.class::cast));
+		updatePositions(name, attrDefinitions);
 	}
 
 
     // ----------------------------------
-    // variable: expression -> string
+    // structDefinition: definition -> string attrDefinition*
 
 	// Child 'string' 
 
@@ -64,6 +74,24 @@ public class Variable extends AbstractExpression  {
     }
 
 
+	// Child 'attrDefinition*' 
+
+	public void setAttrDefinitions(List<AttrDefinition> attrDefinitions) {
+		if (attrDefinitions == null)
+			attrDefinitions = new ArrayList<>();
+		this.attrDefinitions = attrDefinitions;
+
+	}
+
+    public List<AttrDefinition> getAttrDefinitions() {
+        return attrDefinitions;
+    }
+
+    public Stream<AttrDefinition> attrDefinitions() {
+        return attrDefinitions.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -74,7 +102,7 @@ public class Variable extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Variable{" + " name=" + this.getName() + "}";
+        return "StructDefinition{" + " name=" + this.getName() + " attrDefinitions=" + this.getAttrDefinitions() + "}";
     }
 
 

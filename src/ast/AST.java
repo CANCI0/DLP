@@ -4,7 +4,11 @@ package ast;
 
 import visitor.Visitor;
 
+// %% User Declarations -------------
 
+    // Declarations (e.g. imports) in this section will be preserved. Delete if not needed
+
+// %% -------------------------------
 
 /*
 	AST -> 
@@ -26,5 +30,9 @@ public interface AST {
 
 
 
+    // %% User Members -------------------------
 
+        // Methods/attributes in this section will be preserved. Delete if not needed
+
+    // %% --------------------------------------
 }

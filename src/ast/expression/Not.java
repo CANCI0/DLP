@@ -1,8 +1,7 @@
 // Generated with VGen 2.0.0
 
-package ast.statement;
+package ast.expression;
 
-import ast.expression.*;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -12,21 +11,21 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	print: statement -> expression:expression
-	statement -> 
+	not: expression -> expression:expression
+	expression -> 
 */
-public class Print extends AbstractStatement  {
+public class Not extends AbstractExpression  {
 
     // ----------------------------------
     // Instance Variables
 
-	// print: statement -> expression
+	// not: expression -> expression
 	private Expression expression;
 
     // ----------------------------------
     // Constructors
 
-	public Print(Expression expression) {
+	public Not(Expression expression) {
 		super();
 
 		if (expression == null)
@@ -36,7 +35,7 @@ public class Print extends AbstractStatement  {
 		updatePositions(expression);
 	}
 
-	public Print(Object expression) {
+	public Not(Object expression) {
 		super();
 
         if (expression == null)
@@ -48,7 +47,7 @@ public class Print extends AbstractStatement  {
 
 
     // ----------------------------------
-    // print: statement -> expression
+    // not: expression -> expression
 
 	// Child 'expression' 
 
@@ -74,7 +73,7 @@ public class Print extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Print{" + " expression=" + this.getExpression() + "}";
+        return "Not{" + " expression=" + this.getExpression() + "}";
     }
 
 

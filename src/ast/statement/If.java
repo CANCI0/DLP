@@ -3,6 +3,9 @@
 package ast.statement;
 
 import ast.expression.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -12,43 +15,55 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	print: statement -> expression:expression
+	if: statement -> expression:expression tr:statement* fs:statement*
 	statement -> 
 */
-public class Print extends AbstractStatement  {
+public class If extends AbstractStatement  {
 
     // ----------------------------------
     // Instance Variables
 
-	// print: statement -> expression
+	// if: statement -> expression tr:statement* fs:statement*
 	private Expression expression;
+	private List<Statement> tr;
+	private List<Statement> fs;
 
     // ----------------------------------
     // Constructors
 
-	public Print(Expression expression) {
+	public If(Expression expression, List<Statement> tr, List<Statement> fs) {
 		super();
 
 		if (expression == null)
 			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = expression;
 
-		updatePositions(expression);
+		if (tr == null)
+			tr = new ArrayList<>();
+		this.tr = tr;
+
+		if (fs == null)
+			fs = new ArrayList<>();
+		this.fs = fs;
+
+		updatePositions(expression, tr, fs);
 	}
 
-	public Print(Object expression) {
+	public If(Object expression, Object tr, Object fs) {
 		super();
 
         if (expression == null)
             throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = (Expression) expression;
 
-		updatePositions(expression);
+        this.tr = castList(tr, unwrapIfContext.andThen(Statement.class::cast));
+        this.fs = castList(fs, unwrapIfContext.andThen(Statement.class::cast));
+		updatePositions(expression, tr, fs);
 	}
 
 
     // ----------------------------------
-    // print: statement -> expression
+    // if: statement -> expression tr:statement* fs:statement*
 
 	// Child 'expression' 
 
@@ -64,6 +79,42 @@ public class Print extends AbstractStatement  {
     }
 
 
+	// Child 'tr:statement*' 
+
+	public void setTr(List<Statement> tr) {
+		if (tr == null)
+			tr = new ArrayList<>();
+		this.tr = tr;
+
+	}
+
+    public List<Statement> getTr() {
+        return tr;
+    }
+
+    public Stream<Statement> tr() {
+        return tr.stream();
+    }
+
+
+	// Child 'fs:statement*' 
+
+	public void setFs(List<Statement> fs) {
+		if (fs == null)
+			fs = new ArrayList<>();
+		this.fs = fs;
+
+	}
+
+    public List<Statement> getFs() {
+        return fs;
+    }
+
+    public Stream<Statement> fs() {
+        return fs.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -74,7 +125,7 @@ public class Print extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Print{" + " expression=" + this.getExpression() + "}";
+        return "If{" + " expression=" + this.getExpression() + " tr=" + this.getTr() + " fs=" + this.getFs() + "}";
     }
 
 

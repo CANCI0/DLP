@@ -11,7 +11,6 @@ import visitor.Visitor;
 
 // %% -------------------------------
 
-
 /*
 	intLiteral: expression -> intValue:int
 	expression -> 
@@ -85,5 +84,4 @@ public class IntLiteral extends AbstractExpression  {
         // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
-
 }

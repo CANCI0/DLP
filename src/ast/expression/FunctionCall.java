@@ -1,8 +1,11 @@
 // Generated with VGen 2.0.0
 
-package ast;
+package ast.expression;
 
-import ast.type.*;
+import ast.statement.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -14,65 +17,50 @@ import visitor.Visitor;
 
 
 /*
-	varDefinition -> type:type name:string
+	functionCall: expression, statement -> name:string expressions:expression*
+	expression -> 
+	statement -> 
 */
-public class VarDefinition extends AbstractAST  {
+public class FunctionCall extends AbstractExpression  implements Statement {
 
     // ----------------------------------
     // Instance Variables
 
-	// varDefinition -> type string
-	private Type type;
+	// functionCall: expression, statement -> string expression*
 	private String name;
+	private List<Expression> expressions;
 
     // ----------------------------------
     // Constructors
 
-	public VarDefinition(Type type, String name) {
+	public FunctionCall(String name, List<Expression> expressions) {
 		super();
-
-		if (type == null)
-			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = type;
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		updatePositions(type, name);
+		if (expressions == null)
+			expressions = new ArrayList<>();
+		this.expressions = expressions;
+
+		updatePositions(name, expressions);
 	}
 
-	public VarDefinition(Object type, Object name) {
+	public FunctionCall(Object name, Object expressions) {
 		super();
-
-        if (type == null)
-            throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = (Type) type;
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-		updatePositions(type, name);
+        this.expressions = castList(expressions, unwrapIfContext.andThen(Expression.class::cast));
+		updatePositions(name, expressions);
 	}
 
 
     // ----------------------------------
-    // varDefinition -> type string
-
-	// Child 'type' 
-
-	public void setType(Type type) {
-		if (type == null)
-			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = type;
-
-	}
-
-    public Type getType() {
-        return type;
-    }
-
+    // functionCall: expression, statement -> string expression*
 
 	// Child 'string' 
 
@@ -88,6 +76,24 @@ public class VarDefinition extends AbstractAST  {
     }
 
 
+	// Child 'expression*' 
+
+	public void setExpressions(List<Expression> expressions) {
+		if (expressions == null)
+			expressions = new ArrayList<>();
+		this.expressions = expressions;
+
+	}
+
+    public List<Expression> getExpressions() {
+        return expressions;
+    }
+
+    public Stream<Expression> expressions() {
+        return expressions.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -98,7 +104,7 @@ public class VarDefinition extends AbstractAST  {
 
     @Override
     public String toString() {
-        return "VarDefinition{" + " type=" + this.getType() + " name=" + this.getName() + "}";
+        return "FunctionCall{" + " name=" + this.getName() + " expressions=" + this.getExpressions() + "}";
     }
 
 

@@ -27,6 +27,10 @@ interface Statement {
 }
 AST <|-[#808080]- Statement
 
+interface Definition {
+}
+AST <|-[#808080]- Definition
+
 interface Type {
 }
 AST <|-[#808080]- Type
@@ -37,33 +41,123 @@ interface AST {
 class Program {
 }
 AST <|-[#808080]- Program
-Program o-[#404040,thickness=2]- "✱" VarDefinition : varDefinitions >
-Program o-[#404040,thickness=2]- "✱" Statement : statements >
+Program o-[#404040,thickness=2]- "✱" Definition : definitions >
 
 class VarDefinition {
 	+String name
 }
-AST <|-[#808080]- VarDefinition
+Definition <|-[#808080]- VarDefinition
 VarDefinition o-[#404040,thickness=2]-  Type : type >
 
-class IntType {
+class StructDefinition {
+	+String name
 }
-Type <|-[#808080]- IntType
+Definition <|-[#808080]- StructDefinition
+StructDefinition o-[#404040,thickness=2]- "✱" AttrDefinition : attrDefinitions >
 
-class FloatType {
+class FunctionDefinition {
+	+String name
 }
-Type <|-[#808080]- FloatType
+Definition <|-[#808080]- FunctionDefinition
+FunctionDefinition o-[#404040,thickness=2]- "✱" Param : params >
+FunctionDefinition o-[#404040,thickness=2]- "0..1" Type : type >
+FunctionDefinition o-[#404040,thickness=2]- "✱" VarDefinition : varDefinitions >
+FunctionDefinition o-[#404040,thickness=2]- "✱" Statement : statements >
+
+class Param {
+	+String name
+}
+AST <|-[#808080]- Param
+Param o-[#404040,thickness=2]-  Type : type >
+
+class AttrDefinition {
+	+String name
+}
+AST <|-[#808080]- AttrDefinition
+AttrDefinition o-[#404040,thickness=2]-  Type : type >
+
+class Read {
+}
+Statement <|-[#808080]- Read
+Read o-[#404040,thickness=2]-  Expression : expression >
 
 class Print {
 }
 Statement <|-[#808080]- Print
 Print o-[#404040,thickness=2]-  Expression : expression >
 
+class Println {
+}
+Statement <|-[#808080]- Println
+Println o-[#404040,thickness=2]-  Expression : expression >
+
+class Printsp {
+}
+Statement <|-[#808080]- Printsp
+Printsp o-[#404040,thickness=2]-  Expression : expression >
+
+class Return {
+}
+Statement <|-[#808080]- Return
+Return o-[#404040,thickness=2]-  Expression : expression >
+
 class Assignment {
 }
 Statement <|-[#808080]- Assignment
 Assignment o-[#404040,thickness=2]-  Expression : left >
 Assignment o-[#404040,thickness=2]-  Expression : right >
+
+class While {
+}
+Statement <|-[#808080]- While
+While o-[#404040,thickness=2]-  Expression : expression >
+While o-[#404040,thickness=2]- "✱" Statement : statements >
+
+class If {
+}
+Statement <|-[#808080]- If
+If o-[#404040,thickness=2]-  Expression : expression >
+If o-[#404040,thickness=2]- "✱" Statement : tr >
+If o-[#404040,thickness=2]- "✱" Statement : fs >
+
+class FunctionCall {
+	+String name
+}
+Expression <|-[#808080]- FunctionCall
+Statement <|-[#808080]- FunctionCall
+FunctionCall o-[#404040,thickness=2]- "✱" Expression : expressions >
+
+class IntLiteral {
+	+int intValue
+}
+Expression <|-[#808080]- IntLiteral
+
+class RealLiteral {
+	+float floatValue
+}
+Expression <|-[#808080]- RealLiteral
+
+class CharLiteral {
+	+char charValue
+}
+Expression <|-[#808080]- CharLiteral
+
+class ArrayAccess {
+}
+Expression <|-[#808080]- ArrayAccess
+ArrayAccess o-[#404040,thickness=2]-  Expression : expr1 >
+ArrayAccess o-[#404040,thickness=2]-  Expression : expr2 >
+
+class FieldAccess {
+	+String name
+}
+Expression <|-[#808080]- FieldAccess
+FieldAccess o-[#404040,thickness=2]-  Expression : expression >
+
+class Not {
+}
+Expression <|-[#808080]- Not
+Not o-[#404040,thickness=2]-  Expression : expression >
 
 class Arithmetic {
 	+String operator
@@ -77,14 +171,30 @@ class Variable {
 }
 Expression <|-[#808080]- Variable
 
-class IntLiteral {
-	+int intValue
+class Cast {
 }
-Expression <|-[#808080]- IntLiteral
+Expression <|-[#808080]- Cast
+Cast o-[#404040,thickness=2]-  Type : type >
+Cast o-[#404040,thickness=2]-  Expression : expression >
 
-class FloatLiteral {
-	+float floatValue
+class IntType {
 }
-Expression <|-[#808080]- FloatLiteral
+Type <|-[#808080]- IntType
+
+class RealType {
+}
+Type <|-[#808080]- RealType
+
+class CharType {
+}
+Type <|-[#808080]- CharType
+
+class ArrayType {
+}
+Type <|-[#808080]- ArrayType
+
+class IdentType {
+}
+Type <|-[#808080]- IdentType
 
 @enduml

@@ -3,6 +3,9 @@
 package ast.statement;
 
 import ast.expression.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -12,43 +15,49 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	print: statement -> expression:expression
+	while: statement -> expression:expression statements:statement*
 	statement -> 
 */
-public class Print extends AbstractStatement  {
+public class While extends AbstractStatement  {
 
     // ----------------------------------
     // Instance Variables
 
-	// print: statement -> expression
+	// while: statement -> expression statement*
 	private Expression expression;
+	private List<Statement> statements;
 
     // ----------------------------------
     // Constructors
 
-	public Print(Expression expression) {
+	public While(Expression expression, List<Statement> statements) {
 		super();
 
 		if (expression == null)
 			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = expression;
 
-		updatePositions(expression);
+		if (statements == null)
+			statements = new ArrayList<>();
+		this.statements = statements;
+
+		updatePositions(expression, statements);
 	}
 
-	public Print(Object expression) {
+	public While(Object expression, Object statements) {
 		super();
 
         if (expression == null)
             throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
 		this.expression = (Expression) expression;
 
-		updatePositions(expression);
+        this.statements = castList(statements, unwrapIfContext.andThen(Statement.class::cast));
+		updatePositions(expression, statements);
 	}
 
 
     // ----------------------------------
-    // print: statement -> expression
+    // while: statement -> expression statement*
 
 	// Child 'expression' 
 
@@ -64,6 +73,24 @@ public class Print extends AbstractStatement  {
     }
 
 
+	// Child 'statement*' 
+
+	public void setStatements(List<Statement> statements) {
+		if (statements == null)
+			statements = new ArrayList<>();
+		this.statements = statements;
+
+	}
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
+
+    public Stream<Statement> statements() {
+        return statements.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -74,7 +101,7 @@ public class Print extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Print{" + " expression=" + this.getExpression() + "}";
+        return "While{" + " expression=" + this.getExpression() + " statements=" + this.getStatements() + "}";
     }
 
 
