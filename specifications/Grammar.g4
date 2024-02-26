@@ -50,7 +50,7 @@ statement returns[Statement ast]
 	| 'println' expression? ';'																{ $ast = new Println($expression.ctx != null ? $expression.ast : null); }
 	| 'printsp' expression? ';'																{ $ast = new Printsp($expression.ctx != null ? $expression.ast : null); }
 	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); }
-	| functionCall ';'?																		{ $ast = $functionCall.ast}	
+	| IDENT '(' functionCallParams ')' ';'?													{ $ast = new FunctionCallStatement($IDENT, $functionCallParams.list); }	
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
 	| 'if' '(' expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?			{ $ast = new If($expression.ast, $tr.list, $fs.list); }
@@ -60,7 +60,7 @@ expression returns[Expression ast]
     : INT_LITERAL																			{ $ast = new IntLiteral($INT_LITERAL); }
     | REAL_LITERAL																			{ $ast = new RealLiteral($REAL_LITERAL); }
     | CHAR_LITERAL																			{ $ast = new CharLiteral($CHAR_LITERAL); }
-	| functionCall																			{ $ast = $functionCall.ast; }
+	| IDENT '(' functionCallParams ')'														{ $ast = new FunctionCallExpression($IDENT, $functionCallParams.list); }	
 	| IDENT																					{ $ast = new Variable($IDENT); }
 	| expression1=expression '[' expression2=expression ']'									{ $ast = new ArrayAccess($expression1.ast, $expression2.ast); }
 	| expression '.' IDENT																	{ $ast = new FieldAccess($expression.ast, $IDENT); }
@@ -75,8 +75,8 @@ expression returns[Expression ast]
 	| '<' type '>' '(' expression ')'														{ $ast = new Cast($type.ast, $expression.ast); }
     ;
 
-expressions returns[List<Expression> list = new ArrayList<Expression>()]
-	: (expression { $list.add($expression.ast); } (',' expression { $list.add($expression.ast); })*)?							
+functionCallExpression returns[FunctionCallExpression ast]
+	: IDENT '(' functionCallParams ')'														{$ast = new FunctionCallExpression($IDENT, $functionCallParams.list); }	
 	;
 
 functionCall returns[functionCall ast]

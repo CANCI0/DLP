@@ -2,6 +2,7 @@
 
 package ast.type;
 
+import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -11,11 +12,57 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	arrayType: type -> 
+	arrayType: type -> intValue:int
 	type -> 
 */
 public class ArrayType extends AbstractType  {
 
+    // ----------------------------------
+    // Instance Variables
+
+	// arrayType: type -> int
+	private int intValue;
+
+    // ----------------------------------
+    // Constructors
+
+	public ArrayType(int intValue) {
+		super();
+
+		this.intValue = intValue;
+
+		updatePositions(intValue);
+	}
+
+	public ArrayType(Object intValue) {
+		super();
+
+        if (intValue == null)
+            throw new IllegalArgumentException("Parameter 'intValue' can't be null. Pass a non-null value or use 'int?' in the abstract grammar");
+        var intValue_temp = intValue;
+        if (intValue_temp instanceof Token)
+            intValue_temp = ((Token) intValue_temp).getText();
+        if (intValue_temp instanceof String)
+            intValue_temp = Integer.valueOf((String) intValue_temp);
+        this.intValue = (int) intValue_temp;
+
+		updatePositions(intValue);
+	}
+
+
+    // ----------------------------------
+    // arrayType: type -> int
+
+	// Child 'int' 
+
+	public void setIntValue(int intValue) {
+		this.intValue = intValue;
+
+	}
+
+    public int getIntValue() {
+        return intValue;
+    }
 
 
     // ----------------------------------
@@ -28,7 +75,7 @@ public class ArrayType extends AbstractType  {
 
     @Override
     public String toString() {
-        return "ArrayType{" + "}";
+        return "ArrayType{" + " intValue=" + this.getIntValue() + "}";
     }
 
 

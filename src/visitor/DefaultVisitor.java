@@ -19,7 +19,6 @@ import ast.*;
 import ast.definition.*;
 import ast.statement.*;
 import ast.expression.*;
-import ast.expression.FunctionCall;
 import ast.type.*;
 
 // %% User Declarations -------------
@@ -136,9 +135,9 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(FunctionCall functionCall, Object param) {
+	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
-		functionCall.getExpressions().forEach(expression -> expression.accept(this, param));
+		functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
 
@@ -201,6 +200,13 @@ public class DefaultVisitor implements Visitor {
 
 		cast.getType().accept(this, param);
 		cast.getExpression().accept(this, param);
+		return null;
+	}
+
+	@Override
+	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
+
+		functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
 
