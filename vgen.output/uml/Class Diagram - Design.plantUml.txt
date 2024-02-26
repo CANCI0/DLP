@@ -84,22 +84,22 @@ Read o-[#404040,thickness=2]-  Expression : expression >
 class Print {
 }
 Statement <|-[#808080]- Print
-Print o-[#404040,thickness=2]-  Expression : expression >
+Print o-[#404040,thickness=2]- "✱" Expression : expressions >
 
 class Println {
 }
 Statement <|-[#808080]- Println
-Println o-[#404040,thickness=2]-  Expression : expression >
+Println o-[#404040,thickness=2]- "✱" Expression : expressions >
 
 class Printsp {
 }
 Statement <|-[#808080]- Printsp
-Printsp o-[#404040,thickness=2]-  Expression : expression >
+Printsp o-[#404040,thickness=2]- "✱" Expression : expressions >
 
 class Return {
 }
 Statement <|-[#808080]- Return
-Return o-[#404040,thickness=2]-  Expression : expression >
+Return o-[#404040,thickness=2]- "0..1" Expression : expression >
 
 class Assignment {
 }
@@ -151,7 +151,7 @@ class FieldAccess {
 	+String name
 }
 Expression <|-[#808080]- FieldAccess
-FieldAccess o-[#404040,thickness=2]-  Expression : expression >
+FieldAccess o-[#404040,thickness=2]-  Expression : expr >
 
 class Not {
 }

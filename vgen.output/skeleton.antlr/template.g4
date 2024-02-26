@@ -42,10 +42,10 @@ varDefinition returns[VarDefinition ast]
 
 statement returns[Statement ast]
     : expression                          { $ast = new Read($expression.ast); }                  
-    | expression                          { $ast = new Print($expression.ast); }                 
-    | expression                          { $ast = new Println($expression.ast); }               
-    | expression                          { $ast = new Printsp($expression.ast); }               
-    | expression                          { $ast = new Return($expression.ast); }                
+    | expressions+=expression*            { $ast = new Print($expressions); }                    
+    | expressions+=expression*            { $ast = new Println($expressions); }                  
+    | expressions+=expression*            { $ast = new Printsp($expressions); }                  
+    | expression?                         { $ast = new Return(($expression.ctx == null) ? null : $expression.ast); }
     | left=expression right=expression    { $ast = new Assignment($left.ast, $right.ast); }      
     | expression statements+=statement*   { $ast = new While($expression.ast, $statements); }    
     | expression tr+=statement* fs+=statement* { $ast = new If($expression.ast, $tr, $fs); }          

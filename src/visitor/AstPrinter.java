@@ -211,10 +211,10 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", print.getExpression());
+        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", print.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, print, "expression");
+		printUnknownFields(indent + 1, print, "expressions");
 		return null;
 	}
 
@@ -224,10 +224,10 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", println.getExpression());
+        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", println.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, println, "expression");
+		printUnknownFields(indent + 1, println, "expressions");
 		return null;
 	}
 
@@ -237,10 +237,10 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", printsp.getExpression());
+        printListOfNodesChild(indent + 1, "expressions", "List<Expression>", printsp.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, printsp, "expression");
+		printUnknownFields(indent + 1, printsp, "expressions");
 		return null;
 	}
 
@@ -250,7 +250,7 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", returnValue.getExpression());
+        printNodeChild(indent + 1, "expression", "Optional<Expression>", returnValue.getExpression().orElse(null));
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
 		printUnknownFields(indent + 1, returnValue, "expression");
@@ -373,11 +373,11 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", fieldAccess.getExpression());
+        printNodeChild(indent + 1, "expr", "Expression", fieldAccess.getExpr());
         printNonNodeChild(indent + 1, "name", "String", fieldAccess.getName());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, fieldAccess, "expression", "name");
+		printUnknownFields(indent + 1, fieldAccess, "expr", "name");
 		return null;
 	}
 

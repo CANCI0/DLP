@@ -142,41 +142,41 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class Print(Expression expression)
+	// class Print(List<Expression> expressions)
 	@Override
 	public Object visit(Print print, Object param) {
 
-		// print.getExpression().accept(this, param);
+		// print.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(print, param);
 
 		return null;
 	}
 
-	// class Println(Expression expression)
+	// class Println(List<Expression> expressions)
 	@Override
 	public Object visit(Println println, Object param) {
 
-		// println.getExpression().accept(this, param);
+		// println.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(println, param);
 
 		return null;
 	}
 
-	// class Printsp(Expression expression)
+	// class Printsp(List<Expression> expressions)
 	@Override
 	public Object visit(Printsp printsp, Object param) {
 
-		// printsp.getExpression().accept(this, param);
+		// printsp.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(printsp, param);
 
 		return null;
 	}
 
-	// class Return(Expression expression)
+	// class Return(Optional<Expression> expression)
 	@Override
 	public Object visit(Return returnValue, Object param) {
 
-		// returnValue.getExpression().accept(this, param);
+		// returnValue.getExpression().ifPresent(expression -> expression.accept(this, param));
 		super.visit(returnValue, param);
 
 		return null;
@@ -258,11 +258,11 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class FieldAccess(Expression expression, String name)
+	// class FieldAccess(Expression expr, String name)
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 
-		// fieldAccess.getExpression().accept(this, param);
+		// fieldAccess.getExpr().accept(this, param);
 		super.visit(fieldAccess, param);
 
 		return null;

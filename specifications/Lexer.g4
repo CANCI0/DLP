@@ -9,8 +9,8 @@ REAL_LITERAL
 	;
 
 CHAR_LITERAL
-	: '\'' ~[\r\n] '\''
-	| ' \' \\n \' '
+	: '\''~[\r\n]'\''
+	| '\'\\n\''
 	;
 
 IDENT 

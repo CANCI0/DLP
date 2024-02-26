@@ -84,28 +84,28 @@ public class DefaultVisitor implements Visitor {
 	@Override
 	public Object visit(Print print, Object param) {
 
-		print.getExpression().accept(this, param);
+		print.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public Object visit(Println println, Object param) {
 
-		println.getExpression().accept(this, param);
+		println.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public Object visit(Printsp printsp, Object param) {
 
-		printsp.getExpression().accept(this, param);
+		printsp.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public Object visit(Return returnValue, Object param) {
 
-		returnValue.getExpression().accept(this, param);
+		returnValue.getExpression().ifPresent(expression -> expression.accept(this, param));
 		return null;
 	}
 
@@ -170,7 +170,7 @@ public class DefaultVisitor implements Visitor {
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 
-		fieldAccess.getExpression().accept(this, param);
+		fieldAccess.getExpr().accept(this, param);
 		return null;
 	}
 
