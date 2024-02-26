@@ -75,12 +75,12 @@ expression returns[Expression ast]
 	| '<' type '>' '(' expression ')'														{ $ast = new Cast($type.ast, $expression.ast); }
     ;
 
-functionCall returns[functionCall ast]
-	: IDENT '(' functionCallParams ')'														{$ast = new FunctionCall($IDENT, $functionCallParams.list); }	
+expressions returns[List<Expression> list = new ArrayList<Expression>()]
+	: (expression { $list.add($expression.ast); } (',' expression { $list.add($expression.ast); })*)?							
 	;
 
-functionCallParams returns[List<Expression> list = new ArrayList<Expression>()]
-	: (expression { $list.add($expression.ast); } (',' expression { $list.add($expression.ast); })*)?							
+functionCall returns[functionCall ast]
+	: IDENT '(' expressions ')'																{$ast = new FunctionCall($IDENT, $expressions.list); }	
 	;
 
 type returns[Type ast]
