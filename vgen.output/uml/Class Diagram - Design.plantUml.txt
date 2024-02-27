@@ -116,15 +116,9 @@ While o-[#404040,thickness=2]- "✱" Statement : statements >
 class Ifelse {
 }
 Statement <|-[#808080]- Ifelse
-Ifelse o-[#404040,thickness=2]-  Expression : expression >
+Ifelse o-[#404040,thickness=2]-  Expression : cond >
 Ifelse o-[#404040,thickness=2]- "✱" Statement : tr >
 Ifelse o-[#404040,thickness=2]- "✱" Statement : fs >
-
-class If {
-}
-Statement <|-[#808080]- If
-If o-[#404040,thickness=2]-  Expression : expression >
-If o-[#404040,thickness=2]- "✱" Statement : tr >
 
 class FunctionCallStatement {
 	+String name

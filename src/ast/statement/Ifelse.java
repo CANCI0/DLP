@@ -15,7 +15,7 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	ifelse: statement -> expression:expression tr:statement* fs:statement*
+	ifelse: statement -> cond:expression tr:statement* fs:statement*
 	statement -> 
 */
 public class Ifelse extends AbstractStatement  {
@@ -23,20 +23,20 @@ public class Ifelse extends AbstractStatement  {
     // ----------------------------------
     // Instance Variables
 
-	// ifelse: statement -> expression tr:statement* fs:statement*
-	private Expression expression;
+	// ifelse: statement -> cond:expression tr:statement* fs:statement*
+	private Expression cond;
 	private List<Statement> tr;
 	private List<Statement> fs;
 
     // ----------------------------------
     // Constructors
 
-	public Ifelse(Expression expression, List<Statement> tr, List<Statement> fs) {
+	public Ifelse(Expression cond, List<Statement> tr, List<Statement> fs) {
 		super();
 
-		if (expression == null)
-			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = expression;
+		if (cond == null)
+			throw new IllegalArgumentException("Parameter 'cond' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.cond = cond;
 
 		if (tr == null)
 			tr = new ArrayList<>();
@@ -46,36 +46,36 @@ public class Ifelse extends AbstractStatement  {
 			fs = new ArrayList<>();
 		this.fs = fs;
 
-		updatePositions(expression, tr, fs);
+		updatePositions(cond, tr, fs);
 	}
 
-	public Ifelse(Object expression, Object tr, Object fs) {
+	public Ifelse(Object cond, Object tr, Object fs) {
 		super();
 
-        if (expression == null)
-            throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = (Expression) expression;
+        if (cond == null)
+            throw new IllegalArgumentException("Parameter 'cond' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.cond = (Expression) cond;
 
         this.tr = castList(tr, unwrapIfContext.andThen(Statement.class::cast));
         this.fs = castList(fs, unwrapIfContext.andThen(Statement.class::cast));
-		updatePositions(expression, tr, fs);
+		updatePositions(cond, tr, fs);
 	}
 
 
     // ----------------------------------
-    // ifelse: statement -> expression tr:statement* fs:statement*
+    // ifelse: statement -> cond:expression tr:statement* fs:statement*
 
-	// Child 'expression' 
+	// Child 'cond:expression' 
 
-	public void setExpression(Expression expression) {
-		if (expression == null)
-			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = expression;
+	public void setCond(Expression cond) {
+		if (cond == null)
+			throw new IllegalArgumentException("Parameter 'cond' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.cond = cond;
 
 	}
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getCond() {
+        return cond;
     }
 
 
@@ -125,7 +125,7 @@ public class Ifelse extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "Ifelse{" + " expression=" + this.getExpression() + " tr=" + this.getTr() + " fs=" + this.getFs() + "}";
+        return "Ifelse{" + " cond=" + this.getCond() + " tr=" + this.getTr() + " fs=" + this.getFs() + "}";
     }
 
 

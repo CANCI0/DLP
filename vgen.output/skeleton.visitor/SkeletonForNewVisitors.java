@@ -204,25 +204,14 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class Ifelse(Expression expression, List<Statement> tr, List<Statement> fs)
+	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
 
-		// ifelse.getExpression().accept(this, param);
+		// ifelse.getCond().accept(this, param);
 		// ifelse.getTr().forEach(statement -> statement.accept(this, param));
 		// ifelse.getFs().forEach(statement -> statement.accept(this, param));
 		super.visit(ifelse, param);
-
-		return null;
-	}
-
-	// class If(Expression expression, List<Statement> tr)
-	@Override
-	public Object visit(If ifValue, Object param) {
-
-		// ifValue.getExpression().accept(this, param);
-		// ifValue.getTr().forEach(statement -> statement.accept(this, param));
-		super.visit(ifValue, param);
 
 		return null;
 	}
