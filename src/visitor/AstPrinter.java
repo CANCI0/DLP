@@ -286,6 +286,21 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
+	public Object visit(Ifelse ifelse, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "expression", "Expression", ifelse.getExpression());
+        printListOfNodesChild(indent + 1, "tr", "List<Statement>", ifelse.getTr());
+        printListOfNodesChild(indent + 1, "fs", "List<Statement>", ifelse.getFs());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, ifelse, "expression", "tr", "fs");
+		return null;
+	}
+
+	@Override
 	public Object visit(If ifValue, Object param) {
 
 		int indent = ((Integer)param);
@@ -293,10 +308,9 @@ public class AstPrinter implements Visitor {
 		// Imprimir los hijos (y recorrer si son nodos del AST)
         printNodeChild(indent + 1, "expression", "Expression", ifValue.getExpression());
         printListOfNodesChild(indent + 1, "tr", "List<Statement>", ifValue.getTr());
-        printListOfNodesChild(indent + 1, "fs", "List<Statement>", ifValue.getFs());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, ifValue, "expression", "tr", "fs");
+		printUnknownFields(indent + 1, ifValue, "expression", "tr");
 		return null;
 	}
 

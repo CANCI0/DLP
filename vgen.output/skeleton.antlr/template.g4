@@ -48,7 +48,8 @@ statement returns[Statement ast]
     | expression?                         { $ast = new Return(($expression.ctx == null) ? null : $expression.ast); }
     | left=expression right=expression    { $ast = new Assignment($left.ast, $right.ast); }      
     | expression statements+=statement*   { $ast = new While($expression.ast, $statements); }    
-    | expression tr+=statement* fs+=statement* { $ast = new If($expression.ast, $tr, $fs); }          
+    | expression tr+=statement* fs+=statement* { $ast = new Ifelse($expression.ast, $tr, $fs); }      
+    | expression tr+=statement*           { $ast = new If($expression.ast, $tr); }               
     | name=IDENT expressions+=expression* { $ast = new FunctionCallStatement($name, $expressions); }
 	;
 

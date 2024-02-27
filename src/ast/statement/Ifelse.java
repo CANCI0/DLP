@@ -15,22 +15,23 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	if: statement -> expression:expression tr:statement*
+	ifelse: statement -> expression:expression tr:statement* fs:statement*
 	statement -> 
 */
-public class If extends AbstractStatement  {
+public class Ifelse extends AbstractStatement  {
 
     // ----------------------------------
     // Instance Variables
 
-	// if: statement -> expression tr:statement*
+	// ifelse: statement -> expression tr:statement* fs:statement*
 	private Expression expression;
 	private List<Statement> tr;
+	private List<Statement> fs;
 
     // ----------------------------------
     // Constructors
 
-	public If(Expression expression, List<Statement> tr) {
+	public Ifelse(Expression expression, List<Statement> tr, List<Statement> fs) {
 		super();
 
 		if (expression == null)
@@ -41,10 +42,14 @@ public class If extends AbstractStatement  {
 			tr = new ArrayList<>();
 		this.tr = tr;
 
-		updatePositions(expression, tr);
+		if (fs == null)
+			fs = new ArrayList<>();
+		this.fs = fs;
+
+		updatePositions(expression, tr, fs);
 	}
 
-	public If(Object expression, Object tr) {
+	public Ifelse(Object expression, Object tr, Object fs) {
 		super();
 
         if (expression == null)
@@ -52,12 +57,13 @@ public class If extends AbstractStatement  {
 		this.expression = (Expression) expression;
 
         this.tr = castList(tr, unwrapIfContext.andThen(Statement.class::cast));
-		updatePositions(expression, tr);
+        this.fs = castList(fs, unwrapIfContext.andThen(Statement.class::cast));
+		updatePositions(expression, tr, fs);
 	}
 
 
     // ----------------------------------
-    // if: statement -> expression tr:statement*
+    // ifelse: statement -> expression tr:statement* fs:statement*
 
 	// Child 'expression' 
 
@@ -91,6 +97,24 @@ public class If extends AbstractStatement  {
     }
 
 
+	// Child 'fs:statement*' 
+
+	public void setFs(List<Statement> fs) {
+		if (fs == null)
+			fs = new ArrayList<>();
+		this.fs = fs;
+
+	}
+
+    public List<Statement> getFs() {
+        return fs;
+    }
+
+    public Stream<Statement> fs() {
+        return fs.stream();
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -101,7 +125,7 @@ public class If extends AbstractStatement  {
 
     @Override
     public String toString() {
-        return "If{" + " expression=" + this.getExpression() + " tr=" + this.getTr() + "}";
+        return "Ifelse{" + " expression=" + this.getExpression() + " tr=" + this.getTr() + " fs=" + this.getFs() + "}";
     }
 
 

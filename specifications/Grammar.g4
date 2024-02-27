@@ -53,7 +53,8 @@ statement returns[Statement ast]
 	| IDENT '(' expressions ')' ';'?														{ $ast = new FunctionCallStatement($IDENT, $expressions.list); }	
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
-	| 'if' '(' expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?			{ $ast = new If($expression.ast, $tr.list, $fs.list); }
+	| 'if' '(' expression ')' '{' tr=statements '}' 'else' '{' fs=statements '}'			{ $ast = new Ifelse($expression.ast, $tr.list, $fs.list); }
+	| 'if' '(' expression ')' '{' tr=statements '}'											{ $ast = new If($expression.ast, $tr.list); }
     ;
 
 expressions returns[List<Expression> list = new ArrayList<Expression>()]

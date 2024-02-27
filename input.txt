@@ -1,3 +1,5 @@
 main(){
-  a = a.local;
+  if(a > 0){
+    a();
+  } 
 }
