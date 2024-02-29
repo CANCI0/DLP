@@ -27,7 +27,7 @@ functionCallStatement:statement -> string expression*;
 
 intLiteral:expression -> int;
 realLiteral:expression -> float;
-charLiteral:expression -> char;
+charLiteral:expression -> string;
 arrayAccess:expression -> expr1:expression expr2:expression;
 fieldAccess:expression -> expr:expression string;
 not:expression -> expression;

@@ -137,7 +137,7 @@ class RealLiteral {
 Expression <|-[#808080]- RealLiteral
 
 class CharLiteral {
-	+char charValue
+	+String name
 }
 Expression <|-[#808080]- CharLiteral
 

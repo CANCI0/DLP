@@ -151,7 +151,7 @@ class RealLiteral {
 AbstractExpression <|-[#808080]- RealLiteral
 
 class CharLiteral {
-	+char charValue
+	+String name
 }
 AbstractExpression <|-[#808080]- CharLiteral
 

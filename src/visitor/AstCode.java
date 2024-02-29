@@ -75,212 +75,239 @@ public class AstCode implements Visitor {
 	
 	@Override
 	public Object visit(Program program, Object param) {
-		System.out.println(program);
 		program.getDefinitions().forEach(definition -> definition.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {
-		System.out.println(varDefinition);
+		System.out.print("\t" + "var " + varDefinition.getName() + ":");
 		varDefinition.getType().accept(this, param);
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(StructDefinition structDefinition, Object param) {
-		System.out.println(structDefinition);
+		System.out.println("struct" + structDefinition.getName() + "{");
 		structDefinition.getAttrDefinitions().forEach(attrDefinition -> attrDefinition.accept(this, param));
+		System.out.println("}");
 		return null;
 	}
 
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
-		System.out.println(functionDefinition);
+		System.out.print(functionDefinition.getName() + "(");
 		functionDefinition.getParams().forEach(param_ -> param_.accept(this, param));
+		System.out.print(")");
+		if(functionDefinition.getType().isPresent()) {
+			System.out.print(" : ");
+		}
 		functionDefinition.getType().ifPresent(type -> type.accept(this, param));
+		System.out.println(" {");
 		functionDefinition.getVarDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
 		functionDefinition.getStatements().forEach(statement -> statement.accept(this, param));
+		System.out.println("\n}");
 		return null;
 	}
 
 	@Override
-	public Object visit(Param param_, Object param) {
-		System.out.println(param_);
-		param_.getType().accept(this, param);
+	public Object visit(Param param_, Object param) {	
+		System.out.print(param_.getName() + ":");
+		param_.getType().accept(this, param);	
+		System.out.print(", ");
 		return null;
 	}
 
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
-		System.out.println(attrDefinition);
+		System.out.print("\t" + attrDefinition.getName() + ":");
 		attrDefinition.getType().accept(this, param);
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(Read read, Object param) {
-		System.out.println(read);
+		System.out.print("print ");
 		read.getExpression().accept(this, param);
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(Print print, Object param) {
-		System.out.println(print);
+		System.out.print("\t" + "print ");
 		print.getExpressions().forEach(expression -> expression.accept(this, param));
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(Println println, Object param) {
-		System.out.println(println);
+		System.out.print("\t" + "println ");
 		println.getExpressions().forEach(expression -> expression.accept(this, param));
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(Printsp printsp, Object param) {
-		System.out.println(printsp);
+		System.out.print("\t" + "printsp ");
 		printsp.getExpressions().forEach(expression -> expression.accept(this, param));
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(Return returnValue, Object param) {
-		System.out.println(returnValue);
+		System.out.print("\t" + "return ");
 		returnValue.getExpression().ifPresent(expression -> expression.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public Object visit(Assignment assignment, Object param) {
-		System.out.println(assignment);
 		assignment.getLeft().accept(this, param);
+		System.out.print(" = ");
 		assignment.getRight().accept(this, param);
+		System.out.println(";");
 		return null;
 	}
 
 	@Override
 	public Object visit(While whileValue, Object param) {
-		System.out.println(whileValue);
+		System.out.print("while(");
 		whileValue.getExpression().accept(this, param);
+		System.out.println(") {");
 		whileValue.getStatements().forEach(statement -> statement.accept(this, param));
+		System.out.println("}");
 		return null;
 	}
 
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
-		System.out.println(ifelse);
+		System.out.print("if(");
 		ifelse.getCond().accept(this, param);
+		System.out.println("){");
 		ifelse.getTr().forEach(statement -> statement.accept(this, param));
+		System.out.println("\n} else {");
 		ifelse.getFs().forEach(statement -> statement.accept(this, param));
+		System.out.println("}");
 		return null;
 	}
 
 	@Override
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
-		System.out.println(functionCallStatement);
+		System.out.print(functionCallStatement.getName() + "(");
 		functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
+		System.out.print(")");
 		return null;
 	}
 
 	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
-		System.out.println(intLiteral);
+		System.out.print(intLiteral.getIntValue());
 		return null;
 	}
 
 	@Override
 	public Object visit(RealLiteral realLiteral, Object param) {
-		System.out.println(realLiteral);
+		System.out.print(realLiteral.getFloatValue());
 		return null;
 	}
 
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
-		System.out.println(charLiteral);
+		System.out.println(charLiteral.getName());
 		return null;
 	}
 
 	@Override
 	public Object visit(ArrayAccess arrayAccess, Object param) {
-		System.out.println(arrayAccess);
 		arrayAccess.getExpr1().accept(this, param);
+		System.out.print("[");
 		arrayAccess.getExpr2().accept(this, param);
+		System.out.print("]");
 		return null;
 	}
 
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
-		System.out.println(fieldAccess);
 		fieldAccess.getExpr().accept(this, param);
+		System.out.print("." + fieldAccess.getName());
 		return null;
 	}
 
 	@Override
 	public Object visit(Not not, Object param) {
-		System.out.println(not);
+		System.out.println("!");
 		not.getExpression().accept(this, param);
 		return null;
 	}
 
 	@Override
 	public Object visit(Arithmetic arithmetic, Object param) {
-		System.out.println(arithmetic);
 		arithmetic.getLeft().accept(this, param);
+		System.out.print(" " + arithmetic.getOperator() + " ");
 		arithmetic.getRight().accept(this, param);
 		return null;
 	}
 
 	@Override
 	public Object visit(Variable variable, Object param) {
-		System.out.println(variable);
+		System.out.print(variable.getName());
 		return null;
 	}
 
 	@Override
 	public Object visit(Cast cast, Object param) {
-		System.out.println(cast);
+		System.out.print("<");
 		cast.getType().accept(this, param);
+		System.out.print(">");
+		System.out.print("(");
 		cast.getExpression().accept(this, param);
+		System.out.print(")");
 		return null;
 	}
 
 	@Override
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
-		System.out.println(functionCallExpression);
+		System.out.print(functionCallExpression.getName());
+		System.out.print("(");
 		functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
+		System.out.print(")");
 		return null;
 	}
 
 	@Override
 	public Object visit(IntType intType, Object param) {
-		System.out.println("int");
+		System.out.print("int");
 		return null;
 	}
 
 	@Override
 	public Object visit(RealType realType, Object param) {
-		System.out.println("real");
+		System.out.print("real");
 		return null;
 	}
 
 	@Override
 	public Object visit(CharType charType, Object param) {
-		System.out.println("char");
+		System.out.print("char");
 		return null;
 	}
 
 	@Override
 	public Object visit(ArrayType arrayType, Object param) {
-		System.out.println(arrayType);
+		System.out.print("[" + arrayType.getIntValue() + "]");
+		arrayType.getType().accept(this, param);
 		return null;
 	}
 
 	@Override
 	public Object visit(IdentType identType, Object param) {
-		System.out.println(identType.getName());
+		System.out.print(identType.getName());
 		return null;
 	}
 
