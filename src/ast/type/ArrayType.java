@@ -12,7 +12,7 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	arrayType: type -> intValue:int
+	arrayType: type -> intValue:int type:type
 	type -> 
 */
 public class ArrayType extends AbstractType  {
@@ -20,21 +20,26 @@ public class ArrayType extends AbstractType  {
     // ----------------------------------
     // Instance Variables
 
-	// arrayType: type -> int
+	// arrayType: type -> int type
 	private int intValue;
+	private Type type;
 
     // ----------------------------------
     // Constructors
 
-	public ArrayType(int intValue) {
+	public ArrayType(int intValue, Type type) {
 		super();
 
 		this.intValue = intValue;
 
-		updatePositions(intValue);
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
+
+		updatePositions(intValue, type);
 	}
 
-	public ArrayType(Object intValue) {
+	public ArrayType(Object intValue, Object type) {
 		super();
 
         if (intValue == null)
@@ -46,12 +51,16 @@ public class ArrayType extends AbstractType  {
             intValue_temp = Integer.valueOf((String) intValue_temp);
         this.intValue = (int) intValue_temp;
 
-		updatePositions(intValue);
+        if (type == null)
+            throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = (Type) type;
+
+		updatePositions(intValue, type);
 	}
 
 
     // ----------------------------------
-    // arrayType: type -> int
+    // arrayType: type -> int type
 
 	// Child 'int' 
 
@@ -65,6 +74,20 @@ public class ArrayType extends AbstractType  {
     }
 
 
+	// Child 'type' 
+
+	public void setType(Type type) {
+		if (type == null)
+			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
+		this.type = type;
+
+	}
+
+    public Type getType() {
+        return type;
+    }
+
+
     // ----------------------------------
     // Helper methods
 
@@ -75,7 +98,7 @@ public class ArrayType extends AbstractType  {
 
     @Override
     public String toString() {
-        return "ArrayType{" + " intValue=" + this.getIntValue() + "}";
+        return "ArrayType{" + " intValue=" + this.getIntValue() + " type=" + this.getType() + "}";
     }
 
 

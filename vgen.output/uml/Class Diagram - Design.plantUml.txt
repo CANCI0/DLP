@@ -198,8 +198,10 @@ class ArrayType {
 	+int intValue
 }
 Type <|-[#808080]- ArrayType
+ArrayType o-[#404040,thickness=2]-  Type : type >
 
 class IdentType {
+	+String name
 }
 Type <|-[#808080]- IdentType
 

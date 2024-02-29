@@ -83,6 +83,6 @@ type returns[Type ast]
 	: 'int'																					{ $ast = new IntType(); }
 	| 'real'																				{ $ast = new RealType(); }
 	| 'char'																				{ $ast = new CharType(); }
-	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL); }
-	| IDENT																					{ $ast = new IdentType(); }
+	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); }
+	| IDENT																					{ $ast = new IdentType($IDENT); }
 	;

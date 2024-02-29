@@ -24,8 +24,8 @@ type returns[Type ast]
     :                                     { $ast = new IntType(); }                              
     |                                     { $ast = new RealType(); }                             
     |                                     { $ast = new CharType(); }                             
-    | INT_LITERAL                         { $ast = new ArrayType($INT_LITERAL); }                
-    |                                     { $ast = new IdentType(); }                            
+    | INT_LITERAL type                    { $ast = new ArrayType($INT_LITERAL, $type.ast); }     
+    | name=IDENT                          { $ast = new IdentType($name); }                       
 	;
 
 attrDefinition returns[AttrDefinition ast]

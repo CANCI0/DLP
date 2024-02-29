@@ -493,9 +493,10 @@ public class AstPrinter implements Visitor {
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
         printNonNodeChild(indent + 1, "intValue", "int", arrayType.getIntValue());
+        printNodeChild(indent + 1, "type", "Type", arrayType.getType());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, arrayType, "intValue");
+		printUnknownFields(indent + 1, arrayType, "intValue", "type");
 		return null;
 	}
 
@@ -505,9 +506,10 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNonNodeChild(indent + 1, "name", "String", identType.getName());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, identType, "");
+		printUnknownFields(indent + 1, identType, "name");
 		return null;
 	}
 

@@ -338,14 +338,17 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class ArrayType(int intValue)
+	// class ArrayType(int intValue, Type type)
 	@Override
 	public Object visit(ArrayType arrayType, Object param) {
+
+		// arrayType.getType().accept(this, param);
+		super.visit(arrayType, param);
 
 		return null;
 	}
 
-	// class IdentType()
+	// class IdentType(String name)
 	@Override
 	public Object visit(IdentType identType, Object param) {
 

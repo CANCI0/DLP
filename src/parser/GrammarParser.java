@@ -1267,6 +1267,8 @@ public class GrammarParser extends Parser {
 	public static class TypeContext extends ParserRuleContext {
 		public Type ast;
 		public Token INT_LITERAL;
+		public TypeContext type;
+		public Token IDENT;
 		public TerminalNode INT_LITERAL() { return getToken(GrammarParser.INT_LITERAL, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
@@ -1319,16 +1321,16 @@ public class GrammarParser extends Parser {
 				setState(289);
 				match(T__19);
 				setState(290);
-				type();
-				 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).INT_LITERAL); 
+				((TypeContext)_localctx).type = type();
+				 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).INT_LITERAL, ((TypeContext)_localctx).type.ast); 
 				}
 				break;
 			case IDENT:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(293);
-				match(IDENT);
-				 ((TypeContext)_localctx).ast =  new IdentType(); 
+				((TypeContext)_localctx).IDENT = match(IDENT);
+				 ((TypeContext)_localctx).ast =  new IdentType(((TypeContext)_localctx).IDENT); 
 				}
 				break;
 			default:

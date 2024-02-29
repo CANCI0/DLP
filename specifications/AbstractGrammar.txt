@@ -39,5 +39,5 @@ functionCallExpression:expression -> string expression*;
 intType:type -> ;
 realType:type -> ;
 charType:type -> ;
-arrayType:type -> int;
-identType:type -> ;
+arrayType:type -> int type;
+identType:type -> string;
