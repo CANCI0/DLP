@@ -310,7 +310,8 @@ public class AstPrinter implements Visitor {
         printListOfNodesChild(indent + 1, "expressions", "List<Expression>", functionCallStatement.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, functionCallStatement, "name", "expressions");
+        printToString(indent + 1, "vgen-attribute-phase-0", "functionDefinition", "FunctionDefinition", functionCallStatement.getFunctionDefinition());
+		printUnknownFields(indent + 1, functionCallStatement, "name", "expressions", "functionDefinition");
 		return null;
 	}
 
@@ -377,7 +378,8 @@ public class AstPrinter implements Visitor {
         printNonNodeChild(indent + 1, "name", "String", fieldAccess.getName());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, fieldAccess, "expr", "name");
+        printToString(indent + 1, "vgen-attribute-phase-0", "structDefinition", "StructDefinition", fieldAccess.getStructDefinition());
+		printUnknownFields(indent + 1, fieldAccess, "expr", "name", "structDefinition");
 		return null;
 	}
 
@@ -418,7 +420,8 @@ public class AstPrinter implements Visitor {
         printNonNodeChild(indent + 1, "name", "String", variable.getName());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, variable, "name");
+        printToString(indent + 1, "vgen-attribute-phase-0", "varDefinition", "VarDefinition", variable.getVarDefinition());
+		printUnknownFields(indent + 1, variable, "name", "varDefinition");
 		return null;
 	}
 
@@ -446,7 +449,8 @@ public class AstPrinter implements Visitor {
         printListOfNodesChild(indent + 1, "expressions", "List<Expression>", functionCallExpression.getExpressions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, functionCallExpression, "name", "expressions");
+        printToString(indent + 1, "vgen-attribute-phase-0", "functionDefinition", "FunctionDefinition", functionCallExpression.getFunctionDefinition());
+		printUnknownFields(indent + 1, functionCallExpression, "name", "expressions", "functionDefinition");
 		return null;
 	}
 

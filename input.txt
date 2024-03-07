@@ -1,5 +1,5 @@
-main(){
-  if (a) {
-    a();
-  }
-}
+var price: float;
+var price: int;	// Error: redefined variable
+
+print price;
+print value;	// Error: undefined variable

@@ -41,3 +41,11 @@ realType:type -> ;
 charType:type -> ;
 arrayType:type -> int type;
 identType:type -> string;
+
+// -----------------------
+ATTRIBUTE GRAMMAR Identification
+
+variable -> varDefinition;
+functionCallStatement -> functionDefinition;
+functionCallExpression -> functionDefinition;
+fieldAccess -> structDefinition;

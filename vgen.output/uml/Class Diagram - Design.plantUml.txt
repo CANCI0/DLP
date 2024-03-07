@@ -125,6 +125,7 @@ class FunctionCallStatement {
 }
 Statement <|-[#808080]- FunctionCallStatement
 FunctionCallStatement o-[#404040,thickness=2]- "✱" Expression : expressions >
+FunctionCallStatement -[#ff6600,thickness=3]-  FunctionDefinition #text:ff6600 : functionDefinition >
 
 class IntLiteral {
 	+int intValue
@@ -152,6 +153,7 @@ class FieldAccess {
 }
 Expression <|-[#808080]- FieldAccess
 FieldAccess o-[#404040,thickness=2]-  Expression : expr >
+FieldAccess -[#ff6600,thickness=3]-  StructDefinition #text:ff6600 : structDefinition >
 
 class Not {
 }
@@ -169,6 +171,7 @@ class Variable {
 	+String name
 }
 Expression <|-[#808080]- Variable
+Variable -[#ff6600,thickness=3]-  VarDefinition #text:ff6600 : varDefinition >
 
 class Cast {
 }
@@ -181,6 +184,7 @@ class FunctionCallExpression {
 }
 Expression <|-[#808080]- FunctionCallExpression
 FunctionCallExpression o-[#404040,thickness=2]- "✱" Expression : expressions >
+FunctionCallExpression -[#ff6600,thickness=3]-  FunctionDefinition #text:ff6600 : functionDefinition >
 
 class IntType {
 }
