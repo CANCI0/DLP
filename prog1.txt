@@ -1,32 +1,32 @@
 struct Punto {
 	x:int;
 	y:int;
-};
+}
 var b:int;
 
 main() {
-	d = b;		//d no ha sido definida
-	f(8);		//f no ha sido definida
+	d = b;
+	f(8);
 }
 
 var p:int;
 
 f(p:int) {
-	var p:int;	//p ya está definida
+	var p:int;
 }
 
-struct Punto {		//Punto ya está definido
+struct Punto {
 	x:float;
 	y:float;
-};
+}
 
 struct Persona {
-	a: [20]Empresa; //Empresa no está definido
-};
+	a: [20]Empresa;
+}
 
 
-f():float {		
+f():float {
 
 }
 
-var b:char;		//b ya está definida
+var b:char;

@@ -73,7 +73,8 @@ public class Identification extends DefaultVisitor {
             notifyError("Variable already defined: " + varDefinition.getName(), varDefinition);
         else
             variables.put(varDefinition.getName(), varDefinition);
-        return null;
+        varDefinition.getType().accept(this, param);
+		return null;
     }
 
     @Override
@@ -81,13 +82,15 @@ public class Identification extends DefaultVisitor {
         var definition = structs.get(structDefinition.getName());
         if (definition != null)
         	notifyError("Struct already defined: " + structDefinition.getName(), structDefinition);
-        
-        Set<AttrDefinition> definitions = new HashSet<AttrDefinition>();	//Se comprueba que no se repitan los campos
+        else
+        	structs.put(structDefinition.getName(), structDefinition);
+        	
+        Set<String> definitions = new HashSet<String>();	//Se comprueba que no se repitan los campos
         for(AttrDefinition def : structDefinition.getAttrDefinitions()) {	
-        	if(definitions.contains(def)) {
+        	if(definitions.contains(def.getName())) {
         		notifyError("Attribute definition already defined: " + def.getName(), def);
         	}else {
-        		definitions.add(def);
+        		definitions.add(def.getName());
         	}
         }
         
@@ -100,16 +103,23 @@ public class Identification extends DefaultVisitor {
         var definition = functions.get(functionDefinition.getName());
         if (definition != null)
         	notifyError("Function already defined: " + functionDefinition.getName(), functionDefinition);
-        Set<Param> params = new HashSet<Param>();
-        //Comprobamos que no haya parámetros repetidos
-        for(Attr) {
-        	
+        else
+        	functions.put(functionDefinition.getName(), functionDefinition);
+        
+        Set<String> params = new HashSet<String>();
+        //Comprobamos que no haya parametros repetidos
+        for(Param attr : functionDefinition.getParams()) {
+        	if(params.contains(attr.getName())) {
+        		notifyError("Param already defined: " + attr.getName(), attr);
+        	}else {
+        		params.add(attr.getName());
+        	}
         }
         
+        //Comprobamos que las varDefinitions de la funcion no coincidan con ningun parametro
         for(var varDefinition : functionDefinition.getVarDefinitions()) {
         	if(functionDefinition.getParams().stream().anyMatch(x -> Objects.equals(x.getName(), varDefinition.getName()))) {
-        		notifyError("Variable already defined: " + varDefinition.getName(), varDefinition);
-        		continue;
+        		notifyError("Variable already defined in params: " + varDefinition.getName(), varDefinition);
         	}
         	visit(varDefinition, null);
         }
@@ -127,7 +137,7 @@ public class Identification extends DefaultVisitor {
 
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
-
+		
 		attrDefinition.getType().accept(this, param);
 		return null;
 	}
@@ -196,7 +206,9 @@ public class Identification extends DefaultVisitor {
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 		FunctionDefinition functionDefinition = functions.get(functionCallStatement.getName());
 		if(functionDefinition == null) {
-			notifyError("Undefined function: " + functionCallStatement.getName(), functionDefinition);
+			notifyError("Undefined function: " + functionCallStatement.getName(), functionCallStatement);
+		}else {
+			functionCallStatement.setFunctionDefinition(functionDefinition);
 		}
 		functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
@@ -230,7 +242,6 @@ public class Identification extends DefaultVisitor {
 
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
-
 		fieldAccess.getExpr().accept(this, param);
 		return null;
 	}
@@ -272,7 +283,9 @@ public class Identification extends DefaultVisitor {
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
 		FunctionDefinition functionDefinition = functions.get(functionCallExpression.getName());
 		if(functionDefinition == null) {
-			notifyError("Undefined function: " + functionCallExpression.getName(), functionDefinition);
+			notifyError("Undefined function: " + functionCallExpression.getName(), functionCallExpression);
+		} else {
+			functionCallExpression.setFunctionDefinition(functionDefinition);
 		}
 		functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
@@ -305,7 +318,10 @@ public class Identification extends DefaultVisitor {
 
 	@Override
 	public Object visit(IdentType identType, Object param) {
-
+		StructDefinition struct = structs.get(identType.getName());
+		if(struct == null) {
+			notifyError("Undefined struct: " + identType.getName(), identType);
+		}
 		return null;
 	}
     

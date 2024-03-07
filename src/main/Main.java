@@ -23,7 +23,7 @@ import codegeneration.*;
  */
 
 public class Main {
-    public static final String TEST_FILE = "3. Variables.txt"; // Used only in development
+    public static final String TEST_FILE = "prog2.txt"; // Used only in development
     public static final String OUTPUT_FILE = "output.txt";
 
     public static void main(String[] args) throws Exception {
