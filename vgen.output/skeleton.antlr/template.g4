@@ -59,8 +59,9 @@ expression returns[Expression ast]
     | name=IDENT                          { $ast = new CharLiteral($name); }                     
     | expr1=expression expr2=expression   { $ast = new ArrayAccess($expr1.ast, $expr2.ast); }    
     | expression name=IDENT               { $ast = new FieldAccess($expression.ast, $name); }    
-    | expression                          { $ast = new Not($expression.ast); }                   
+    | expression                          { $ast = new Logic($expression.ast); }                 
     | left=expression operator=IDENT right=expression { $ast = new Arithmetic($left.ast, $operator, $right.ast); }
+    | left=expression operator=IDENT right=expression { $ast = new Relational($left.ast, $operator, $right.ast); }
     | name=IDENT                          { $ast = new Variable($name); }                        
     | type expression                     { $ast = new Cast($type.ast, $expression.ast); }       
     | name=IDENT expressions+=expression* { $ast = new FunctionCallExpression($name, $expressions); }

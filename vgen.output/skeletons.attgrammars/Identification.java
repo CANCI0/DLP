@@ -281,12 +281,12 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class Not(Expression expression)
+	// class Logic(Expression expression)
 	@Override
-	public Object visit(Not not, Object param) {
+	public Object visit(Logic logic, Object param) {
 
-		// not.getExpression().accept(this, param);
-		super.visit(not, param);
+		// logic.getExpression().accept(this, param);
+		super.visit(logic, param);
 
 		return null;
 	}
@@ -298,6 +298,17 @@ public class Identification extends DefaultVisitor {
 		// arithmetic.getLeft().accept(this, param);
 		// arithmetic.getRight().accept(this, param);
 		super.visit(arithmetic, param);
+
+		return null;
+	}
+
+	// class Relational(Expression left, String operator, Expression right)
+	@Override
+	public Object visit(Relational relational, Object param) {
+
+		// relational.getLeft().accept(this, param);
+		// relational.getRight().accept(this, param);
+		super.visit(relational, param);
 
 		return null;
 	}

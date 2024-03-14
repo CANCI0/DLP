@@ -297,17 +297,17 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class Not(Expression expression)
+	// class Logic(Expression expression)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
-	public Object visit(Not not, Object param) {
+	public Object visit(Logic logic, Object param) {
 
-		// not.getExpression().accept(this, param);
-		super.visit(not, param);
+		// logic.getExpression().accept(this, param);
+		super.visit(logic, param);
 
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// not.setExpressionType(?);
-		// not.setLvalue(?);
+		// logic.setExpressionType(?);
+		// logic.setLvalue(?);
 		return null;
 	}
 
@@ -323,6 +323,21 @@ public class TypeChecking extends DefaultVisitor {
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
 		// arithmetic.setExpressionType(?);
 		// arithmetic.setLvalue(?);
+		return null;
+	}
+
+	// class Relational(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(Relational relational, Object param) {
+
+		// relational.getLeft().accept(this, param);
+		// relational.getRight().accept(this, param);
+		super.visit(relational, param);
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// relational.setExpressionType(?);
+		// relational.setLvalue(?);
 		return null;
 	}
 

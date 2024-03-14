@@ -1050,7 +1050,7 @@ public class GrammarParser extends Parser {
 				match(T__21);
 				setState(218);
 				((ExpressionContext)_localctx).expression = expression(9);
-				 ((ExpressionContext)_localctx).ast =  new Not(((ExpressionContext)_localctx).expression.ast); 
+				 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).expression.ast); 
 				}
 				break;
 			case 7:
@@ -1160,7 +1160,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(248);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(7);
-						 ((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Relational(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 4:
@@ -1183,7 +1183,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(253);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(6);
-						 ((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Relational(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 5:
@@ -1197,7 +1197,7 @@ public class GrammarParser extends Parser {
 						((ExpressionContext)_localctx).op = match(T__33);
 						setState(258);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(5);
-						 ((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 6:
@@ -1211,7 +1211,7 @@ public class GrammarParser extends Parser {
 						((ExpressionContext)_localctx).op = match(T__34);
 						setState(263);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(4);
-						 ((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 7:

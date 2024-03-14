@@ -172,10 +172,10 @@ AbstractExpression <|-[#808080]- FieldAccess
 FieldAccess o-[#404040,thickness=2]-  Expression : expr >
 FieldAccess -[#ff6600,thickness=3]-  StructDefinition #text:ff6600 : structDefinition >
 
-class Not {
+class Logic {
 }
-AbstractExpression <|-[#808080]- Not
-Not o-[#404040,thickness=2]-  Expression : expression >
+AbstractExpression <|-[#808080]- Logic
+Logic o-[#404040,thickness=2]-  Expression : expression >
 
 class Arithmetic {
 	+String operator
@@ -183,6 +183,13 @@ class Arithmetic {
 AbstractExpression <|-[#808080]- Arithmetic
 Arithmetic o-[#404040,thickness=2]-  Expression : left >
 Arithmetic o-[#404040,thickness=2]-  Expression : right >
+
+class Relational {
+	+String operator
+}
+AbstractExpression <|-[#808080]- Relational
+Relational o-[#404040,thickness=2]-  Expression : left >
+Relational o-[#404040,thickness=2]-  Expression : right >
 
 class Variable {
 	+String name

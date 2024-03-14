@@ -175,9 +175,9 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Not not, Object param) {
+	public Object visit(Logic logic, Object param) {
 
-		not.getExpression().accept(this, param);
+		logic.getExpression().accept(this, param);
 		return null;
 	}
 
@@ -186,6 +186,14 @@ public class DefaultVisitor implements Visitor {
 
 		arithmetic.getLeft().accept(this, param);
 		arithmetic.getRight().accept(this, param);
+		return null;
+	}
+
+	@Override
+	public Object visit(Relational relational, Object param) {
+
+		relational.getLeft().accept(this, param);
+		relational.getRight().accept(this, param);
 		return null;
 	}
 

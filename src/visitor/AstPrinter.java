@@ -394,17 +394,17 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
-	public Object visit(Not not, Object param) {
+	public Object visit(Logic logic, Object param) {
 
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNodeChild(indent + 1, "expression", "Expression", not.getExpression());
+        printNodeChild(indent + 1, "expression", "Expression", logic.getExpression());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-        printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", not.getExpressionType());
-        printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", not.isLvalue());
-		printUnknownFields(indent + 1, not, "expression", "expressionType", "lvalue");
+        printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", logic.getExpressionType());
+        printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", logic.isLvalue());
+		printUnknownFields(indent + 1, logic, "expression", "expressionType", "lvalue");
 		return null;
 	}
 
@@ -422,6 +422,23 @@ public class AstPrinter implements Visitor {
         printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", arithmetic.getExpressionType());
         printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", arithmetic.isLvalue());
 		printUnknownFields(indent + 1, arithmetic, "left", "operator", "right", "expressionType", "lvalue");
+		return null;
+	}
+
+	@Override
+	public Object visit(Relational relational, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "left", "Expression", relational.getLeft());
+        printNonNodeChild(indent + 1, "operator", "String", relational.getOperator());
+        printNodeChild(indent + 1, "right", "Expression", relational.getRight());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+        printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", relational.getExpressionType());
+        printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", relational.isLvalue());
+		printUnknownFields(indent + 1, relational, "left", "operator", "right", "expressionType", "lvalue");
 		return null;
 	}
 

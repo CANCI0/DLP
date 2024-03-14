@@ -12,26 +12,27 @@ import visitor.Visitor;
 
 // %% -------------------------------
 
+
 /*
-	not: expression -> expression:expression
+	logic: expression -> expression:expression
 	expression -> 
 	
 	PHASE TypeChecking
 	expression -> expressionType:type
 	expression -> lvalue:boolean
 */
-public class Not extends AbstractExpression  {
+public class Logic extends AbstractExpression  {
 
     // ----------------------------------
     // Instance Variables
 
-	// not: expression -> expression
+	// logic: expression -> expression
 	private Expression expression;
 
     // ----------------------------------
     // Constructors
 
-	public Not(Expression expression) {
+	public Logic(Expression expression) {
 		super();
 
 		if (expression == null)
@@ -41,7 +42,7 @@ public class Not extends AbstractExpression  {
 		updatePositions(expression);
 	}
 
-	public Not(Object expression) {
+	public Logic(Object expression) {
 		super();
 
         if (expression == null)
@@ -53,7 +54,7 @@ public class Not extends AbstractExpression  {
 
 
     // ----------------------------------
-    // not: expression -> expression
+    // logic: expression -> expression
 
 	// Child 'expression' 
 
@@ -79,7 +80,7 @@ public class Not extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Not{" + " expression=" + this.getExpression() + "}";
+        return "Logic{" + " expression=" + this.getExpression() + "}";
     }
 
 
@@ -88,4 +89,5 @@ public class Not extends AbstractExpression  {
         // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
+
 }

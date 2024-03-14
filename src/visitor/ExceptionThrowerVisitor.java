@@ -143,15 +143,21 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(Not not, Object param) {
+	public Object visit(Logic logic, Object param) {
 
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Not)' has been invoked but it has not been implemented.");
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Logic)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
 	public Object visit(Arithmetic arithmetic, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Arithmetic)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(Relational relational, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Relational)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
