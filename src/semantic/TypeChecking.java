@@ -236,6 +236,8 @@ public class TypeChecking extends DefaultVisitor {
 		// expression.accept(this, param));
 		super.visit(functionCallStatement, param);
 
+		checkArgumentTypes(functionCallStatement);
+		
 		return null;
 	}
 
@@ -558,6 +560,21 @@ public class TypeChecking extends DefaultVisitor {
 			notifyError("ERROR: no se puede convertir un array", cast.start());
 		} else if (cast.getExpression().getExpressionType() instanceof StructType) {
 			notifyError("ERROR: no se puede convertir un struct", cast.start());
+		}
+	}
+	
+	private void checkArgumentTypes(FunctionCallStatement functionCallStatement) {
+		List<Param> paramDefinitions = functionCallStatement.getFunctionDefinition().getParams();
+		List<Expression> params = functionCallStatement.getExpressions();
+		if(paramDefinitions.size() != params.size()) {
+			notifyError("ERROR: número erróneo de argumentos", functionCallStatement.start());
+			return;
+		}
+		
+		for(int i = 0 ; i < params.size() ; i++) {
+			if(!areTypesEqual(params.get(i).getExpressionType(), paramDefinitions.get(i).getType())) {
+				notifyError("ERROR: ERROR: argument type", functionCallStatement.start());
+			}
 		}
 	}
 

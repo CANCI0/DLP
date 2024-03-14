@@ -23,7 +23,7 @@ import codegeneration.*;
  */
 
 public class Main {
-    public static final String TEST_FILE = "./tests-type-checking/tests expresiones. errors. cast.txt"; // Used only in development
+    public static final String TEST_FILE = "./tests-type-checking/tests sentences. errors. call statement.txt"; // Used only in development
     public static final String OUTPUT_FILE = "output.txt";
 
     public static void main(String[] args) throws Exception {
