@@ -68,11 +68,11 @@ expression returns[Expression ast]
 	| IDENT																					{ $ast = new Variable($IDENT); }
 	| expression1=expression '[' expression2=expression ']'									{ $ast = new ArrayAccess($expression1.ast, $expression2.ast); }
 	| expr=expression '.' IDENT																{ $ast = new FieldAccess($expr.ast, $IDENT); }
-	| '!' expression																		{ $ast = new Logic($expression.ast); }
+	| '!' expression																		{ $ast = new Not($expression.ast); }
 	| left=expression op=('*' | '/' | '%') right=expression									{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
 	| left=expression op=('+' | '-') right=expression										{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
-	| left=expression op=('>=' | '<=' | '>' | '<') right=expression							{ $ast = new Relational($left.ast, $op, $right.ast); }
-	| left=expression op=('==' | '!=' ) right=expression									{ $ast = new Relational($left.ast, $op, $right.ast); }
+	| left=expression op=('>=' | '<=' | '>' | '<') right=expression							{ $ast = new Logic($left.ast, $op, $right.ast); }
+	| left=expression op=('==' | '!=' ) right=expression									{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| left=expression op='&&' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| left=expression op='||' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| '(' expression ')'																	{ $ast = $expression.ast; }
