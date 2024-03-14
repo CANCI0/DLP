@@ -20,8 +20,11 @@ AST *-[#404040,thickness=1]- Position : end >
 
 
 interface Expression {
+	..<color:#3366cc> TypeChecking </color>..
+	+<color:#3366cc>boolean lvalue</color>
 }
 AST <|-[#808080]- Expression
+Expression -[#3366cc,thickness=3]-  Type #text:3366cc : expressionType >
 
 interface Statement {
 }
@@ -190,9 +193,9 @@ class IntType {
 }
 Type <|-[#808080]- IntType
 
-class RealType {
+class FloatType {
 }
-Type <|-[#808080]- RealType
+Type <|-[#808080]- FloatType
 
 class CharType {
 }
@@ -208,5 +211,9 @@ class IdentType {
 	+String name
 }
 Type <|-[#808080]- IdentType
+
+class VoidType {
+}
+Type <|-[#808080]- VoidType
 
 @enduml

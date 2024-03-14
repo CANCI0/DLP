@@ -3,6 +3,8 @@
 package ast.expression;
 
 import ast.*;
+import ast.type.*;
+import org.antlr.v4.runtime.Token;
 
 // %% User Declarations -------------
 
@@ -12,10 +14,28 @@ import ast.*;
 
 /*
 	expression -> 
+	
+	PHASE TypeChecking
+	expression -> expressionType:type
+	expression -> lvalue:boolean
 */
 public interface Expression extends AST {
 
 
+
+
+    // --------------------------------
+    // PHASE TypeChecking
+
+	// Attribute 'expressionType:type' 
+
+	public void setExpressionType(Type expressionType);
+	public Type getExpressionType();
+
+	// Attribute 'lvalue:boolean' 
+
+	public void setLvalue(boolean lvalue);
+	public boolean isLvalue();
 
 
     // %% User Members -------------------------

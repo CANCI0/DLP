@@ -217,7 +217,7 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(RealType realType, Object param) {
+	public Object visit(FloatType floatType, Object param) {
 
 		return null;
 	}
@@ -237,6 +237,12 @@ public class DefaultVisitor implements Visitor {
 
 	@Override
 	public Object visit(IdentType identType, Object param) {
+
+		return null;
+	}
+
+	@Override
+	public Object visit(VoidType voidType, Object param) {
 
 		return null;
 	}

@@ -3,6 +3,7 @@
 package ast.expression;
 
 import ast.type.*;
+import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -14,6 +15,10 @@ import visitor.Visitor;
 /*
 	cast: expression -> type:type expression:expression
 	expression -> 
+	
+	PHASE TypeChecking
+	expression -> expressionType:type
+	expression -> lvalue:boolean
 */
 public class Cast extends AbstractExpression  {
 

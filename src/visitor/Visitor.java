@@ -72,13 +72,15 @@ public interface Visitor {
 
 	public Object visit(IntType intType, Object param);
 
-	public Object visit(RealType realType, Object param);
+	public Object visit(FloatType floatType, Object param);
 
 	public Object visit(CharType charType, Object param);
 
 	public Object visit(ArrayType arrayType, Object param);
 
 	public Object visit(IdentType identType, Object param);
+
+	public Object visit(VoidType voidType, Object param);
 
     // %% User Members -------------------------
 

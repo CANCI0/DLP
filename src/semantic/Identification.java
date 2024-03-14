@@ -31,9 +31,9 @@ import ast.statement.Return;
 import ast.statement.While;
 import ast.type.ArrayType;
 import ast.type.CharType;
+import ast.type.FloatType;
 import ast.type.IdentType;
 import ast.type.IntType;
-import ast.type.RealType;
 import main.ErrorManager;
 import visitor.DefaultVisitor;
 
@@ -298,7 +298,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	@Override
-	public Object visit(RealType realType, Object param) {
+	public Object visit(FloatType floatType, Object param) {
 
 		return null;
 	}

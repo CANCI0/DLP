@@ -179,9 +179,9 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(RealType realType, Object param) {
+	public Object visit(FloatType floatType, Object param) {
 
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(RealType)' has been invoked but it has not been implemented.");
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FloatType)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
@@ -200,6 +200,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	public Object visit(IdentType identType, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(IdentType)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(VoidType voidType, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(VoidType)' has been invoked but it has not been implemented.");
 	}
 
     // %% User Members -------------------------

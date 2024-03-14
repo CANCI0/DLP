@@ -2,6 +2,7 @@
 
 package ast.expression;
 
+import ast.type.*;
 import ast.definition.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
@@ -18,6 +19,10 @@ import visitor.Visitor;
 	
 	PHASE Identification
 	fieldAccess -> structDefinition:structDefinition
+	
+	PHASE TypeChecking
+	expression -> expressionType:type
+	expression -> lvalue:boolean
 */
 public class FieldAccess extends AbstractExpression  {
 

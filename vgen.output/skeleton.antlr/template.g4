@@ -22,10 +22,11 @@ definition returns[Definition ast]
 
 type returns[Type ast]
     :                                     { $ast = new IntType(); }                              
-    |                                     { $ast = new RealType(); }                             
+    |                                     { $ast = new FloatType(); }                            
     |                                     { $ast = new CharType(); }                             
     | INT_LITERAL type                    { $ast = new ArrayType($INT_LITERAL, $type.ast); }     
     | name=IDENT                          { $ast = new IdentType($name); }                       
+    |                                     { $ast = new VoidType(); }                             
 	;
 
 attrDefinition returns[AttrDefinition ast]

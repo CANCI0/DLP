@@ -2,6 +2,7 @@
 
 package ast.expression;
 
+import ast.type.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -14,6 +15,10 @@ import visitor.Visitor;
 /*
 	realLiteral: expression -> floatValue:float
 	expression -> 
+	
+	PHASE TypeChecking
+	expression -> expressionType:type
+	expression -> lvalue:boolean
 */
 public class RealLiteral extends AbstractExpression  {
 

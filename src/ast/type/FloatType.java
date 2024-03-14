@@ -11,10 +11,10 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	realType: type -> 
+	floatType: type -> 
 	type -> 
 */
-public class RealType extends AbstractType  {
+public class FloatType extends AbstractType  {
 
 
 
@@ -28,7 +28,7 @@ public class RealType extends AbstractType  {
 
     @Override
     public String toString() {
-        return "RealType{" + "}";
+        return "FloatType{" + "}";
     }
 
 

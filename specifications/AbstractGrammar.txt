@@ -37,10 +37,11 @@ cast:expression -> type expression;
 functionCallExpression:expression -> string expression*;
 
 intType:type -> ;
-realType:type -> ;
+floatType:type -> ;
 charType:type -> ;
 arrayType:type -> int type;
 identType:type -> string;
+voidType:type -> ;
 
 // -----------------------
 ATTRIBUTE GRAMMAR Identification
@@ -49,3 +50,9 @@ variable -> varDefinition;
 functionCallStatement -> functionDefinition;
 functionCallExpression -> functionDefinition;
 fieldAccess -> structDefinition;
+
+// -----------------------
+ATTRIBUTE GRAMMAR TypeChecking
+
+expression -> expressionType:type;
+expression -> lvalue:boolean;

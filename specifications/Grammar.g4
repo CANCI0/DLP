@@ -81,8 +81,9 @@ expression returns[Expression ast]
 
 type returns[Type ast]
 	: 'int'																					{ $ast = new IntType(); }
-	| 'real'																				{ $ast = new RealType(); }
+	| 'float'																				{ $ast = new FloatType(); }
 	| 'char'																				{ $ast = new CharType(); }
+	| 'void'																				{ $ast = new VoidType(); }
 	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); }
 	| IDENT																					{ $ast = new IdentType($IDENT); }
 	;
