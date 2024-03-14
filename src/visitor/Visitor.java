@@ -52,7 +52,7 @@ public interface Visitor {
 
 	public Object visit(IntLiteral intLiteral, Object param);
 
-	public Object visit(RealLiteral realLiteral, Object param);
+	public Object visit(FloatLiteral floatLiteral, Object param);
 
 	public Object visit(CharLiteral charLiteral, Object param);
 
@@ -60,11 +60,11 @@ public interface Visitor {
 
 	public Object visit(FieldAccess fieldAccess, Object param);
 
+	public Object visit(Not not, Object param);
+
 	public Object visit(Logic logic, Object param);
 
 	public Object visit(Arithmetic arithmetic, Object param);
-
-	public Object visit(Relational relational, Object param);
 
 	public Object visit(Variable variable, Object param);
 
@@ -80,7 +80,7 @@ public interface Visitor {
 
 	public Object visit(ArrayType arrayType, Object param);
 
-	public Object visit(IdentType identType, Object param);
+	public Object visit(StructType structType, Object param);
 
 	public Object visit(VoidType voidType, Object param);
 

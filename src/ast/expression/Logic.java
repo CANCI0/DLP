@@ -12,9 +12,8 @@ import visitor.Visitor;
 
 // %% -------------------------------
 
-
 /*
-	logic: expression -> expression:expression
+	logic: expression -> left:expression operator:string right:expression
 	expression -> 
 	
 	PHASE TypeChecking
@@ -26,47 +25,93 @@ public class Logic extends AbstractExpression  {
     // ----------------------------------
     // Instance Variables
 
-	// logic: expression -> expression
-	private Expression expression;
+	// logic: expression -> left:expression operator:string right:expression
+	private Expression left;
+	private String operator;
+	private Expression right;
 
     // ----------------------------------
     // Constructors
 
-	public Logic(Expression expression) {
+	public Logic(Expression left, String operator, Expression right) {
 		super();
 
-		if (expression == null)
-			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = expression;
+		if (left == null)
+			throw new IllegalArgumentException("Parameter 'left' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.left = left;
 
-		updatePositions(expression);
+		if (operator == null)
+			throw new IllegalArgumentException("Parameter 'operator' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
+		this.operator = operator;
+
+		if (right == null)
+			throw new IllegalArgumentException("Parameter 'right' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.right = right;
+
+		updatePositions(left, operator, right);
 	}
 
-	public Logic(Object expression) {
+	public Logic(Object left, Object operator, Object right) {
 		super();
 
-        if (expression == null)
-            throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = (Expression) expression;
+        if (left == null)
+            throw new IllegalArgumentException("Parameter 'left' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.left = (Expression) left;
 
-		updatePositions(expression);
+        if (operator == null)
+            throw new IllegalArgumentException("Parameter 'operator' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
+		this.operator = (operator instanceof Token) ? ((Token) operator).getText() : (String) operator;
+
+        if (right == null)
+            throw new IllegalArgumentException("Parameter 'right' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.right = (Expression) right;
+
+		updatePositions(left, operator, right);
 	}
 
 
     // ----------------------------------
-    // logic: expression -> expression
+    // logic: expression -> left:expression operator:string right:expression
 
-	// Child 'expression' 
+	// Child 'left:expression' 
 
-	public void setExpression(Expression expression) {
-		if (expression == null)
-			throw new IllegalArgumentException("Parameter 'expression' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
-		this.expression = expression;
+	public void setLeft(Expression left) {
+		if (left == null)
+			throw new IllegalArgumentException("Parameter 'left' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.left = left;
 
 	}
 
-    public Expression getExpression() {
-        return expression;
+    public Expression getLeft() {
+        return left;
+    }
+
+
+	// Child 'operator:string' 
+
+	public void setOperator(String operator) {
+		if (operator == null)
+			throw new IllegalArgumentException("Parameter 'operator' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
+		this.operator = operator;
+
+	}
+
+    public String getOperator() {
+        return operator;
+    }
+
+
+	// Child 'right:expression' 
+
+	public void setRight(Expression right) {
+		if (right == null)
+			throw new IllegalArgumentException("Parameter 'right' can't be null. Pass a non-null value or use 'expression?' in the abstract grammar");
+		this.right = right;
+
+	}
+
+    public Expression getRight() {
+        return right;
     }
 
 
@@ -80,7 +125,7 @@ public class Logic extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "Logic{" + " expression=" + this.getExpression() + "}";
+        return "Logic{" + " left=" + this.getLeft() + " operator=" + this.getOperator() + " right=" + this.getRight() + "}";
     }
 
 
@@ -89,5 +134,4 @@ public class Logic extends AbstractExpression  {
         // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
-
 }

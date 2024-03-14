@@ -3,7 +3,7 @@
 package ast.expression;
 
 import ast.type.*;
-import ast.definition.*;
+import ast.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -18,7 +18,7 @@ import visitor.Visitor;
 	expression -> 
 	
 	PHASE Identification
-	fieldAccess -> structDefinition:structDefinition
+	fieldAccess -> attrDefinition:attrDefinition
 	
 	PHASE TypeChecking
 	expression -> expressionType:type
@@ -34,7 +34,7 @@ public class FieldAccess extends AbstractExpression  {
 	private String name;
 
     // PHASE Identification
-	private StructDefinition structDefinition;
+	private AttrDefinition attrDefinition;
 
     // ----------------------------------
     // Constructors
@@ -103,17 +103,17 @@ public class FieldAccess extends AbstractExpression  {
     // --------------------------------
     // PHASE Identification
 
-	// Attribute 'structDefinition' 
+	// Attribute 'attrDefinition' 
 
-	public void setStructDefinition(StructDefinition structDefinition) {
-		if (structDefinition == null)
-			throw new IllegalArgumentException("Parameter 'structDefinition' can't be null. Pass a non-null value or use 'structDefinition?' in the abstract grammar");
-		this.structDefinition = structDefinition;
+	public void setAttrDefinition(AttrDefinition attrDefinition) {
+		if (attrDefinition == null)
+			throw new IllegalArgumentException("Parameter 'attrDefinition' can't be null. Pass a non-null value or use 'attrDefinition?' in the abstract grammar");
+		this.attrDefinition = attrDefinition;
 
 	}
 
-    public StructDefinition getStructDefinition() {
-        return structDefinition;
+    public AttrDefinition getAttrDefinition() {
+        return attrDefinition;
     }
 
 

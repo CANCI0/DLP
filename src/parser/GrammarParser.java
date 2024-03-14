@@ -8,7 +8,6 @@ import org.antlr.v4.runtime.tree.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
-
 import ast.expression.*;
 import ast.statement.*;
 import ast.definition.*;
@@ -1014,7 +1013,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(205);
 				((ExpressionContext)_localctx).REAL_LITERAL = match(REAL_LITERAL);
-				 ((ExpressionContext)_localctx).ast =  new RealLiteral(((ExpressionContext)_localctx).REAL_LITERAL); 
+				 ((ExpressionContext)_localctx).ast =  new FloatLiteral(((ExpressionContext)_localctx).REAL_LITERAL); 
 				}
 				break;
 			case 3:
@@ -1050,7 +1049,7 @@ public class GrammarParser extends Parser {
 				match(T__21);
 				setState(218);
 				((ExpressionContext)_localctx).expression = expression(9);
-				 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).expression.ast); 
+				 ((ExpressionContext)_localctx).ast =  new Not(((ExpressionContext)_localctx).expression.ast); 
 				}
 				break;
 			case 7:
@@ -1160,7 +1159,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(248);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(7);
-						 ((ExpressionContext)_localctx).ast =  new Relational(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 4:
@@ -1183,7 +1182,7 @@ public class GrammarParser extends Parser {
 						}
 						setState(253);
 						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(6);
-						 ((ExpressionContext)_localctx).ast =  new Relational(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
+						 ((ExpressionContext)_localctx).ast =  new Logic(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
 					case 5:
@@ -1339,7 +1338,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(295);
 				((TypeContext)_localctx).IDENT = match(IDENT);
-				 ((TypeContext)_localctx).ast =  new IdentType(((TypeContext)_localctx).IDENT); 
+				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).IDENT); 
 				}
 				break;
 			default:

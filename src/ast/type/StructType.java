@@ -1,8 +1,7 @@
 // Generated with VGen 2.0.0
 
-package ast;
+package ast.type;
 
-import ast.type.*;
 import ast.definition.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
@@ -14,19 +13,19 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	attrDefinition -> name:string type:type
+	structType: type -> name:string
+	type -> 
 	
 	PHASE Identification
-	attrDefinition -> structDefinition:structDefinition
+	structType -> structDefinition:structDefinition
 */
-public class AttrDefinition extends AbstractAST  {
+public class StructType extends AbstractType  {
 
     // ----------------------------------
     // Instance Variables
 
-	// attrDefinition -> string type
+	// structType: type -> string
 	private String name;
-	private Type type;
 
     // PHASE Identification
 	private StructDefinition structDefinition;
@@ -34,37 +33,29 @@ public class AttrDefinition extends AbstractAST  {
     // ----------------------------------
     // Constructors
 
-	public AttrDefinition(String name, Type type) {
+	public StructType(String name) {
 		super();
 
 		if (name == null)
 			throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = name;
 
-		if (type == null)
-			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = type;
-
-		updatePositions(name, type);
+		updatePositions(name);
 	}
 
-	public AttrDefinition(Object name, Object type) {
+	public StructType(Object name) {
 		super();
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-        if (type == null)
-            throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = (Type) type;
-
-		updatePositions(name, type);
+		updatePositions(name);
 	}
 
 
     // ----------------------------------
-    // attrDefinition -> string type
+    // structType: type -> string
 
 	// Child 'string' 
 
@@ -77,20 +68,6 @@ public class AttrDefinition extends AbstractAST  {
 
     public String getName() {
         return name;
-    }
-
-
-	// Child 'type' 
-
-	public void setType(Type type) {
-		if (type == null)
-			throw new IllegalArgumentException("Parameter 'type' can't be null. Pass a non-null value or use 'type?' in the abstract grammar");
-		this.type = type;
-
-	}
-
-    public Type getType() {
-        return type;
     }
 
 
@@ -122,7 +99,7 @@ public class AttrDefinition extends AbstractAST  {
 
     @Override
     public String toString() {
-        return "AttrDefinition{" + " name=" + this.getName() + " type=" + this.getType() + "}";
+        return "StructType{" + " name=" + this.getName() + "}";
     }
 
 

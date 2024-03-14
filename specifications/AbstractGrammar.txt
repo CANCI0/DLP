@@ -26,13 +26,13 @@ ifelse:statement -> cond:expression tr:statement* fs:statement*;
 functionCallStatement:statement -> string expression*;
 
 intLiteral:expression -> int;
-realLiteral:expression -> float;
+floatLiteral:expression -> float;
 charLiteral:expression -> string;
 arrayAccess:expression -> expr1:expression expr2:expression;
 fieldAccess:expression -> expr:expression string;
-logic:expression -> expression;
+not:expression -> expression;
+logic:expression -> left:expression operator:string right:expression;
 arithmetic:expression -> left:expression operator:string right:expression;
-relational:expression -> left:expression operator:string right:expression;
 variable:expression -> string;
 cast:expression -> type expression;
 functionCallExpression:expression -> string expression*;
@@ -41,7 +41,7 @@ intType:type -> ;
 floatType:type -> ;
 charType:type -> ;
 arrayType:type -> int type;
-identType:type -> string;
+structType:type -> string;
 voidType:type -> ;
 
 // -----------------------
@@ -50,7 +50,10 @@ ATTRIBUTE GRAMMAR Identification
 variable -> varDefinition;
 functionCallStatement -> functionDefinition;
 functionCallExpression -> functionDefinition;
-fieldAccess -> structDefinition;
+attrDefinition -> structDefinition; 
+fieldAccess -> attrDefinition;
+structType -> structDefinition;
+arrayAccess -> varDefinition;
 
 // -----------------------
 ATTRIBUTE GRAMMAR TypeChecking

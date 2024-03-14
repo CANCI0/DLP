@@ -2,6 +2,7 @@ package semantic;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -15,10 +16,10 @@ import ast.expression.ArrayAccess;
 import ast.expression.Cast;
 import ast.expression.CharLiteral;
 import ast.expression.FieldAccess;
+import ast.expression.FloatLiteral;
 import ast.expression.FunctionCallExpression;
 import ast.expression.IntLiteral;
 import ast.expression.Not;
-import ast.expression.RealLiteral;
 import ast.expression.Variable;
 import ast.statement.Assignment;
 import ast.statement.FunctionCallStatement;
@@ -34,6 +35,8 @@ import ast.type.CharType;
 import ast.type.FloatType;
 import ast.type.IdentType;
 import ast.type.IntType;
+import ast.type.StructType;
+import ast.type.Type;
 import main.ErrorManager;
 import visitor.DefaultVisitor;
 
@@ -91,6 +94,7 @@ public class Identification extends DefaultVisitor {
         		notifyError("Attribute definition already defined: " + def.getName(), def);
         	}else {
         		definitions.add(def.getName());
+        		def.setStructDefinition(structDefinition);
         	}
         }
         
@@ -221,7 +225,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	@Override
-	public Object visit(RealLiteral realLiteral, Object param) {
+	public Object visit(FloatLiteral floatLiteral, Object param) {
 
 		return null;
 	}
@@ -243,7 +247,8 @@ public class Identification extends DefaultVisitor {
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 		fieldAccess.getExpr().accept(this, param);
-		return null;
+		
+	    return null;
 	}
 
 	@Override
@@ -317,10 +322,12 @@ public class Identification extends DefaultVisitor {
 	}
 
 	@Override
-	public Object visit(IdentType identType, Object param) {
-		StructDefinition struct = structs.get(identType.getName());
+	public Object visit(StructType structType, Object param) {
+		StructDefinition struct = structs.get(structType.getName());
 		if(struct == null) {
-			notifyError("Undefined struct: " + identType.getName(), identType);
+			notifyError("Undefined struct: " + structType.getName(), structType);
+		} else {
+			structType.setStructDefinition(struct);
 		}
 		return null;
 	}

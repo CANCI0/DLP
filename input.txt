@@ -1,5 +1,5 @@
-var price: float;
-var price: int;	// Error: redefined variable
-
-print price;
-print value;	// Error: undefined variable
+main(){
+	var x: [10][10]int;
+	
+	x[1][1] = 10;
+}

@@ -5,6 +5,8 @@
 
 package semantic;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import ast.*;
@@ -17,10 +19,10 @@ import ast.expression.Cast;
 import ast.expression.CharLiteral;
 import ast.expression.Expression;
 import ast.expression.FieldAccess;
+import ast.expression.FloatLiteral;
 import ast.expression.FunctionCallExpression;
 import ast.expression.IntLiteral;
 import ast.expression.Not;
-import ast.expression.RealLiteral;
 import ast.expression.Variable;
 import ast.statement.Assignment;
 import ast.statement.FunctionCallStatement;
@@ -36,6 +38,7 @@ import ast.type.CharType;
 import ast.type.FloatType;
 import ast.type.IdentType;
 import ast.type.IntType;
+import ast.type.StructType;
 import ast.type.Type;
 import ast.type.VoidType;
 import main.ErrorManager;
@@ -107,7 +110,7 @@ public class TypeChecking extends DefaultVisitor {
  		// param_.getType().accept(this, param);
  		super.visit(param_, param);
 
- 		predicate(primitiveType(param_.getType()), "ERROR. Tipo del par�metro debe ser simple", param_);
+ 		predicate(primitiveType(param_.getType()), "ERROR. Tipo del par�metro debe ser simple", param_);
  		
  		return null;
  	}
@@ -179,6 +182,8 @@ public class TypeChecking extends DefaultVisitor {
  		// assignment.getLeft().accept(this, param);
  		// assignment.getRight().accept(this, param);
  		super.visit(assignment, param);
+ 		predicate(primitiveType(assignment.getLeft().getExpressionType()), "ERROR: el de la izquierda no es un tipo simple", assignment);
+ 		predicate(areTypesEqual(assignment.getLeft().getExpressionType(), assignment.getRight().getExpressionType()), "ERROR: no son del mismo tipo", assignment);
 
  		return null;
  	}
@@ -220,25 +225,27 @@ public class TypeChecking extends DefaultVisitor {
  	// class IntLiteral(int intValue)
  	@Override
  	public Object visit(IntLiteral intLiteral, Object param) {
-
+ 		intLiteral.setExpressionType(new IntType());
  		return null;
  	}
 
- 	// class RealLiteral(float floatValue)
+ 	// class FloatLiteral(float floatValue)
  	@Override
- 	public Object visit(RealLiteral realLiteral, Object param) {
-
+ 	public Object visit(FloatLiteral floatLiteral, Object param) {
+ 		floatLiteral.setExpressionType(new FloatType());
  		return null;
  	}
 
  	// class CharLiteral(String name)
  	@Override
  	public Object visit(CharLiteral charLiteral, Object param) {
-
+ 		charLiteral.setExpressionType(new CharType());
  		return null;
  	}
 
  	// class ArrayAccess(Expression expr1, Expression expr2)
+ 	//var v:[10]int;
+ 	//v[0] = 3;
  	@Override
  	public Object visit(ArrayAccess arrayAccess, Object param) {
 
@@ -246,6 +253,14 @@ public class TypeChecking extends DefaultVisitor {
  		// arrayAccess.getExpr2().accept(this, param);
  		super.visit(arrayAccess, param);
 
+ 		Type type = arrayAccess.getExpr1().getExpressionType();
+ 		if(type instanceof ArrayType) {
+ 			ArrayType at = (ArrayType) type;
+ 			arrayAccess.setExpressionType(at.getType());
+ 		} else {
+ 	 		arrayAccess.setExpressionType(arrayAccess.getExpr1().getExpressionType());	
+ 		}
+ 		
  		return null;
  	}
 
@@ -253,10 +268,25 @@ public class TypeChecking extends DefaultVisitor {
  	// phase Identification { StructDefinition structDefinition }
  	@Override
  	public Object visit(FieldAccess fieldAccess, Object param) {
-
  		// fieldAccess.getExpr().accept(this, param);
  		super.visit(fieldAccess, param);
+ 		
+ 		Type type = fieldAccess.getExpr().getExpressionType(); 
+ 		if(type instanceof StructType) {
+ 			StructType structType = (StructType) type;
+ 			StructDefinition sd = structType.getStructDefinition();
+ 			List<AttrDefinition> attrdefs = sd.getAttrDefinitions();
+ 			for(AttrDefinition def : attrdefs) {
+ 				if(def.getName().equals(fieldAccess.getName())) {
+ 					fieldAccess.setAttrDefinition(def);
+ 					fieldAccess.setExpressionType(def.getType());
+ 				}
+ 			}
+ 		}		
+ 		
+ 		predicate(isStruct(fieldAccess), "ERROR: Se está intentando acceder a un campo de una expresión que no es un struct", fieldAccess);
 
+ 		fieldAccess.setExpressionType(fieldAccess.getAttrDefinition().getType());
  		return null;
  	}
 
@@ -266,7 +296,7 @@ public class TypeChecking extends DefaultVisitor {
 
  		// not.getExpression().accept(this, param);
  		super.visit(not, param);
-
+ 		not.setExpressionType(not.getExpression().getExpressionType());
  		return null;
  	}
 
@@ -277,7 +307,7 @@ public class TypeChecking extends DefaultVisitor {
  		// arithmetic.getLeft().accept(this, param);
  		// arithmetic.getRight().accept(this, param);
  		super.visit(arithmetic, param);
-
+ 		
  		return null;
  	}
 
@@ -285,7 +315,8 @@ public class TypeChecking extends DefaultVisitor {
  	// phase Identification { VarDefinition varDefinition }
  	@Override
  	public Object visit(Variable variable, Object param) {
-
+ 		
+ 		variable.setExpressionType(variable.getVarDefinition().getType());
  		return null;
  	}
 
@@ -296,7 +327,8 @@ public class TypeChecking extends DefaultVisitor {
  		// cast.getType().accept(this, param);
  		// cast.getExpression().accept(this, param);
  		super.visit(cast, param);
-
+ 		
+ 		cast.setExpressionType(cast.getType());
  		return null;
  	}
 
@@ -307,7 +339,7 @@ public class TypeChecking extends DefaultVisitor {
 
  		// functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
  		super.visit(functionCallExpression, param);
-
+ 		functionCallExpression.setExpressionType(functionCallExpression.getFunctionDefinition().getType().orElse(new VoidType()));
  		return null;
  	}
 
@@ -342,12 +374,6 @@ public class TypeChecking extends DefaultVisitor {
  		return null;
  	}
 
- 	// class IdentType(String name)
- 	@Override
- 	public Object visit(IdentType identType, Object param) {
-
- 		return null;
- 	}
     //# ----------------------------------------------------------
     //# Auxiliary methods (optional)
 
@@ -365,6 +391,79 @@ public class TypeChecking extends DefaultVisitor {
  		} else {
  			return false;
  		}
+ 	}
+ 	
+ 	public boolean areTypesEqual(Type type1, Type type2) {
+        // Si los tipos son nulos, no son iguales
+        if (type1 == null || type2 == null) {
+            return false;
+        }
+
+        // Comprobar si los tipos son iguales directamente
+        if (type1.getClass() == type2.getClass()) {
+            return true;
+        }
+
+        // Si los tipos son ArrayType, comprobar recursivamente los tipos internos
+        if (type1 instanceof ArrayType && type2 instanceof ArrayType) {
+            ArrayType arrayType1 = (ArrayType) type1;
+            ArrayType arrayType2 = (ArrayType) type2;
+            return areTypesEqual(arrayType1.getType(), arrayType2.getType());
+        }
+
+        // Si los tipos son StructType, comprobar recursivamente los atributos
+        if (type1 instanceof StructType && type2 instanceof StructType) {
+            StructType structType1 = (StructType) type1;
+            StructType structType2 = (StructType) type2;
+            return areStructTypesEqual(structType1.getStructDefinition(), structType2.getStructDefinition());
+        }
+
+        // En cualquier otro caso, los tipos no son iguales
+        return false;
+    }
+
+    private boolean areStructTypesEqual(StructDefinition struct1, StructDefinition struct2) {
+        // Si los structs son nulos, no son iguales
+        if (struct1 == null || struct2 == null) {
+            return false;
+        }
+
+        // Comprobar si los structs son el mismo objeto
+        if (struct1.equals(struct2)) {
+            return true;
+        }
+
+        // Comprobar si tienen el mismo número de atributos
+        if (struct1.getAttrDefinitions().size() != struct2.getAttrDefinitions().size()) {
+            return false;
+        }
+
+        // Comprobar si los nombres y tipos de los atributos coinciden
+        for (int i = 0; i < struct1.getAttrDefinitions().size(); i++) {
+            AttrDefinition attr1 = struct1.getAttrDefinitions().get(i);
+            AttrDefinition attr2 = struct2.getAttrDefinitions().get(i);
+            if (!attr1.getName().equals(attr2.getName()) || !areTypesEqual(attr1.getType(), attr2.getType())) {
+                return false;
+            }
+        }
+
+        // Si todas las comprobaciones pasan, los structs son iguales
+        return true;
+    }
+ 	
+ 	private boolean checkLValueSimpleType(Assignment assignment) {
+ 		Expression left = assignment.getLeft();
+ 		if(primitiveType(left.getExpressionType())) {
+ 			return true;
+ 		}
+ 		return false;
+ 	}
+ 	
+ 	private boolean isStruct(FieldAccess fieldAccess) {
+ 		if(fieldAccess.getExpr().getExpressionType() instanceof StructType) {
+ 			return true;
+ 		} 
+ 		return false;
  	}
  	
     private void notifyError(String errorMessage, Position position) {

@@ -13,25 +13,25 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	realLiteral: expression -> floatValue:float
+	floatLiteral: expression -> floatValue:float
 	expression -> 
 	
 	PHASE TypeChecking
 	expression -> expressionType:type
 	expression -> lvalue:boolean
 */
-public class RealLiteral extends AbstractExpression  {
+public class FloatLiteral extends AbstractExpression  {
 
     // ----------------------------------
     // Instance Variables
 
-	// realLiteral: expression -> float
+	// floatLiteral: expression -> float
 	private float floatValue;
 
     // ----------------------------------
     // Constructors
 
-	public RealLiteral(float floatValue) {
+	public FloatLiteral(float floatValue) {
 		super();
 
 		this.floatValue = floatValue;
@@ -39,7 +39,7 @@ public class RealLiteral extends AbstractExpression  {
 		updatePositions(floatValue);
 	}
 
-	public RealLiteral(Object floatValue) {
+	public FloatLiteral(Object floatValue) {
 		super();
 
         if (floatValue == null)
@@ -56,7 +56,7 @@ public class RealLiteral extends AbstractExpression  {
 
 
     // ----------------------------------
-    // realLiteral: expression -> float
+    // floatLiteral: expression -> float
 
 	// Child 'float' 
 
@@ -80,7 +80,7 @@ public class RealLiteral extends AbstractExpression  {
 
     @Override
     public String toString() {
-        return "RealLiteral{" + " floatValue=" + this.getFloatValue() + "}";
+        return "FloatLiteral{" + " floatValue=" + this.getFloatValue() + "}";
     }
 
 

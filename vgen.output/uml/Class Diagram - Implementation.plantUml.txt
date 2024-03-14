@@ -92,6 +92,7 @@ class AttrDefinition {
 }
 AbstractAST <|-[#808080]- AttrDefinition
 AttrDefinition o-[#404040,thickness=2]-  Type : type >
+AttrDefinition -[#ff6600,thickness=3]-  StructDefinition #text:ff6600 : structDefinition >
 
 class Read {
 }
@@ -149,10 +150,10 @@ class IntLiteral {
 }
 AbstractExpression <|-[#808080]- IntLiteral
 
-class RealLiteral {
+class FloatLiteral {
 	+float floatValue
 }
-AbstractExpression <|-[#808080]- RealLiteral
+AbstractExpression <|-[#808080]- FloatLiteral
 
 class CharLiteral {
 	+String name
@@ -164,18 +165,26 @@ class ArrayAccess {
 AbstractExpression <|-[#808080]- ArrayAccess
 ArrayAccess o-[#404040,thickness=2]-  Expression : expr1 >
 ArrayAccess o-[#404040,thickness=2]-  Expression : expr2 >
+ArrayAccess -[#ff6600,thickness=3]-  VarDefinition #text:ff6600 : varDefinition >
 
 class FieldAccess {
 	+String name
 }
 AbstractExpression <|-[#808080]- FieldAccess
 FieldAccess o-[#404040,thickness=2]-  Expression : expr >
-FieldAccess -[#ff6600,thickness=3]-  StructDefinition #text:ff6600 : structDefinition >
+FieldAccess -[#ff6600,thickness=3]-  AttrDefinition #text:ff6600 : attrDefinition >
+
+class Not {
+}
+AbstractExpression <|-[#808080]- Not
+Not o-[#404040,thickness=2]-  Expression : expression >
 
 class Logic {
+	+String operator
 }
 AbstractExpression <|-[#808080]- Logic
-Logic o-[#404040,thickness=2]-  Expression : expression >
+Logic o-[#404040,thickness=2]-  Expression : left >
+Logic o-[#404040,thickness=2]-  Expression : right >
 
 class Arithmetic {
 	+String operator
@@ -183,13 +192,6 @@ class Arithmetic {
 AbstractExpression <|-[#808080]- Arithmetic
 Arithmetic o-[#404040,thickness=2]-  Expression : left >
 Arithmetic o-[#404040,thickness=2]-  Expression : right >
-
-class Relational {
-	+String operator
-}
-AbstractExpression <|-[#808080]- Relational
-Relational o-[#404040,thickness=2]-  Expression : left >
-Relational o-[#404040,thickness=2]-  Expression : right >
 
 class Variable {
 	+String name
@@ -228,10 +230,11 @@ class ArrayType {
 AbstractType <|-[#808080]- ArrayType
 ArrayType o-[#404040,thickness=2]-  Type : type >
 
-class IdentType {
+class StructType {
 	+String name
 }
-AbstractType <|-[#808080]- IdentType
+AbstractType <|-[#808080]- StructType
+StructType -[#ff6600,thickness=3]-  StructDefinition #text:ff6600 : structDefinition >
 
 class VoidType {
 }

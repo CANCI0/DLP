@@ -119,9 +119,9 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(RealLiteral realLiteral, Object param) {
+	public Object visit(FloatLiteral floatLiteral, Object param) {
 
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(RealLiteral)' has been invoked but it has not been implemented.");
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FloatLiteral)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
@@ -143,6 +143,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(Not not, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Not)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(Logic logic, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Logic)' has been invoked but it has not been implemented.");
@@ -152,12 +158,6 @@ public class ExceptionThrowerVisitor implements Visitor {
 	public Object visit(Arithmetic arithmetic, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Arithmetic)' has been invoked but it has not been implemented.");
-	}
-
-	@Override
-	public Object visit(Relational relational, Object param) {
-
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Relational)' has been invoked but it has not been implemented.");
 	}
 
 	@Override
@@ -203,9 +203,9 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(IdentType identType, Object param) {
+	public Object visit(StructType structType, Object param) {
 
-        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(IdentType)' has been invoked but it has not been implemented.");
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(StructType)' has been invoked but it has not been implemented.");
 	}
 
 	@Override

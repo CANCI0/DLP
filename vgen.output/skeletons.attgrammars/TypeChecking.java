@@ -130,6 +130,7 @@ public class TypeChecking extends DefaultVisitor {
 	}
 
 	// class AttrDefinition(String name, Type type)
+	// phase Identification { StructDefinition structDefinition }
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
 
@@ -245,14 +246,14 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class RealLiteral(float floatValue)
+	// class FloatLiteral(float floatValue)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
-	public Object visit(RealLiteral realLiteral, Object param) {
+	public Object visit(FloatLiteral floatLiteral, Object param) {
 
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// realLiteral.setExpressionType(?);
-		// realLiteral.setLvalue(?);
+		// floatLiteral.setExpressionType(?);
+		// floatLiteral.setLvalue(?);
 		return null;
 	}
 
@@ -268,6 +269,7 @@ public class TypeChecking extends DefaultVisitor {
 	}
 
 	// class ArrayAccess(Expression expr1, Expression expr2)
+	// phase Identification { VarDefinition varDefinition }
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(ArrayAccess arrayAccess, Object param) {
@@ -283,7 +285,7 @@ public class TypeChecking extends DefaultVisitor {
 	}
 
 	// class FieldAccess(Expression expr, String name)
-	// phase Identification { StructDefinition structDefinition }
+	// phase Identification { AttrDefinition attrDefinition }
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
@@ -297,12 +299,27 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class Logic(Expression expression)
+	// class Not(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(Not not, Object param) {
+
+		// not.getExpression().accept(this, param);
+		super.visit(not, param);
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// not.setExpressionType(?);
+		// not.setLvalue(?);
+		return null;
+	}
+
+	// class Logic(Expression left, String operator, Expression right)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Logic logic, Object param) {
 
-		// logic.getExpression().accept(this, param);
+		// logic.getLeft().accept(this, param);
+		// logic.getRight().accept(this, param);
 		super.visit(logic, param);
 
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
@@ -323,21 +340,6 @@ public class TypeChecking extends DefaultVisitor {
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
 		// arithmetic.setExpressionType(?);
 		// arithmetic.setLvalue(?);
-		return null;
-	}
-
-	// class Relational(Expression left, String operator, Expression right)
-	// phase TypeChecking { Type expressionType, boolean lvalue }
-	@Override
-	public Object visit(Relational relational, Object param) {
-
-		// relational.getLeft().accept(this, param);
-		// relational.getRight().accept(this, param);
-		super.visit(relational, param);
-
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// relational.setExpressionType(?);
-		// relational.setLvalue(?);
 		return null;
 	}
 
@@ -414,9 +416,10 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class IdentType(String name)
+	// class StructType(String name)
+	// phase Identification { StructDefinition structDefinition }
 	@Override
-	public Object visit(IdentType identType, Object param) {
+	public Object visit(StructType structType, Object param) {
 
 		return null;
 	}

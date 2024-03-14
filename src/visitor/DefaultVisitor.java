@@ -148,7 +148,7 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(RealLiteral realLiteral, Object param) {
+	public Object visit(FloatLiteral floatLiteral, Object param) {
 
 		return null;
 	}
@@ -175,9 +175,17 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(Not not, Object param) {
+
+		not.getExpression().accept(this, param);
+		return null;
+	}
+
+	@Override
 	public Object visit(Logic logic, Object param) {
 
-		logic.getExpression().accept(this, param);
+		logic.getLeft().accept(this, param);
+		logic.getRight().accept(this, param);
 		return null;
 	}
 
@@ -186,14 +194,6 @@ public class DefaultVisitor implements Visitor {
 
 		arithmetic.getLeft().accept(this, param);
 		arithmetic.getRight().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(Relational relational, Object param) {
-
-		relational.getLeft().accept(this, param);
-		relational.getRight().accept(this, param);
 		return null;
 	}
 
@@ -244,7 +244,7 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
-	public Object visit(IdentType identType, Object param) {
+	public Object visit(StructType structType, Object param) {
 
 		return null;
 	}

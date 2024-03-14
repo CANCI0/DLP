@@ -62,7 +62,7 @@ expressions returns[List<Expression> list = new ArrayList<Expression>()]
 	
 expression returns[Expression ast]
     : INT_LITERAL																			{ $ast = new IntLiteral($INT_LITERAL); }
-    | REAL_LITERAL																			{ $ast = new RealLiteral($REAL_LITERAL); }
+    | REAL_LITERAL																			{ $ast = new FloatLiteral($REAL_LITERAL); }
     | CHAR_LITERAL																			{ $ast = new CharLiteral($CHAR_LITERAL); }
 	| IDENT '(' expressions ')'																{ $ast = new FunctionCallExpression($IDENT, $expressions.list); }	
 	| IDENT																					{ $ast = new Variable($IDENT); }
@@ -85,5 +85,5 @@ type returns[Type ast]
 	| 'char'																				{ $ast = new CharType(); }
 	| 'void'																				{ $ast = new VoidType(); }
 	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); }
-	| IDENT																					{ $ast = new IdentType($IDENT); }
+	| IDENT																					{ $ast = new StructType($IDENT); }
 	;

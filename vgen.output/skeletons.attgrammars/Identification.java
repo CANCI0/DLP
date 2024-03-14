@@ -130,12 +130,15 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class AttrDefinition(String name, Type type)
+	// phase Identification { StructDefinition structDefinition }
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
 
 		// attrDefinition.getType().accept(this, param);
 		super.visit(attrDefinition, param);
 
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// attrDefinition.setStructDefinition(?);
 		return null;
 	}
 
@@ -243,9 +246,9 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class RealLiteral(float floatValue)
+	// class FloatLiteral(float floatValue)
 	@Override
-	public Object visit(RealLiteral realLiteral, Object param) {
+	public Object visit(FloatLiteral floatLiteral, Object param) {
 
 		return null;
 	}
@@ -258,6 +261,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class ArrayAccess(Expression expr1, Expression expr2)
+	// phase Identification { VarDefinition varDefinition }
 	@Override
 	public Object visit(ArrayAccess arrayAccess, Object param) {
 
@@ -265,11 +269,13 @@ public class Identification extends DefaultVisitor {
 		// arrayAccess.getExpr2().accept(this, param);
 		super.visit(arrayAccess, param);
 
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// arrayAccess.setVarDefinition(?);
 		return null;
 	}
 
 	// class FieldAccess(Expression expr, String name)
-	// phase Identification { StructDefinition structDefinition }
+	// phase Identification { AttrDefinition attrDefinition }
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 
@@ -277,15 +283,26 @@ public class Identification extends DefaultVisitor {
 		super.visit(fieldAccess, param);
 
 		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// fieldAccess.setStructDefinition(?);
+		// fieldAccess.setAttrDefinition(?);
 		return null;
 	}
 
-	// class Logic(Expression expression)
+	// class Not(Expression expression)
+	@Override
+	public Object visit(Not not, Object param) {
+
+		// not.getExpression().accept(this, param);
+		super.visit(not, param);
+
+		return null;
+	}
+
+	// class Logic(Expression left, String operator, Expression right)
 	@Override
 	public Object visit(Logic logic, Object param) {
 
-		// logic.getExpression().accept(this, param);
+		// logic.getLeft().accept(this, param);
+		// logic.getRight().accept(this, param);
 		super.visit(logic, param);
 
 		return null;
@@ -298,17 +315,6 @@ public class Identification extends DefaultVisitor {
 		// arithmetic.getLeft().accept(this, param);
 		// arithmetic.getRight().accept(this, param);
 		super.visit(arithmetic, param);
-
-		return null;
-	}
-
-	// class Relational(Expression left, String operator, Expression right)
-	@Override
-	public Object visit(Relational relational, Object param) {
-
-		// relational.getLeft().accept(this, param);
-		// relational.getRight().accept(this, param);
-		super.visit(relational, param);
 
 		return null;
 	}
@@ -378,10 +384,13 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	// class IdentType(String name)
+	// class StructType(String name)
+	// phase Identification { StructDefinition structDefinition }
 	@Override
-	public Object visit(IdentType identType, Object param) {
+	public Object visit(StructType structType, Object param) {
 
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// structType.setStructDefinition(?);
 		return null;
 	}
 

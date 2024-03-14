@@ -3,6 +3,7 @@
 package ast.expression;
 
 import ast.type.*;
+import ast.definition.*;
 import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
@@ -16,6 +17,9 @@ import visitor.Visitor;
 	arrayAccess: expression -> expr1:expression expr2:expression
 	expression -> 
 	
+	PHASE Identification
+	arrayAccess -> varDefinition:varDefinition
+	
 	PHASE TypeChecking
 	expression -> expressionType:type
 	expression -> lvalue:boolean
@@ -28,6 +32,9 @@ public class ArrayAccess extends AbstractExpression  {
 	// arrayAccess: expression -> expr1:expression expr2:expression
 	private Expression expr1;
 	private Expression expr2;
+
+    // PHASE Identification
+	private VarDefinition varDefinition;
 
     // ----------------------------------
     // Constructors
@@ -89,6 +96,24 @@ public class ArrayAccess extends AbstractExpression  {
 
     public Expression getExpr2() {
         return expr2;
+    }
+
+
+
+    // --------------------------------
+    // PHASE Identification
+
+	// Attribute 'varDefinition' 
+
+	public void setVarDefinition(VarDefinition varDefinition) {
+		if (varDefinition == null)
+			throw new IllegalArgumentException("Parameter 'varDefinition' can't be null. Pass a non-null value or use 'varDefinition?' in the abstract grammar");
+		this.varDefinition = varDefinition;
+
+	}
+
+    public VarDefinition getVarDefinition() {
+        return varDefinition;
     }
 
 
