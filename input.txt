@@ -1,5 +1,16 @@
-main(){
-	var x: [10][10]int;
-	
-	x[1][1] = 10;
+// Este test no debe producir NINGÚN error de compilacion
+
+struct Nombre {
+    letras:[10]char;
+}
+
+struct Persona {
+    nombre:Nombre;
+    edad:int;
+}
+
+main() {
+	var raul:Persona;
+
+    print raul.nombre.letras[1];
 }
