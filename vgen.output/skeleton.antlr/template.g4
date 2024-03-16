@@ -27,6 +27,7 @@ type returns[Type ast]
     | INT_LITERAL type                    { $ast = new ArrayType($INT_LITERAL, $type.ast); }     
     | name=IDENT                          { $ast = new StructType($name); }                      
     |                                     { $ast = new VoidType(); }                             
+    | msg=IDENT                           { $ast = new ErrorType($msg); }                        
 	;
 
 attrDefinition returns[AttrDefinition ast]

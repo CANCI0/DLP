@@ -255,6 +255,12 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	@Override
+	public Object visit(ErrorType errorType, Object param) {
+
+		return null;
+	}
+
     // %% User Members -------------------------
 
         // Methods/attributes in this section will be preserved. Delete if not needed

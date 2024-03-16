@@ -84,6 +84,8 @@ public interface Visitor {
 
 	public Object visit(VoidType voidType, Object param);
 
+	public Object visit(ErrorType errorType, Object param);
+
     // %% User Members -------------------------
 
         // Methods/attributes in this section will be preserved. Delete if not needed

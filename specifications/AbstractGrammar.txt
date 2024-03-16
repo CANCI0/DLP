@@ -43,6 +43,7 @@ charType:type -> ;
 arrayType:type -> int type;
 structType:type -> string;
 voidType:type -> ;
+errorType:type -> msg:string;
 
 // -----------------------
 ATTRIBUTE GRAMMAR Identification

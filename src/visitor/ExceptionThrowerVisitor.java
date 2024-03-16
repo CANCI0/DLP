@@ -214,6 +214,12 @@ public class ExceptionThrowerVisitor implements Visitor {
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(VoidType)' has been invoked but it has not been implemented.");
 	}
 
+	@Override
+	public Object visit(ErrorType errorType, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(ErrorType)' has been invoked but it has not been implemented.");
+	}
+
     // %% User Members -------------------------
 
         // Methods/attributes in this section will be preserved. Delete if not needed

@@ -36,6 +36,7 @@ import ast.statement.Return;
 import ast.statement.While;
 import ast.type.ArrayType;
 import ast.type.CharType;
+import ast.type.ErrorType;
 import ast.type.FloatType;
 import ast.type.IdentType;
 import ast.type.IntType;
@@ -148,7 +149,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		// print.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(print, param);
-
+		primitiveTypes(print.getExpressions());
+		
 		return null;
 	}
 
@@ -276,8 +278,10 @@ public class TypeChecking extends DefaultVisitor {
 		if (type instanceof ArrayType) {
 			ArrayType at = (ArrayType) type;
 			arrayAccess.setExpressionType(at.getType());
-		} else {
+		} else if (isAccesible(arrayAccess) && isInt(arrayAccess.getExpr2())) {
 			arrayAccess.setExpressionType(arrayAccess.getExpr1().getExpressionType());
+		} else {
+			arrayAccess.setExpressionType(new ErrorType());
 		}
 		predicate(isAccesible(arrayAccess), "ERROR: acceso a no-array", arrayAccess);
 		predicate(isInt(arrayAccess.getExpr2()), "ERROR: acceso a array con indice no entero", arrayAccess);
@@ -305,10 +309,21 @@ public class TypeChecking extends DefaultVisitor {
 			}
 		}
 
-		predicate(isStruct(fieldAccess),
-				"ERROR: Se está intentando acceder a un campo de una expresión que no es un struct", fieldAccess);
+		boolean isStruct = isStruct(fieldAccess);
+		boolean hasProperty = false;
+		predicate(isStruct, "ERROR: Se está intentando acceder a un campo de una expresión que no es un struct", fieldAccess);
+		
+		if(isStruct) {
+			hasProperty = hasProperty(fieldAccess);
+			predicate(hasProperty, "ERROR: La propiedad del struct no existe", fieldAccess);
+		}
 
-		fieldAccess.setExpressionType(fieldAccess.getAttrDefinition().getType());
+		if(isStruct && hasProperty) {
+			fieldAccess.setExpressionType(fieldAccess.getAttrDefinition().getType());
+		} else {
+			fieldAccess.setExpressionType(new ErrorType());
+		}
+		
 		return null;
 	}
 
@@ -331,9 +346,11 @@ public class TypeChecking extends DefaultVisitor {
 		// arithmetic.getRight().accept(this, param);
 		super.visit(arithmetic, param);
 		checkOperation(arithmetic);
-		areTypesEqual(arithmetic.getLeft().getExpressionType(), arithmetic.getRight().getExpressionType());
-		arithmetic.setExpressionType(arithmetic.getLeft().getExpressionType());
-
+		predicate(areTypesEqual(arithmetic.getLeft().getExpressionType(), arithmetic.getRight().getExpressionType()), "ERROR: ambos operandos tienen que ser del mismo tipo", arithmetic);
+		if(!areTypesEqual(arithmetic.getLeft().getExpressionType(), arithmetic.getRight().getExpressionType())) {
+			arithmetic.setExpressionType(new ErrorType());
+		}
+		
 		return null;
 	}
 
@@ -378,8 +395,22 @@ public class TypeChecking extends DefaultVisitor {
 		// functionCallExpression.getExpressions().forEach(expression ->
 		// expression.accept(this, param));
 		super.visit(functionCallExpression, param);
-		functionCallExpression
-				.setExpressionType(functionCallExpression.getFunctionDefinition().getType().orElse(new VoidType()));
+		
+		functionCallExpression.setExpressionType(functionCallExpression.getFunctionDefinition().getType().orElse(new VoidType()));
+		
+		List<Param> paramDefinitions = functionCallExpression.getFunctionDefinition().getParams();
+		List<Expression> params = functionCallExpression.getExpressions();
+		if(paramDefinitions.size() != params.size()) {
+			notifyError("ERROR: número erróneo de argumentos", functionCallExpression.start());
+			return null;
+		}
+		
+		for(int i = 0 ; i < params.size() ; i++) {
+			if(!areTypesEqual(params.get(i).getExpressionType(), paramDefinitions.get(i).getType())) {
+				notifyError("ERROR: ERROR: argument type", functionCallExpression.start());
+			}
+		}
+		
 		return null;
 	}
 
@@ -417,6 +448,14 @@ public class TypeChecking extends DefaultVisitor {
 	// # ----------------------------------------------------------
 	// # Auxiliary methods (optional)
 
+	private void primitiveTypes(List<Expression> list) {
+		for(Expression e : list) {
+			if(!primitiveType(e.getExpressionType())) {
+				notifyError("ERROR: Se esperaba un tipo simple", e.start());
+			}
+		}
+	}
+	
 	private boolean primitiveType(Type type) {
 		return (type.getClass() == IntType.class)
 				|| (type.getClass() == CharType.class)
@@ -498,6 +537,14 @@ public class TypeChecking extends DefaultVisitor {
 		}
 		return false;
 	}
+	
+	private boolean hasProperty(FieldAccess fieldAccess) {
+		if(fieldAccess.getAttrDefinition() == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	private boolean isStruct(FieldAccess fieldAccess) {
 		if (fieldAccess.getExpr().getExpressionType() instanceof StructType) {
@@ -533,18 +580,22 @@ public class TypeChecking extends DefaultVisitor {
 			case "/":
 			case "+":
 			case "-":
-				if (!(arithmetic.getLeft().getExpressionType() instanceof IntType
-						&& arithmetic.getRight().getExpressionType() instanceof IntType)
-						&& !(arithmetic.getLeft().getExpressionType() instanceof FloatType
-								&& arithmetic.getRight().getExpressionType() instanceof FloatType)) {
+				if (!(arithmetic.getLeft().getExpressionType() instanceof IntType || arithmetic.getLeft().getExpressionType() instanceof FloatType) ||
+						!(arithmetic.getRight().getExpressionType() instanceof IntType || arithmetic.getRight().getExpressionType() instanceof FloatType)) {
 					notifyError("ERROR: ambos operandos tienen que ser enteros o float", arithmetic.start());
+					arithmetic.setExpressionType(new ErrorType());
+				} else {
+					arithmetic.setExpressionType(arithmetic.getLeft().getExpressionType());
 				}
 				break;
 			case "%":
 				if(!(arithmetic.getLeft().getExpressionType() instanceof IntType
 						&& arithmetic.getRight().getExpressionType() instanceof IntType)) {
 					notifyError("ERROR: ambos operandos tienen que ser enteros", arithmetic.start());
-				} 
+					arithmetic.setExpressionType(new ErrorType());
+				} else {
+					arithmetic.setExpressionType(arithmetic.getLeft().getExpressionType());
+				}
 				break;
 		}
 	}
@@ -564,6 +615,8 @@ public class TypeChecking extends DefaultVisitor {
 	}
 	
 	private void checkArgumentTypes(FunctionCallStatement functionCallStatement) {
+		super.visit(functionCallStatement, null);
+		
 		List<Param> paramDefinitions = functionCallStatement.getFunctionDefinition().getParams();
 		List<Expression> params = functionCallStatement.getExpressions();
 		if(paramDefinitions.size() != params.size()) {

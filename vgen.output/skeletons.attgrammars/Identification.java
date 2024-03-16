@@ -401,4 +401,11 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	// class ErrorType(String msg)
+	@Override
+	public Object visit(ErrorType errorType, Object param) {
+
+		return null;
+	}
+
 }

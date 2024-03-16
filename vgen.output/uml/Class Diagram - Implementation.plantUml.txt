@@ -240,4 +240,9 @@ class VoidType {
 }
 AbstractType <|-[#808080]- VoidType
 
+class ErrorType {
+	+String msg
+}
+AbstractType <|-[#808080]- ErrorType
+
 @enduml
