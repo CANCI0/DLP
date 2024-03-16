@@ -163,7 +163,8 @@ public class TypeChecking extends DefaultVisitor {
 		// println.getExpressions().forEach(expression -> expression.accept(this,
 		// param));
 		super.visit(println, param);
-
+		primitiveTypes(println.getExpressions());
+		
 		return null;
 	}
 
@@ -174,9 +175,7 @@ public class TypeChecking extends DefaultVisitor {
 		// printsp.getExpressions().forEach(expression -> expression.accept(this,
 		// param));
 		super.visit(printsp, param);
-		for (Expression e : printsp.getExpressions()) {
-			predicate(primitiveType(e.getExpressionType()), "ERROR: El parámetro no es primitivo", printsp);
-		}
+		primitiveTypes(printsp.getExpressions());
 
 		return null;
 	}
@@ -195,7 +194,6 @@ public class TypeChecking extends DefaultVisitor {
 	// class Assignment(Expression left, Expression right)
 	@Override
 	public Object visit(Assignment assignment, Object param) {
-
 		// assignment.getLeft().accept(this, param);
 		// assignment.getRight().accept(this, param);
 		super.visit(assignment, param);

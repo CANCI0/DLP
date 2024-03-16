@@ -104,6 +104,7 @@ public class Identification extends DefaultVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object param) {
+    	super.visit(functionDefinition, param);
     	variables.set();
         var definition = functions.get(functionDefinition.getName());
         if (definition != null)
@@ -126,89 +127,14 @@ public class Identification extends DefaultVisitor {
         	if(functionDefinition.getParams().stream().anyMatch(x -> Objects.equals(x.getName(), varDefinition.getName()))) {
         		notifyError("Variable already defined in params: " + varDefinition.getName(), varDefinition);
         	}
-        	visit(varDefinition, null);
         }
-        functionDefinition.getStatements().forEach(statement -> statement.accept(this, param));
         variables.reset();
         return null;
     }
 
 	@Override
-	public Object visit(Param param_, Object param) {
-
-		param_.getType().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(AttrDefinition attrDefinition, Object param) {
-		
-		attrDefinition.getType().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(Read read, Object param) {
-
-		read.getExpression().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(Print print, Object param) {
-
-		print.getExpressions().forEach(expression -> expression.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Println println, Object param) {
-
-		println.getExpressions().forEach(expression -> expression.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Printsp printsp, Object param) {
-
-		printsp.getExpressions().forEach(expression -> expression.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Return returnValue, Object param) {
-
-		returnValue.getExpression().ifPresent(expression -> expression.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Assignment assignment, Object param) {
-
-		assignment.getLeft().accept(this, param);
-		assignment.getRight().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(While whileValue, Object param) {
-
-		whileValue.getExpression().accept(this, param);
-		whileValue.getStatements().forEach(statement -> statement.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Ifelse ifelse, Object param) {
-
-		ifelse.getCond().accept(this, param);
-		ifelse.getTr().forEach(statement -> statement.accept(this, param));
-		ifelse.getFs().forEach(statement -> statement.accept(this, param));
-		return null;
-	}
-
-	@Override
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
+		super.visit(functionCallStatement, param);
 		FunctionDefinition functionDefinition = functions.get(functionCallStatement.getName());
 		if(functionDefinition == null) {
 			notifyError("Undefined function: " + functionCallStatement.getName(), functionCallStatement);
@@ -220,55 +146,8 @@ public class Identification extends DefaultVisitor {
 	}
 
 	@Override
-	public Object visit(IntLiteral intLiteral, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(FloatLiteral floatLiteral, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(CharLiteral charLiteral, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ArrayAccess arrayAccess, Object param) {
-
-		arrayAccess.getExpr1().accept(this, param);
-		arrayAccess.getExpr2().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(FieldAccess fieldAccess, Object param) {
-		fieldAccess.getExpr().accept(this, param);
-		
-	    return null;
-	}
-
-	@Override
-	public Object visit(Not not, Object param) {
-
-		not.getExpression().accept(this, param);
-		return null;
-	}
-
-	@Override
-	public Object visit(Arithmetic arithmetic, Object param) {
-
-		arithmetic.getLeft().accept(this, param);
-		arithmetic.getRight().accept(this, param);
-		return null;
-	}
-
-	@Override
     public Object visit(Variable variable, Object param) {
+		super.visit(variable, param);
         var definition = variables.getFromAny(variable.getName());
         if (definition == null)
             notifyError("Undefined variable: " + variable.getName(), variable);
@@ -278,15 +157,8 @@ public class Identification extends DefaultVisitor {
     }
 
 	@Override
-	public Object visit(Cast cast, Object param) {
-
-		cast.getType().accept(this, param);
-		cast.getExpression().accept(this, param);
-		return null;
-	}
-
-	@Override
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
+		super.visit(functionCallExpression, param);
 		FunctionDefinition functionDefinition = functions.get(functionCallExpression.getName());
 		if(functionDefinition == null) {
 			notifyError("Undefined function: " + functionCallExpression.getName(), functionCallExpression);
@@ -296,32 +168,7 @@ public class Identification extends DefaultVisitor {
 		functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
 		return null;
 	}
-
-	@Override
-	public Object visit(IntType intType, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(FloatType floatType, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(CharType charType, Object param) {
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ArrayType arrayType, Object param) {
-
-		arrayType.getType().accept(this, param);
-		return null;
-	}
-
+	
 	@Override
 	public Object visit(StructType structType, Object param) {
 		StructDefinition struct = structs.get(structType.getName());
