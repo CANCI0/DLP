@@ -82,6 +82,7 @@ public class Identification extends DefaultVisitor {
 
     @Override
     public Object visit(StructDefinition structDefinition, Object param) {
+    	super.visit(structDefinition, param);
         var definition = structs.get(structDefinition.getName());
         if (definition != null)
         	notifyError("Struct already defined: " + structDefinition.getName(), structDefinition);

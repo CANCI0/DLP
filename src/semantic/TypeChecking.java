@@ -139,7 +139,9 @@ public class TypeChecking extends DefaultVisitor {
 
 		// read.getExpression().accept(this, param);
 		super.visit(read, param);
-
+		predicate(primitiveType(read.getExpression().getExpressionType()), "ERROR: no es un tipo simple", read);
+		predicate(read.getExpression().isLvalue(), "ERROR: no es LValue", read);
+		
 		return null;
 	}
 
@@ -201,7 +203,8 @@ public class TypeChecking extends DefaultVisitor {
 				"ERROR: el de la izquierda no es un tipo simple", assignment);
 		predicate(areTypesEqual(assignment.getLeft().getExpressionType(), assignment.getRight().getExpressionType()),
 				"ERROR: no son del mismo tipo", assignment);
-
+		predicate(assignment.getLeft().isLvalue(), "ERROR: No es LValue", assignment);
+		
 		return null;
 	}
 
@@ -247,6 +250,8 @@ public class TypeChecking extends DefaultVisitor {
 	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
 		intLiteral.setExpressionType(new IntType());
+		intLiteral.setLvalue(false);
+		
 		return null;
 	}
 
@@ -254,6 +259,8 @@ public class TypeChecking extends DefaultVisitor {
 	@Override
 	public Object visit(FloatLiteral floatLiteral, Object param) {
 		floatLiteral.setExpressionType(new FloatType());
+		floatLiteral.setLvalue(false);
+		
 		return null;
 	}
 
@@ -261,6 +268,8 @@ public class TypeChecking extends DefaultVisitor {
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
 		charLiteral.setExpressionType(new CharType());
+		charLiteral.setLvalue(false);
+		
 		return null;
 	}
 
@@ -285,7 +294,8 @@ public class TypeChecking extends DefaultVisitor {
 		}
 		predicate(isAccesible(arrayAccess), "ERROR: acceso a no-array", arrayAccess);
 		predicate(isInt(arrayAccess.getExpr2()), "ERROR: acceso a array con indice no entero", arrayAccess);
-
+		arrayAccess.setLvalue(true);
+		
 		return null;
 	}
 
@@ -318,11 +328,10 @@ public class TypeChecking extends DefaultVisitor {
 			predicate(hasProperty, "ERROR: La propiedad del struct no existe", fieldAccess);
 		}
 
-		if(isStruct && hasProperty) {
-			fieldAccess.setExpressionType(fieldAccess.getAttrDefinition().getType());
-		} else {
+		if(!isStruct || !hasProperty) {
 			fieldAccess.setExpressionType(new ErrorType());
-		}
+		} 
+		fieldAccess.setLvalue(true);
 		
 		return null;
 	}
@@ -334,7 +343,9 @@ public class TypeChecking extends DefaultVisitor {
 		// not.getExpression().accept(this, param);
 		super.visit(not, param);
 		predicate(isInt(not.getExpression()), "ERROR: El operando debe ser entero", not);
-		not.setExpressionType(not.getExpression().getExpressionType());
+		not.setExpressionType(new IntType());
+		not.setLvalue(false);
+		
 		return null;
 	}
 
@@ -350,6 +361,7 @@ public class TypeChecking extends DefaultVisitor {
 		if(!areTypesEqual(arithmetic.getLeft().getExpressionType(), arithmetic.getRight().getExpressionType())) {
 			arithmetic.setExpressionType(new ErrorType());
 		}
+		arithmetic.setLvalue(false);
 		
 		return null;
 	}
@@ -357,9 +369,18 @@ public class TypeChecking extends DefaultVisitor {
 	@Override
 	public Object visit(Logic logic, Object param) {
 		super.visit(logic, param);
-		predicate(isInt(logic.getLeft()) || isFloat(logic.getLeft()), "ERROR: El primer operando debe ser entero", logic);
-		predicate(isInt(logic.getRight()) || isFloat(logic.getRight()), "ERROR: El segundo operando debe ser entero", logic);
-		logic.setExpressionType(new IntType());
+		predicate(isInt(logic.getLeft()) || isFloat(logic.getLeft()), "ERROR: El primer operando debe ser entero o float", logic);
+		predicate(isInt(logic.getRight()) || isFloat(logic.getRight()), "ERROR: El segundo operando debe ser entero o float", logic);
+		
+		if(logic.getLeft().getExpressionType() instanceof IntType && logic.getRight().getExpressionType() instanceof IntType) {
+			logic.setExpressionType(new IntType());
+		} else if(logic.getLeft().getExpressionType() instanceof FloatType && logic.getRight().getExpressionType() instanceof FloatType) {
+			logic.setExpressionType(new IntType());
+		} else {
+			logic.setExpressionType(new ErrorType());
+		}
+		logic.setLvalue(false);
+		
 		return null;
 	}
 
@@ -367,8 +388,9 @@ public class TypeChecking extends DefaultVisitor {
 	// phase Identification { VarDefinition varDefinition }
 	@Override
 	public Object visit(Variable variable, Object param) {
-
 		variable.setExpressionType(variable.getVarDefinition().getType());
+		variable.setLvalue(true);
+		
 		return null;
 	}
 
@@ -384,6 +406,8 @@ public class TypeChecking extends DefaultVisitor {
 		predicate(!areTypesEqual(cast.getType(), cast.getExpression().getExpressionType()), "ERROR: el tipo de la expresión y el tipo destino deben ser distintos", cast);
 		
 		cast.setExpressionType(cast.getType());
+		cast.setLvalue(false);
+		
 		return null;
 	}
 
@@ -410,6 +434,7 @@ public class TypeChecking extends DefaultVisitor {
 				notifyError("ERROR: ERROR: argument type", functionCallExpression.start());
 			}
 		}
+		functionCallExpression.setLvalue(false);
 		
 		return null;
 	}
