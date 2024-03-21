@@ -96,14 +96,7 @@ public class TypeChecking extends DefaultVisitor {
 	// type, List<VarDefinition> varDefinitions, List<Statement> statements)
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
-
-		// functionDefinition.getParams().forEach(param_ -> param_.accept(this, param));
-		// functionDefinition.getType().ifPresent(type -> type.accept(this, param));
-		// functionDefinition.getVarDefinitions().forEach(varDefinition ->
-		// varDefinition.accept(this, param));
-		// functionDefinition.getStatements().forEach(statement ->
-		// statement.accept(this, param));
-		super.visit(functionDefinition, param);
+		super.visit(functionDefinition, functionDefinition.getType());
 
 		predicate(primitiveOrVoid(functionDefinition.getType()), "ERROR. Tipo de retorno debe ser simple o void",
 				functionDefinition);
@@ -183,10 +176,19 @@ public class TypeChecking extends DefaultVisitor {
 	// class Return(Optional<Expression> expression)
 	@Override
 	public Object visit(Return returnValue, Object param) {
-
-		// returnValue.getExpression().ifPresent(expression -> expression.accept(this,
-		// param));
 		super.visit(returnValue, param);
+		Optional<Type> functionReturnType = (Optional<Type>) param;
+		Type type = functionReturnType.orElse(new VoidType());
+		
+		if(type instanceof VoidType) {
+			if(returnValue.getExpression().isPresent()) {
+				notifyError("ERROR: Una función con tipo de retorno void no puede devolver nada", returnValue.start());
+			}
+		} else {
+			if(returnValue.getExpression().isEmpty()) {
+				notifyError("ERROR: Una función con tipo de retorno debe devolver un valor", returnValue.start());
+			}
+		}
 
 		return null;
 	}
@@ -209,24 +211,20 @@ public class TypeChecking extends DefaultVisitor {
 	// class While(Expression expression, List<Statement> statements)
 	@Override
 	public Object visit(While whileValue, Object param) {
-
-		// whileValue.getExpression().accept(this, param);
-		// whileValue.getStatements().forEach(statement -> statement.accept(this,
-		// param));
 		super.visit(whileValue, param);
 
+		predicate(isInt(whileValue.getExpression()), "ERROR: La condición debe ser int", whileValue);
+		
 		return null;
 	}
 
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
-
-		// ifelse.getCond().accept(this, param);
-		// ifelse.getTr().forEach(statement -> statement.accept(this, param));
-		// ifelse.getFs().forEach(statement -> statement.accept(this, param));
 		super.visit(ifelse, param);
 
+		predicate(isInt(ifelse.getCond()), "ERROR: La condición debe ser int", ifelse);
+		
 		return null;
 	}
 
