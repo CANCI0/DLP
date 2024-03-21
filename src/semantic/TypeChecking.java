@@ -73,7 +73,7 @@ public class TypeChecking extends DefaultVisitor {
 				functionDefinition);
 		List<VarDefinition> params = functionDefinition.getParams();
 		for(VarDefinition param_ : params) {
-			predicate(primitiveType(param_.getType()),"ERROR: El tipo del parámtro debe ser simple", param_);
+			predicate(primitiveType(param_.getType()),"ERROR: El tipo del parï¿½mtro debe ser simple", param_);
 		}
 
 		return null;
@@ -393,37 +393,6 @@ public class TypeChecking extends DefaultVisitor {
 		}
 		functionCallExpression.setLvalue(false);
 		
-		return null;
-	}
-
-	// class IntType()
-	@Override
-	public Object visit(IntType intType, Object param) {
-
-		return null;
-	}
-
-	// class RealType()
-	@Override
-	public Object visit(FloatType floatType, Object param) {
-
-		return null;
-	}
-
-	// class CharType()
-	@Override
-	public Object visit(CharType charType, Object param) {
-
-		return null;
-	}
-
-	// class ArrayType(int intValue, Type type)
-	@Override
-	public Object visit(ArrayType arrayType, Object param) {
-
-		// arrayType.getType().accept(this, param);
-		super.visit(arrayType, param);
-
 		return null;
 	}
 
