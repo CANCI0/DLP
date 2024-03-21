@@ -2,7 +2,6 @@
 
 package ast.definition;
 
-import ast.*;
 import ast.type.*;
 import ast.statement.*;
 import java.util.List;
@@ -19,7 +18,7 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	functionDefinition: definition -> name:string params:param* type:type? varDefinitions:varDefinition* statements:statement*
+	functionDefinition: definition -> name:string params:varDefinition* type:type? definitions:varDefinition* statements:statement*
 	definition -> 
 */
 public class FunctionDefinition extends AbstractDefinition  {
@@ -27,17 +26,17 @@ public class FunctionDefinition extends AbstractDefinition  {
     // ----------------------------------
     // Instance Variables
 
-	// functionDefinition: definition -> string param* type? varDefinition* statement*
+	// functionDefinition: definition -> string params:varDefinition* type? definitions:varDefinition* statement*
 	private String name;
-	private List<Param> params;
+	private List<VarDefinition> params;
 	private Optional<Type> type;
-	private List<VarDefinition> varDefinitions;
+	private List<VarDefinition> definitions;
 	private List<Statement> statements;
 
     // ----------------------------------
     // Constructors
 
-	public FunctionDefinition(String name, List<Param> params, Optional<Type> type, List<VarDefinition> varDefinitions, List<Statement> statements) {
+	public FunctionDefinition(String name, List<VarDefinition> params, Optional<Type> type, List<VarDefinition> definitions, List<Statement> statements) {
 		super();
 
 		if (name == null)
@@ -52,34 +51,34 @@ public class FunctionDefinition extends AbstractDefinition  {
 			type = Optional.empty();
 		this.type = type;
 
-		if (varDefinitions == null)
-			varDefinitions = new ArrayList<>();
-		this.varDefinitions = varDefinitions;
+		if (definitions == null)
+			definitions = new ArrayList<>();
+		this.definitions = definitions;
 
 		if (statements == null)
 			statements = new ArrayList<>();
 		this.statements = statements;
 
-		updatePositions(name, params, type, varDefinitions, statements);
+		updatePositions(name, params, type, definitions, statements);
 	}
 
-	public FunctionDefinition(Object name, Object params, Object type, Object varDefinitions, Object statements) {
+	public FunctionDefinition(Object name, Object params, Object type, Object definitions, Object statements) {
 		super();
 
         if (name == null)
             throw new IllegalArgumentException("Parameter 'name' can't be null. Pass a non-null value or use 'string?' in the abstract grammar");
 		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-        this.params = castList(params, unwrapIfContext.andThen(Param.class::cast));
+        this.params = castList(params, unwrapIfContext.andThen(VarDefinition.class::cast));
         this.type = castOptional(type, Type.class);
-        this.varDefinitions = castList(varDefinitions, unwrapIfContext.andThen(VarDefinition.class::cast));
+        this.definitions = castList(definitions, unwrapIfContext.andThen(VarDefinition.class::cast));
         this.statements = castList(statements, unwrapIfContext.andThen(Statement.class::cast));
-		updatePositions(name, params, type, varDefinitions, statements);
+		updatePositions(name, params, type, definitions, statements);
 	}
 
 
     // ----------------------------------
-    // functionDefinition: definition -> string param* type? varDefinition* statement*
+    // functionDefinition: definition -> string params:varDefinition* type? definitions:varDefinition* statement*
 
 	// Child 'string' 
 
@@ -95,20 +94,20 @@ public class FunctionDefinition extends AbstractDefinition  {
     }
 
 
-	// Child 'param*' 
+	// Child 'params:varDefinition*' 
 
-	public void setParams(List<Param> params) {
+	public void setParams(List<VarDefinition> params) {
 		if (params == null)
 			params = new ArrayList<>();
 		this.params = params;
 
 	}
 
-    public List<Param> getParams() {
+    public List<VarDefinition> getParams() {
         return params;
     }
 
-    public Stream<Param> params() {
+    public Stream<VarDefinition> params() {
         return params.stream();
     }
 
@@ -127,21 +126,21 @@ public class FunctionDefinition extends AbstractDefinition  {
     }
 
 
-	// Child 'varDefinition*' 
+	// Child 'definitions:varDefinition*' 
 
-	public void setVarDefinitions(List<VarDefinition> varDefinitions) {
-		if (varDefinitions == null)
-			varDefinitions = new ArrayList<>();
-		this.varDefinitions = varDefinitions;
+	public void setDefinitions(List<VarDefinition> definitions) {
+		if (definitions == null)
+			definitions = new ArrayList<>();
+		this.definitions = definitions;
 
 	}
 
-    public List<VarDefinition> getVarDefinitions() {
-        return varDefinitions;
+    public List<VarDefinition> getDefinitions() {
+        return definitions;
     }
 
-    public Stream<VarDefinition> varDefinitions() {
-        return varDefinitions.stream();
+    public Stream<VarDefinition> definitions() {
+        return definitions.stream();
     }
 
 
@@ -173,7 +172,7 @@ public class FunctionDefinition extends AbstractDefinition  {
 
     @Override
     public String toString() {
-        return "FunctionDefinition{" + " name=" + this.getName() + " params=" + this.getParams() + " type=" + this.getType() + " varDefinitions=" + this.getVarDefinitions() + " statements=" + this.getStatements() + "}";
+        return "FunctionDefinition{" + " name=" + this.getName() + " params=" + this.getParams() + " type=" + this.getType() + " definitions=" + this.getDefinitions() + " statements=" + this.getStatements() + "}";
     }
 
 

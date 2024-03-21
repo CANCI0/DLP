@@ -5,46 +5,17 @@
 
 package semantic;
 
+import ast.expression.*;
+import ast.statement.*;
+import ast.definition.*;
+import ast.type.*;
+import main.ErrorManager;
+import visitor.DefaultVisitor;
+
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import ast.*;
-import ast.definition.FunctionDefinition;
-import ast.definition.StructDefinition;
-import ast.definition.VarDefinition;
-import ast.expression.Arithmetic;
-import ast.expression.ArrayAccess;
-import ast.expression.Cast;
-import ast.expression.CharLiteral;
-import ast.expression.Expression;
-import ast.expression.FieldAccess;
-import ast.expression.FloatLiteral;
-import ast.expression.FunctionCallExpression;
-import ast.expression.IntLiteral;
-import ast.expression.Logic;
-import ast.expression.Not;
-import ast.expression.Variable;
-import ast.statement.Assignment;
-import ast.statement.FunctionCallStatement;
-import ast.statement.Ifelse;
-import ast.statement.Print;
-import ast.statement.Println;
-import ast.statement.Printsp;
-import ast.statement.Read;
-import ast.statement.Return;
-import ast.statement.While;
-import ast.type.ArrayType;
-import ast.type.CharType;
-import ast.type.ErrorType;
-import ast.type.FloatType;
-import ast.type.IdentType;
-import ast.type.IntType;
-import ast.type.StructType;
-import ast.type.Type;
-import ast.type.VoidType;
-import main.ErrorManager;
-import visitor.DefaultVisitor;
 
 // This class will be implemented in type checking phase
 
@@ -100,18 +71,10 @@ public class TypeChecking extends DefaultVisitor {
 
 		predicate(primitiveOrVoid(functionDefinition.getType()), "ERROR. Tipo de retorno debe ser simple o void",
 				functionDefinition);
-
-		return null;
-	}
-
-	// class Param(String name, Type type)
-	@Override
-	public Object visit(Param param_, Object param) {
-
-		// param_.getType().accept(this, param);
-		super.visit(param_, param);
-
-		predicate(primitiveType(param_.getType()), "ERROR. Tipo del par�metro debe ser simple", param_);
+		List<VarDefinition> params = functionDefinition.getParams();
+		for(VarDefinition param_ : params) {
+			predicate(primitiveType(param_.getType()),"ERROR: El tipo del par�mtro debe ser simple", param_);
+		}
 
 		return null;
 	}
@@ -187,6 +150,8 @@ public class TypeChecking extends DefaultVisitor {
 		} else {
 			if(returnValue.getExpression().isEmpty()) {
 				notifyError("ERROR: Una función con tipo de retorno debe devolver un valor", returnValue.start());
+			} else if(!areTypesEqual(returnValue.getExpression().get().getExpressionType(), type) ) {
+				notifyError("ERROR: El tipo de retorno no coincide con el del return", returnValue.start());
 			}
 		}
 
@@ -365,12 +330,10 @@ public class TypeChecking extends DefaultVisitor {
 	@Override
 	public Object visit(Logic logic, Object param) {
 		super.visit(logic, param);
-		predicate(isInt(logic.getLeft()) || isFloat(logic.getLeft()), "ERROR: El primer operando debe ser entero o float", logic);
-		predicate(isInt(logic.getRight()) || isFloat(logic.getRight()), "ERROR: El segundo operando debe ser entero o float", logic);
+		predicate(isInt(logic.getLeft()), "ERROR: El primer operando debe ser entero", logic);
+		predicate(isInt(logic.getRight()), "ERROR: El segundo operando debe ser entero", logic);
 		
 		if(logic.getLeft().getExpressionType() instanceof IntType && logic.getRight().getExpressionType() instanceof IntType) {
-			logic.setExpressionType(new IntType());
-		} else if(logic.getLeft().getExpressionType() instanceof FloatType && logic.getRight().getExpressionType() instanceof FloatType) {
 			logic.setExpressionType(new IntType());
 		} else {
 			logic.setExpressionType(new ErrorType());
@@ -411,17 +374,15 @@ public class TypeChecking extends DefaultVisitor {
 	// phase Identification { FunctionDefinition functionDefinition }
 	@Override
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
-
-		// functionCallExpression.getExpressions().forEach(expression ->
-		// expression.accept(this, param));
 		super.visit(functionCallExpression, param);
 		
 		functionCallExpression.setExpressionType(functionCallExpression.getFunctionDefinition().getType().orElse(new VoidType()));
 		
-		List<Param> paramDefinitions = functionCallExpression.getFunctionDefinition().getParams();
+		List<VarDefinition> paramDefinitions = functionCallExpression.getFunctionDefinition().getParams();
 		List<Expression> params = functionCallExpression.getExpressions();
 		if(paramDefinitions.size() != params.size()) {
 			notifyError("ERROR: número erróneo de argumentos", functionCallExpression.start());
+			functionCallExpression.setLvalue(false);
 			return null;
 		}
 		
@@ -550,14 +511,6 @@ public class TypeChecking extends DefaultVisitor {
 		// Si todas las comprobaciones pasan, los structs son iguales
 		return true;
 	}
-
-	private boolean checkLValueSimpleType(Assignment assignment) {
-		Expression left = assignment.getLeft();
-		if (primitiveType(left.getExpressionType())) {
-			return true;
-		}
-		return false;
-	}
 	
 	private boolean hasProperty(FieldAccess fieldAccess) {
 		if(fieldAccess.getAttrDefinition() == null) {
@@ -583,13 +536,6 @@ public class TypeChecking extends DefaultVisitor {
 
 	private boolean isInt(Expression expr) {
 		if (expr.getExpressionType() instanceof IntType) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean isFloat(Expression expr) {
-		if (expr.getExpressionType() instanceof FloatType) {
 			return true;
 		}
 		return false;
@@ -638,7 +584,7 @@ public class TypeChecking extends DefaultVisitor {
 	private void checkArgumentTypes(FunctionCallStatement functionCallStatement) {
 		super.visit(functionCallStatement, null);
 		
-		List<Param> paramDefinitions = functionCallStatement.getFunctionDefinition().getParams();
+		List<VarDefinition> paramDefinitions = functionCallStatement.getFunctionDefinition().getParams();
 		List<Expression> params = functionCallStatement.getExpressions();
 		if(paramDefinitions.size() != params.size()) {
 			notifyError("ERROR: número erróneo de argumentos", functionCallStatement.start());

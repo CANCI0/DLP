@@ -414,7 +414,7 @@ public class GrammarParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParamsContext extends ParserRuleContext {
-		public List<Param> list = new ArrayList<Param>();
+		public List<VarDefinition> list = new ArrayList<VarDefinition>();
 		public ParamContext param;
 		public List<ParamContext> param() {
 			return getRuleContexts(ParamContext.class);
@@ -478,7 +478,7 @@ public class GrammarParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParamContext extends ParserRuleContext {
-		public Param ast;
+		public VarDefinition ast;
 		public Token IDENT;
 		public TypeContext type;
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
@@ -503,7 +503,7 @@ public class GrammarParser extends Parser {
 			match(T__5);
 			setState(95);
 			((ParamContext)_localctx).type = type();
-			 ((ParamContext)_localctx).ast =  new Param(((ParamContext)_localctx).IDENT, ((ParamContext)_localctx).type.ast); 
+			 ((ParamContext)_localctx).ast =  new VarDefinition(((ParamContext)_localctx).IDENT, ((ParamContext)_localctx).type.ast); 
 			}
 		}
 		catch (RecognitionException re) {

@@ -106,25 +106,15 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class FunctionDefinition(String name, List<Param> params, Optional<Type> type, List<VarDefinition> varDefinitions, List<Statement> statements)
+	// class FunctionDefinition(String name, List<VarDefinition> params, Optional<Type> type, List<VarDefinition> definitions, List<Statement> statements)
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
 
-		// functionDefinition.getParams().forEach(param_ -> param_.accept(this, param));
+		// functionDefinition.getParams().forEach(varDefinition -> varDefinition.accept(this, param));
 		// functionDefinition.getType().ifPresent(type -> type.accept(this, param));
-		// functionDefinition.getVarDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
+		// functionDefinition.getDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
 		// functionDefinition.getStatements().forEach(statement -> statement.accept(this, param));
 		super.visit(functionDefinition, param);
-
-		return null;
-	}
-
-	// class Param(String name, Type type)
-	@Override
-	public Object visit(Param param_, Object param) {
-
-		// param_.getType().accept(this, param);
-		super.visit(param_, param);
 
 		return null;
 	}

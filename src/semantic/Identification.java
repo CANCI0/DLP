@@ -2,41 +2,16 @@ package semantic;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import ast.*;
-import ast.definition.FunctionDefinition;
-import ast.definition.StructDefinition;
-import ast.definition.VarDefinition;
-import ast.expression.Arithmetic;
-import ast.expression.ArrayAccess;
-import ast.expression.Cast;
-import ast.expression.CharLiteral;
-import ast.expression.FieldAccess;
-import ast.expression.FloatLiteral;
-import ast.expression.FunctionCallExpression;
-import ast.expression.IntLiteral;
-import ast.expression.Not;
-import ast.expression.Variable;
-import ast.statement.Assignment;
-import ast.statement.FunctionCallStatement;
-import ast.statement.Ifelse;
-import ast.statement.Print;
-import ast.statement.Println;
-import ast.statement.Printsp;
-import ast.statement.Read;
-import ast.statement.Return;
-import ast.statement.While;
-import ast.type.ArrayType;
-import ast.type.CharType;
-import ast.type.FloatType;
-import ast.type.IdentType;
-import ast.type.IntType;
-import ast.type.StructType;
-import ast.type.Type;
+import ast.definition.*;
+import ast.expression.*;
+import ast.statement.*;
+import ast.type.*;
 import main.ErrorManager;
 import visitor.DefaultVisitor;
 
@@ -104,7 +79,6 @@ public class Identification extends DefaultVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object param) {
-    	super.visit(functionDefinition, param);
     	variables.set();
         var definition = functions.get(functionDefinition.getName());
         if (definition != null)
@@ -112,9 +86,11 @@ public class Identification extends DefaultVisitor {
         else
         	functions.put(functionDefinition.getName(), functionDefinition);
         
+        super.visit(functionDefinition, param);
+        
         Set<String> params = new HashSet<String>();
-        //Comprobamos que no haya parametros repetidos
-        for(Param attr : functionDefinition.getParams()) {
+        //Comprobamos que no haya parametros repetidos y que sean de tipo simple
+        for(VarDefinition attr : functionDefinition.getParams()) {
         	if(params.contains(attr.getName())) {
         		notifyError("Param already defined: " + attr.getName(), attr);
         	}else {
@@ -123,7 +99,7 @@ public class Identification extends DefaultVisitor {
         }
         
         //Comprobamos que las varDefinitions de la funcion no coincidan con ningun parametro
-        for(var varDefinition : functionDefinition.getVarDefinitions()) {
+        for(var varDefinition : functionDefinition.getDefinitions()) {
         	if(functionDefinition.getParams().stream().anyMatch(x -> Objects.equals(x.getName(), varDefinition.getName()))) {
         		notifyError("Variable already defined in params: " + varDefinition.getName(), varDefinition);
         	}

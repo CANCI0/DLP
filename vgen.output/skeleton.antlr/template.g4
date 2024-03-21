@@ -17,7 +17,7 @@ program returns[Program ast]
 definition returns[Definition ast]
     : name=IDENT type                     { $ast = new VarDefinition($name, $type.ast); }        
     | name=IDENT attrDefinitions+=attrDefinition* { $ast = new StructDefinition($name, $attrDefinitions); }
-    | name=IDENT params+=param* type? varDefinitions+=varDefinition* statements+=statement* { $ast = new FunctionDefinition($name, $params, ($type.ctx == null) ? null : $type.ast, $varDefinitions, $statements); }
+    | name=IDENT params+=varDefinition* type? definitions+=varDefinition* statements+=statement* { $ast = new FunctionDefinition($name, $params, ($type.ctx == null) ? null : $type.ast, $definitions, $statements); }
 	;
 
 type returns[Type ast]
@@ -32,10 +32,6 @@ type returns[Type ast]
 
 attrDefinition returns[AttrDefinition ast]
     : name=IDENT type                     { $ast = new AttrDefinition($name, $type.ast); }       
-	;
-
-param returns[Param ast]
-    : name=IDENT type                     { $ast = new Param($name, $type.ast); }                
 	;
 
 varDefinition returns[VarDefinition ast]

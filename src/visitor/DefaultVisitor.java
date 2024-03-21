@@ -53,17 +53,10 @@ public class DefaultVisitor implements Visitor {
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
 
-		functionDefinition.getParams().forEach(param_ -> param_.accept(this, param));
+		functionDefinition.getParams().forEach(varDefinition -> varDefinition.accept(this, param));
 		functionDefinition.getType().ifPresent(type -> type.accept(this, param));
-		functionDefinition.getVarDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
+		functionDefinition.getDefinitions().forEach(varDefinition -> varDefinition.accept(this, param));
 		functionDefinition.getStatements().forEach(statement -> statement.accept(this, param));
-		return null;
-	}
-
-	@Override
-	public Object visit(Param param_, Object param) {
-
-		param_.getType().accept(this, param);
 		return null;
 	}
 

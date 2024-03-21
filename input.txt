@@ -1,16 +1,5 @@
-// Este test no debe producir NINGÚN error de compilacion
+main(){
+	var f:float;
 
-struct Nombre {
-    letras:[10]char;
-}
-
-struct Persona {
-    nombre:Nombre;
-    edad:int;
-}
-
-main() {
-	var raul:Persona;
-
-    print raul.nombre.letras[1];
+	print 2.5 && f;	// Deben ser tipo entero
 }

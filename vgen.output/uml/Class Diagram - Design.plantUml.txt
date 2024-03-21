@@ -62,16 +62,10 @@ class FunctionDefinition {
 	+String name
 }
 Definition <|-[#808080]- FunctionDefinition
-FunctionDefinition o-[#404040,thickness=2]- "✱" Param : params >
+FunctionDefinition o-[#404040,thickness=2]- "✱" VarDefinition : params >
 FunctionDefinition o-[#404040,thickness=2]- "0..1" Type : type >
-FunctionDefinition o-[#404040,thickness=2]- "✱" VarDefinition : varDefinitions >
+FunctionDefinition o-[#404040,thickness=2]- "✱" VarDefinition : definitions >
 FunctionDefinition o-[#404040,thickness=2]- "✱" Statement : statements >
-
-class Param {
-	+String name
-}
-AST <|-[#808080]- Param
-Param o-[#404040,thickness=2]-  Type : type >
 
 class AttrDefinition {
 	+String name

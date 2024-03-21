@@ -9,9 +9,7 @@ program -> definition*;
 
 varDefinition:definition -> string type;
 structDefinition:definition -> string attrDefinition*;
-functionDefinition:definition -> string param* type? varDefinition* statement*;
-
-param -> string type;
+functionDefinition:definition -> string params:varDefinition* type? definitions:varDefinition* statement*;
 
 attrDefinition -> string type;
 

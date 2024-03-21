@@ -24,12 +24,12 @@ attrDefinition returns[AttrDefinition ast]
     : IDENT ':' type ';'																	{ $ast = new AttrDefinition($IDENT, $type.ast); }
     ;
 
-params returns[List<Param> list = new ArrayList<Param>()]
+params returns[List<VarDefinition> list = new ArrayList<VarDefinition>()]
     : (param { $list.add($param.ast); } (',' param { $list.add($param.ast); })*)?
 	;
 
-param returns[Param ast]
-    : IDENT ':' type																		{ $ast = new Param($IDENT, $type.ast); }
+param returns[VarDefinition ast]
+    : IDENT ':' type																		{ $ast = new VarDefinition($IDENT, $type.ast); }
 	;
 
 varDefinitions returns[List<VarDefinition> list = new ArrayList<VarDefinition>()]

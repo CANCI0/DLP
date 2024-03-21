@@ -28,8 +28,6 @@ public interface Visitor {
 
 	public Object visit(FunctionDefinition functionDefinition, Object param);
 
-	public Object visit(Param param_, Object param);
-
 	public Object visit(AttrDefinition attrDefinition, Object param);
 
 	public Object visit(Read read, Object param);
