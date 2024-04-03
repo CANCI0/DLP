@@ -2,7 +2,6 @@
 
 package ast.expression;
 
-import ast.type.*;
 import ast.definition.*;
 import java.util.List;
 import java.util.ArrayList;

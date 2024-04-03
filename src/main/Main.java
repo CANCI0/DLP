@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ErrorManager errorManager = new ErrorManager();
 
-        var inputFile = TEST_FILE; // TODO: Replace `TEST_FILE` with `args[0]` in the final version
+        var inputFile = TEST_FILE; // Replace `TEST_FILE` with `args[0]` in the final version
 
         System.out.println("\nCompiler started.\n");
 

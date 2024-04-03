@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import ast.*;
 import ast.definition.*;
@@ -156,9 +155,9 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
     
-    private void notifyError(String msg) {
-        errorManager.notify("Identification", msg);
-    }
+    // private void notifyError(String msg) {
+    //     errorManager.notify("Identification", msg);
+    // }
 
     private void notifyError(String msg, Position position) {
         errorManager.notify("Identification", msg, position);

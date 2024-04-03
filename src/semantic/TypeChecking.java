@@ -571,9 +571,9 @@ public class TypeChecking extends DefaultVisitor {
 		errorManager.notify("Type Checking", errorMessage, position);
 	}
 
-	private void notifyError(String msg) {
-		errorManager.notify("Type Checking", msg);
-	}
+	// private void notifyError(String msg) {
+	// 	errorManager.notify("Type Checking", msg);
+	// }
 
 	/**
 	 * predicate. Auxiliary method to implement predicates. Delete if not needed.
