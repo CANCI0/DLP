@@ -129,7 +129,8 @@ public class AstPrinter implements Visitor {
         printNodeChild(indent + 1, "type", "Type", varDefinition.getType());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, varDefinition, "name", "type");
+        printToString(indent + 1, "vgen-attribute-phase-2", "address", "int", varDefinition.getAddress());
+		printUnknownFields(indent + 1, varDefinition, "name", "type", "address");
 		return null;
 	}
 
@@ -143,7 +144,8 @@ public class AstPrinter implements Visitor {
         printListOfNodesChild(indent + 1, "attrDefinitions", "List<AttrDefinition>", structDefinition.getAttrDefinitions());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, structDefinition, "name", "attrDefinitions");
+        printToString(indent + 1, "vgen-attribute-phase-2", "address", "int", structDefinition.getAddress());
+		printUnknownFields(indent + 1, structDefinition, "name", "attrDefinitions", "address");
 		return null;
 	}
 
@@ -160,7 +162,8 @@ public class AstPrinter implements Visitor {
         printListOfNodesChild(indent + 1, "statements", "List<Statement>", functionDefinition.getStatements());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, functionDefinition, "name", "params", "type", "definitions", "statements");
+        printToString(indent + 1, "vgen-attribute-phase-2", "address", "int", functionDefinition.getAddress());
+		printUnknownFields(indent + 1, functionDefinition, "name", "params", "type", "definitions", "statements", "address");
 		return null;
 	}
 
@@ -175,7 +178,8 @@ public class AstPrinter implements Visitor {
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
         printToString(indent + 1, "vgen-attribute-phase-0", "structDefinition", "StructDefinition", attrDefinition.getStructDefinition());
-		printUnknownFields(indent + 1, attrDefinition, "name", "type", "structDefinition");
+        printToString(indent + 1, "vgen-attribute-phase-2", "address", "int", attrDefinition.getAddress());
+		printUnknownFields(indent + 1, attrDefinition, "name", "type", "structDefinition", "address");
 		return null;
 	}
 
@@ -561,10 +565,9 @@ public class AstPrinter implements Visitor {
 		int indent = ((Integer)param);
 
 		// Imprimir los hijos (y recorrer si son nodos del AST)
-        printNonNodeChild(indent + 1, "msg", "String", errorType.getMsg());
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
-		printUnknownFields(indent + 1, errorType, "msg");
+		printUnknownFields(indent + 1, errorType, "");
 		return null;
 	}
 

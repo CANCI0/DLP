@@ -18,6 +18,9 @@ import visitor.Visitor;
 	
 	PHASE Identification
 	attrDefinition -> structDefinition:structDefinition
+	
+	PHASE MemoryAllocation
+	attrDefinition -> address:int
 */
 public class AttrDefinition extends AbstractAST  {
 
@@ -30,6 +33,9 @@ public class AttrDefinition extends AbstractAST  {
 
     // PHASE Identification
 	private StructDefinition structDefinition;
+
+    // PHASE MemoryAllocation
+	private int address;
 
     // ----------------------------------
     // Constructors
@@ -109,6 +115,22 @@ public class AttrDefinition extends AbstractAST  {
 
     public StructDefinition getStructDefinition() {
         return structDefinition;
+    }
+
+
+
+    // --------------------------------
+    // PHASE MemoryAllocation
+
+	// Attribute 'address:int' 
+
+	public void setAddress(int address) {
+		this.address = address;
+
+	}
+
+    public int getAddress() {
+        return address;
     }
 
 

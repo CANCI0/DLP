@@ -3,6 +3,7 @@
 package ast.definition;
 
 import ast.*;
+import org.antlr.v4.runtime.Token;
 
 // %% User Declarations -------------
 
@@ -12,15 +13,25 @@ import ast.*;
 
 /*
 	definition -> 
+	
+	PHASE MemoryAllocation
+	definition -> address:int
 */
 public interface Definition extends AST {
 
 
 
 
-    // %% User Members -------------------------
+    // --------------------------------
+    // PHASE MemoryAllocation
 
-        // Methods/attributes in this section will be preserved. Delete if not needed
+	// Attribute 'address:int' 
+
+	public void setAddress(int address);
+	public int getAddress();
+
+
+    // %% User Members -------------------------
 
     // %% --------------------------------------
 }

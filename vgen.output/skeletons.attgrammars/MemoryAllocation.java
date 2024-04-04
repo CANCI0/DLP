@@ -68,7 +68,7 @@ import ast.expression.*;
 import ast.type.*;
 
 
-public class Identification extends DefaultVisitor {
+public class MemoryAllocation extends DefaultVisitor {
 
     public void process(AST ast) {
         ast.accept(this, null);
@@ -80,6 +80,11 @@ public class Identification extends DefaultVisitor {
 	@Override
 	public Object visit(Program program, Object param) {
 
+		for (var definition : program.getDefinitions()) {
+			// TODO: Remember to initialize INHERITED attributes <----
+			// definition.setAddress(?);
+		}
+
 		// program.getDefinitions().forEach(definition -> definition.accept(this, param));
 		super.visit(program, param);
 
@@ -87,6 +92,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class VarDefinition(String name, Type type)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {
 
@@ -97,8 +103,14 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class StructDefinition(String name, List<AttrDefinition> attrDefinitions)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(StructDefinition structDefinition, Object param) {
+
+		for (var attrDefinition : structDefinition.getAttrDefinitions()) {
+			// TODO: Remember to initialize INHERITED attributes <----
+			// attrDefinition.setAddress(structDefinition.getAddress());
+		}
 
 		// structDefinition.getAttrDefinitions().forEach(attrDefinition -> attrDefinition.accept(this, param));
 		super.visit(structDefinition, param);
@@ -107,8 +119,19 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class FunctionDefinition(String name, List<VarDefinition> params, Optional<Type> type, List<VarDefinition> definitions, List<Statement> statements)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
+
+		for (var varDefinition : functionDefinition.getParams()) {
+			// TODO: Remember to initialize INHERITED attributes <----
+			// varDefinition.setAddress(functionDefinition.getAddress());
+		}
+
+		for (var varDefinition : functionDefinition.getDefinitions()) {
+			// TODO: Remember to initialize INHERITED attributes <----
+			// varDefinition.setAddress(functionDefinition.getAddress());
+		}
 
 		// functionDefinition.getParams().forEach(varDefinition -> varDefinition.accept(this, param));
 		// functionDefinition.getType().ifPresent(type -> type.accept(this, param));
@@ -121,14 +144,13 @@ public class Identification extends DefaultVisitor {
 
 	// class AttrDefinition(String name, Type type)
 	// phase Identification { StructDefinition structDefinition }
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
 
 		// attrDefinition.getType().accept(this, param);
 		super.visit(attrDefinition, param);
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// attrDefinition.setStructDefinition(?);
 		return null;
 	}
 
@@ -224,12 +246,11 @@ public class Identification extends DefaultVisitor {
 		// functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(functionCallStatement, param);
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// functionCallStatement.setFunctionDefinition(?);
 		return null;
 	}
 
 	// class IntLiteral(int intValue)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
 
@@ -237,6 +258,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class FloatLiteral(float floatValue)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(FloatLiteral floatLiteral, Object param) {
 
@@ -244,6 +266,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class CharLiteral(String name)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
 
@@ -252,6 +275,7 @@ public class Identification extends DefaultVisitor {
 
 	// class ArrayAccess(Expression expr1, Expression expr2)
 	// phase Identification { VarDefinition varDefinition }
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(ArrayAccess arrayAccess, Object param) {
 
@@ -259,25 +283,23 @@ public class Identification extends DefaultVisitor {
 		// arrayAccess.getExpr2().accept(this, param);
 		super.visit(arrayAccess, param);
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// arrayAccess.setVarDefinition(?);
 		return null;
 	}
 
 	// class FieldAccess(Expression expr, String name)
 	// phase Identification { AttrDefinition attrDefinition }
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 
 		// fieldAccess.getExpr().accept(this, param);
 		super.visit(fieldAccess, param);
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// fieldAccess.setAttrDefinition(?);
 		return null;
 	}
 
 	// class Not(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Not not, Object param) {
 
@@ -288,6 +310,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class Logic(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Logic logic, Object param) {
 
@@ -299,6 +322,7 @@ public class Identification extends DefaultVisitor {
 	}
 
 	// class Arithmetic(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Arithmetic arithmetic, Object param) {
 
@@ -311,15 +335,15 @@ public class Identification extends DefaultVisitor {
 
 	// class Variable(String name)
 	// phase Identification { VarDefinition varDefinition }
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Variable variable, Object param) {
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// variable.setVarDefinition(?);
 		return null;
 	}
 
 	// class Cast(Type type, Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Cast cast, Object param) {
 
@@ -332,14 +356,13 @@ public class Identification extends DefaultVisitor {
 
 	// class FunctionCallExpression(String name, List<Expression> expressions)
 	// phase Identification { FunctionDefinition functionDefinition }
+	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
 
 		// functionCallExpression.getExpressions().forEach(expression -> expression.accept(this, param));
 		super.visit(functionCallExpression, param);
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// functionCallExpression.setFunctionDefinition(?);
 		return null;
 	}
 
@@ -379,8 +402,6 @@ public class Identification extends DefaultVisitor {
 	@Override
 	public Object visit(StructType structType, Object param) {
 
-		// TODO: Remember to initialize SYNTHESIZED attributes <-----
-		// structType.setStructDefinition(?);
 		return null;
 	}
 

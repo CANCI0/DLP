@@ -80,6 +80,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 	}
 
 	// class VarDefinition(String name, Type type)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {
 
@@ -90,6 +91,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 	}
 
 	// class StructDefinition(String name, List<AttrDefinition> attrDefinitions)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(StructDefinition structDefinition, Object param) {
 
@@ -100,6 +102,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 	}
 
 	// class FunctionDefinition(String name, List<VarDefinition> params, Optional<Type> type, List<VarDefinition> definitions, List<Statement> statements)
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
 
@@ -114,6 +117,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 
 	// class AttrDefinition(String name, Type type)
 	// phase Identification { StructDefinition structDefinition }
+	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(AttrDefinition attrDefinition, Object param) {
 
@@ -381,7 +385,7 @@ public class SkeletonForNewVisitors extends DefaultVisitor {
 		return null;
 	}
 
-	// class ErrorType(String msg)
+	// class ErrorType()
 	@Override
 	public Object visit(ErrorType errorType, Object param) {
 

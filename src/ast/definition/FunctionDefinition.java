@@ -20,6 +20,9 @@ import visitor.Visitor;
 /*
 	functionDefinition: definition -> name:string params:varDefinition* type:type? definitions:varDefinition* statements:statement*
 	definition -> 
+	
+	PHASE MemoryAllocation
+	definition -> address:int
 */
 public class FunctionDefinition extends AbstractDefinition  {
 
@@ -177,8 +180,6 @@ public class FunctionDefinition extends AbstractDefinition  {
 
 
     // %% User Members -------------------------
-
-        // Methods/attributes in this section will be preserved. Delete if not needed
 
     // %% --------------------------------------
 }

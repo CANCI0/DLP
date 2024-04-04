@@ -8,7 +8,7 @@ import visitor.Visitor;
 
 // %% User Declarations -------------
 
-    // Declarations (e.g. imports) in this section will be preserved. Delete if not needed
+import ast.AttrDefinition;
 
 // %% -------------------------------
 
@@ -105,7 +105,14 @@ public class StructType extends AbstractType  {
 
     // %% User Members -------------------------
 
-        // Methods/attributes in this section will be preserved. Delete if not needed
+ 	@Override
+ 	public int getSize() {
+ 		int size = 0;
+ 		for(AttrDefinition attr : getStructDefinition().getAttrDefinitions()) {
+ 			size += attr.getType().getSize();
+ 		}
+ 		return size;
+ 	}
 
     // %% --------------------------------------
 }

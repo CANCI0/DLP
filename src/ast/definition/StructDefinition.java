@@ -18,6 +18,9 @@ import visitor.Visitor;
 /*
 	structDefinition: definition -> name:string attrDefinitions:attrDefinition*
 	definition -> 
+	
+	PHASE MemoryAllocation
+	definition -> address:int
 */
 public class StructDefinition extends AbstractDefinition  {
 

@@ -41,7 +41,7 @@ charType:type -> ;
 arrayType:type -> int type;
 structType:type -> string;
 voidType:type -> ;
-errorType:type -> msg:string;
+errorType:type ->;
 
 // -----------------------
 ATTRIBUTE GRAMMAR Identification
@@ -59,3 +59,8 @@ ATTRIBUTE GRAMMAR TypeChecking
 
 expression -> expressionType:type;
 expression -> lvalue:boolean;
+
+// -----------------------
+ATTRIBUTE GRAMMAR MemoryAllocation
+definition -> [inh] address:int;    	// Inherited attribute
+attrDefinition -> [inh] address:int;	// Inherited attribute

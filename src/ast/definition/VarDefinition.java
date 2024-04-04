@@ -15,6 +15,9 @@ import visitor.Visitor;
 /*
 	varDefinition: definition -> name:string type:type
 	definition -> 
+	
+	PHASE MemoryAllocation
+	definition -> address:int
 */
 public class VarDefinition extends AbstractDefinition  {
 

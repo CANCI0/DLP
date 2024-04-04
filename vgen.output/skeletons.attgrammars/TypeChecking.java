@@ -421,7 +421,7 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
-	// class ErrorType(String msg)
+	// class ErrorType()
 	@Override
 	public Object visit(ErrorType errorType, Object param) {
 

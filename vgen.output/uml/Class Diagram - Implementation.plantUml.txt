@@ -37,6 +37,8 @@ Statement <|-[#808080]- AbstractStatement
 AbstractAST <|-[#808080]- AbstractStatement
 
 interface Definition {
+	..<color:#669900> MemoryAllocation </color>..
+	+<color:#669900>int address</color>
 }
 AST <|-[#808080]- Definition
 abstract AbstractDefinition
@@ -83,6 +85,8 @@ FunctionDefinition o-[#404040,thickness=2]- "✱" Statement : statements >
 
 class AttrDefinition {
 	+String name
+	..<color:#669900> MemoryAllocation </color>..
+	+<color:#669900>int address</color>
 }
 AbstractAST <|-[#808080]- AttrDefinition
 AttrDefinition o-[#404040,thickness=2]-  Type : type >
@@ -235,7 +239,6 @@ class VoidType {
 AbstractType <|-[#808080]- VoidType
 
 class ErrorType {
-	+String msg
 }
 AbstractType <|-[#808080]- ErrorType
 
