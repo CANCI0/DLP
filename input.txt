@@ -1,5 +1,10 @@
-main(){
-	var f:float;
+var f : float;
+var i : int;
 
-	print 2.5 && f;	// Deben ser tipo entero
+main(){
+	i = 5;
+	print i / 2;	// output -> 2
+
+	f = 5.0;
+	print (f / 2.0 + 1.0) * 2.0;	// output -> 7.0
 }

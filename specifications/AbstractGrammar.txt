@@ -46,6 +46,7 @@ errorType:type ->;
 // -----------------------
 ATTRIBUTE GRAMMAR Identification
 
+varDefinition -> scope:int;
 variable -> varDefinition;
 functionCallStatement -> functionDefinition;
 functionCallExpression -> functionDefinition;
@@ -64,3 +65,15 @@ expression -> lvalue:boolean;
 ATTRIBUTE GRAMMAR MemoryAllocation
 definition -> [inh] address:int;    	// Inherited attribute
 attrDefinition -> [inh] address:int;	// Inherited attribute
+
+
+// -----------------------
+CODE SPECIFICATION Mapl
+
+run[program]
+execute[statement]
+value[expression]
+address[expression]
+
+metadata[program]
+metadata[varDefinition]

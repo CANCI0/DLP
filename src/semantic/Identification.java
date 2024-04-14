@@ -49,6 +49,7 @@ public class Identification extends DefaultVisitor {
         if (definition != null)
             notifyError("Variable already defined: " + varDefinition.getName(), varDefinition);
         else
+        	definition.set
             variables.put(varDefinition.getName(), varDefinition);
         varDefinition.getType().accept(this, param);
 		return null;

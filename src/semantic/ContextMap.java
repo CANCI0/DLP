@@ -3,13 +3,13 @@ package semantic;
 import java.util.*;
 
 /*
-* Implementaciónn de una tabla Hash con contextos.
+* Implementaciï¿½nn de una tabla Hash con contextos.
 * Permite:
-* - Insertar símbolos (put) en el contexto actual.
+* - Insertar sï¿½mbolos (put) en el contexto actual.
 * - Buscar tanto en el contexto actual (getFromTop) como en todos los contextos (getFromAny).
 * - Crear y destruir contextos mediante las operaciones set y reset.
 *
-* La forma habitual de instanciarla será:
+* La forma habitual de instanciarla serï¿½:
 * 	ContextMap<String, DefinicionVariable> variables = new ContextMap<String, DefinicionVariable>();
 *
 */
@@ -38,6 +38,10 @@ public class ContextMap<T> {
         }
         return null;
     }
+    
+    public int getActualScope() {
+    	return contextos.size();
+    }
 
     public void set() {
         contextos.push(new HashMap<>());
@@ -48,14 +52,14 @@ public class ContextMap<T> {
     }
 
     // --------------------------------------------------
-    // Para usar en depuración
+    // Para usar en depuraciï¿½n
 
     @Override
     public String toString() {
         var buffer = new StringBuilder();
         for (int i = contextos.size() - 1; i >= 0; i--) {
             buffer.append("------------------\nNivel " + i
-                    + " (OJO: recordar que no están en el orden en el que se insertaron!!!)\n");
+                    + " (OJO: recordar que no estï¿½n en el orden en el que se insertaron!!!)\n");
             for (Map.Entry<String, T> entry : contextos.get(i).entrySet())
                 buffer.append("\t" + entry.getKey() + " = " + entry.getValue() + "\n");
             buffer.append('\n');
