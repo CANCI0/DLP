@@ -18,8 +18,10 @@ public class Run extends AbstractCodeFunction {
 	public Object visit(Program program, Object param) {
 		
 		metadata(program);
+		out("call main");
+		out("halt");
         execute(program.getDefinitions().stream());
-        out("halt");
+        
         
 		return null;
 	}

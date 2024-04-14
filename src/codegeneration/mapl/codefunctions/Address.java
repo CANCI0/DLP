@@ -25,7 +25,7 @@ public class Address extends AbstractCodeFunction {
 		address(arrayAccess.getExpr2());
 
 		out("pushi " + arrayAccess.getExpressionType().getSize());
-		out("multi");
+		out("muli");
 		out("pushi " + arrayAccess.getExpressionType().getSize());
 
 		return null;
@@ -51,7 +51,15 @@ public class Address extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(Variable variable, Object param) {
-
+		
+		out("pusha " + variable.getVarDefinition().getAddress());
+	
+		return null;
+	}
+	
+	@Override
+	public Object visit(IntLiteral variable, Object param) {
+	
 		return null;
 	}
 

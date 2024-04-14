@@ -5,6 +5,7 @@ package codegeneration.mapl.codefunctions;
 import ast.AST;
 import ast.Position;
 import ast.definition.FunctionDefinition;
+import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
 import ast.statement.*;
 import codegeneration.mapl.*;
@@ -18,15 +19,39 @@ public class Execute extends AbstractCodeFunction {
     
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object param) {
-    	
-    	out("enter " + functionDefinition.getAddress());
     	execute(functionDefinition.getDefinitions().stream());
+    	
+    	out(functionDefinition.getName() + ":");
+    	
+    	//Return type size
+    	int cte1 = 0;    	
     	if(functionDefinition.getType().isPresent()) {
-    		
+    		cte1 = functionDefinition.getType().get().getSize();
     	}
+
+    	//Local Variables size
+    	int cte2 = functionDefinition.getDefinitions().stream()
+			.mapToInt(varDef -> varDef.getType().getSize())
+			.sum();
+    	
+    	//Function parameters size
+    	int cte3 = functionDefinition.getParams().stream()
+            .mapToInt(paramDef -> paramDef.getType().getSize())
+            .sum();
+    	
+    	execute(functionDefinition.getStatements().stream());
+    	
+    	out("ret " + cte1 + "," + cte2 + "," + cte3);
+    	
     	return null;
     }
-
+    
+    @Override
+    public Object visit(StructDefinition structDefinition, Object param) {
+    	 	
+    	return null;
+    }
+    
     @Override
     public Object visit(VarDefinition varDefinition, Object param) {
     	
@@ -49,6 +74,8 @@ public class Execute extends AbstractCodeFunction {
 	@Override
 	public Object visit(Print print, Object param) {
 
+		line(print);
+		
 		value(print.expressions());
 
 		for(int i = 0 ; i < print.getExpressions().size() ; i++) {

@@ -1,10 +1,30 @@
-var f : float;
-var i : int;
+var a:int;
+var b:float;
 
-main(){
-	i = 5;
-	print i / 2;	// output -> 2
+struct Punto {
+	x:float;
+	y:float;
+}
 
-	f = 5.0;
-	print (f / 2.0 + 1.0) * 2.0;	// output -> 7.0
+var v:[5]int;
+var p:Punto;
+
+main() {
+	var asdas : float;
+
+	a = 1111;
+	b = 2222.2;
+	v[3] = 3333;
+	p.y = 4444.4;
+		
+	print a;		    // 1111
+	print b + p.y;	// 6666.6
+	print v[3];		// 3333
+
+	print a > 0;	// 1
+	print <int>(b);			// 2222
+
+    // Al final debería salir:
+    // 1111 6666.6 3333
+    // 12222
 }

@@ -4,6 +4,7 @@ package codegeneration.mapl.codefunctions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import ast.expression.*;
 import codegeneration.mapl.*;
@@ -35,9 +36,8 @@ public class Value extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
-		super.visit(intLiteral, param);
-		
-		out("pushi " + intLiteral);
+
+		out("pushi " + intLiteral.getIntValue());
 
 		return null;
 	}
@@ -46,8 +46,7 @@ public class Value extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(FloatLiteral floatLiteral, Object param) {
-		super.visit(floatLiteral, param);
-		
+
 		out("pushf " + floatLiteral.getFloatValue());
 
 		return null;
@@ -57,8 +56,7 @@ public class Value extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
-		super.visit(charLiteral, param);
-		
+
 		out("pushb " + charLiteral);
 
 		return null;
@@ -69,13 +67,8 @@ public class Value extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(ArrayAccess arrayAccess, Object param) {
-		super.visit(arrayAccess, param);
-		// value(arrayAccess.getExpr1());
+
 		address(arrayAccess);
-
-		// value(arrayAccess.getExpr2());
-		// address(arrayAccess.getExpr2());
-
 		out("load", arrayAccess.getExpressionType());
 
 		return null;
@@ -87,9 +80,7 @@ public class Value extends AbstractCodeFunction {
 	@Override
 	public Object visit(FieldAccess fieldAccess, Object param) {
 
-		// value(fieldAccess.getExpr());
 		address(fieldAccess);
-
 		out("load", fieldAccess.getAttrDefinition().getType());
 
 		return null;
@@ -136,7 +127,8 @@ public class Value extends AbstractCodeFunction {
 	@Override
 	public Object visit(Variable variable, Object param) {
 
-		out("<instruction>");
+		address(variable);
+		out("load", variable.getExpressionType());
 
 		return null;
 	}
@@ -149,8 +141,10 @@ public class Value extends AbstractCodeFunction {
 		// value(cast.getExpression());
 		// address(cast.getExpression());
 
-		out(suffixFor(cast.getExpressionType()) + "2" + suffixFor(cast.getType()));
-
+		if(!Objects.equals(cast.getType().getClass(), cast.getExpressionType().getClass())) {
+			out(suffixFor(cast.getExpressionType()) + "2" + suffixFor(cast.getType()));
+		}
+		
 		return null;
 	}
 
