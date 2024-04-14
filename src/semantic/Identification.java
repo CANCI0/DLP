@@ -34,7 +34,7 @@ public class Identification extends DefaultVisitor {
         ast.accept(this, null);
     }
 
- // # ----------------------------------------------------------
+    // # ----------------------------------------------------------
     // class VarDefinition(Type type, String name)  
     @Override
 	public Object visit(Program program, Object param) {
@@ -49,7 +49,7 @@ public class Identification extends DefaultVisitor {
         if (definition != null)
             notifyError("Variable already defined: " + varDefinition.getName(), varDefinition);
         else
-        	definition.set
+        	varDefinition.setScope(variables.getActualScope());
             variables.put(varDefinition.getName(), varDefinition);
         varDefinition.getType().accept(this, param);
 		return null;

@@ -92,6 +92,7 @@ public class MemoryAllocation extends DefaultVisitor {
 	}
 
 	// class VarDefinition(String name, Type type)
+	// phase Identification { int scope }
 	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {

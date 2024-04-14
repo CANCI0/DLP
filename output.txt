@@ -1,0 +1,6 @@
+#source "input.txt"
+#GLOBAL f:float
+#GLOBAL i:int
+#func main
+#ret void
+halt

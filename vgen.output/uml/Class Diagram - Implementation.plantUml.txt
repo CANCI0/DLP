@@ -64,6 +64,8 @@ Program o-[#404040,thickness=2]- "✱" Definition : definitions >
 
 class VarDefinition {
 	+String name
+	..<color:#ff6600> Identification </color>..
+	+<color:#ff6600>int scope</color>
 }
 AbstractDefinition <|-[#808080]- VarDefinition
 VarDefinition o-[#404040,thickness=2]-  Type : type >

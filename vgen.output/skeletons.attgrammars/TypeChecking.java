@@ -87,6 +87,7 @@ public class TypeChecking extends DefaultVisitor {
 	}
 
 	// class VarDefinition(String name, Type type)
+	// phase Identification { int scope }
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {
 

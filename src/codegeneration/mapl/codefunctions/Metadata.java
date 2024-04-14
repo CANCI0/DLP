@@ -44,7 +44,11 @@ public class Metadata extends AbstractCodeFunction {
     @Override
     public Object visit(VarDefinition varDefinition, Object param) {
 
-        out("#GLOBAL " + varDefinition.getName() + ":" + getTypeName(varDefinition.getType()));
+    	if(varDefinition.getScope() == 1) {
+            out("#GLOBAL " + varDefinition.getName() + ":" + getTypeName(varDefinition.getType()));
+    	} else {
+    		out("#param " + varDefinition.getName() + ":" + getTypeName(varDefinition.getType()));
+    	}
 
         return null;
     }

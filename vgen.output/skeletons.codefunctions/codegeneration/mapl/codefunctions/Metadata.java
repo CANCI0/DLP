@@ -24,6 +24,7 @@ public class Metadata extends AbstractCodeFunction {
 	}
 
 	// class VarDefinition(String name, Type type)
+	// phase Identification { int scope }
 	// phase MemoryAllocation { int address }
 	@Override
 	public Object visit(VarDefinition varDefinition, Object param) {

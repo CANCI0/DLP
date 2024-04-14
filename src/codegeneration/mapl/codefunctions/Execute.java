@@ -4,6 +4,8 @@ package codegeneration.mapl.codefunctions;
 
 import ast.AST;
 import ast.Position;
+import ast.definition.FunctionDefinition;
+import ast.definition.VarDefinition;
 import ast.statement.*;
 import codegeneration.mapl.*;
 
@@ -13,7 +15,23 @@ public class Execute extends AbstractCodeFunction {
     public Execute(MaplCodeSpecification specification) {
         super(specification);
     }
+    
+    @Override
+    public Object visit(FunctionDefinition functionDefinition, Object param) {
+    	
+    	out("enter " + functionDefinition.getAddress());
+    	execute(functionDefinition.getDefinitions().stream());
+    	if(functionDefinition.getType().isPresent()) {
+    		
+    	}
+    	return null;
+    }
 
+    @Override
+    public Object visit(VarDefinition varDefinition, Object param) {
+    	
+    	return null;
+    }
 
 	// class Read(Expression expression)
 	@Override
