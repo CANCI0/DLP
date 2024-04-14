@@ -36,6 +36,9 @@ public class Metadata extends AbstractCodeFunction {
     public Object visit(FunctionDefinition functionDefinition, Object param) {
 
         out("#func " + functionDefinition.getName());
+        functionDefinition.params().forEach(x -> {
+        	out("#param " + x.getName() + ":" + getTypeName(x.getType()));
+        });
         metadata(functionDefinition.definitions());
         out("#ret " + getTypeName(functionDefinition.getType().orElse(new VoidType())));
 

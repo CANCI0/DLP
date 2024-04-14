@@ -1,8 +1,8 @@
-suma(a:int, b:int) : int{
-	return a + b;
+suma(a:int, b:int){
+	print a + b;
 }
 
 main() {
-	print suma(5,4);
+	suma(5,4);
 }
 

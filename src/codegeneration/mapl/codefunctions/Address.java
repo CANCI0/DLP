@@ -52,7 +52,7 @@ public class Address extends AbstractCodeFunction {
 	@Override
 	public Object visit(Variable variable, Object param) {
 		
-		out("pusha " + variable.getVarDefinition().getAddress());
+		out("push " + variable.getVarDefinition().getAddress());
 	
 		return null;
 	}

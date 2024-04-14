@@ -1,22 +1,32 @@
 #source "input.txt"
 #func suma
-#ret int
+#param a:int
+#param b:int
+#ret void
 #func main
 #ret void
 call main
 halt
 suma:
-pusha 6
+enter 0
+
+#line 2
+push bp
+push 6
+addi
 loadi
-pusha 4
+push bp
+push 4
+addi
 loadi
 addi
-ret 2,0,4
+outi
+ret 0,0,4
 main:
+enter 0
 
 #line 6
 pushi 5
 pushi 4
 call suma
-outi
 ret 0,0,0

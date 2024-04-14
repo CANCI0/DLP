@@ -2,36 +2,13 @@
 
 package codegeneration.mapl.codefunctions;
 
-import java.util.List;
-import java.util.UUID;
-
 import ast.AST;
-import ast.AttrDefinition;
 import ast.Position;
-import ast.Program;
 import ast.definition.FunctionDefinition;
 import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
-import ast.expression.Arithmetic;
-import ast.expression.ArrayAccess;
-import ast.expression.Cast;
-import ast.expression.CharLiteral;
-import ast.expression.Expression;
-import ast.expression.FieldAccess;
-import ast.expression.FloatLiteral;
 import ast.expression.FunctionCallExpression;
-import ast.expression.IntLiteral;
-import ast.expression.Logic;
-import ast.expression.Not;
-import ast.expression.Variable;
 import ast.statement.*;
-import ast.type.ArrayType;
-import ast.type.CharType;
-import ast.type.ErrorType;
-import ast.type.FloatType;
-import ast.type.IntType;
-import ast.type.StructType;
-import ast.type.VoidType;
 import codegeneration.mapl.*;
 
 public class Execute extends AbstractCodeFunction {
@@ -58,6 +35,8 @@ public class Execute extends AbstractCodeFunction {
 		// Function parameters size
 		int cte3 = functionDefinition.getParams().stream().mapToInt(paramDef -> paramDef.getType().getSize()).sum();
 
+		out("enter " + cte2);
+		
 		execute(functionDefinition.getStatements().stream());
 
 		out("ret " + cte1 + "," + cte2 + "," + cte3);
@@ -200,6 +179,8 @@ public class Execute extends AbstractCodeFunction {
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
 		line(functionCallStatement);
+		
+		value(functionCallStatement);
 
 		return null;
 	}
@@ -211,10 +192,7 @@ public class Execute extends AbstractCodeFunction {
 	public Object visit(FunctionCallExpression functionCallExpression, Object param) {
 		
 		line(functionCallExpression);
-
-		
-		
-		
+	
 		return null;
 	}
 

@@ -146,7 +146,14 @@ public class Value extends AbstractCodeFunction {
 	@Override
 	public Object visit(Variable variable, Object param) {
 
-		address(variable);
+		// Si es global la dirección es absoluta
+		if (variable.getVarDefinition().getScope() == 1) {
+			address(variable);
+		} else {
+			out("push bp");
+			address(variable);
+			out("addi");
+		}
 		out("load", variable.getExpressionType());
 
 		return null;
@@ -253,11 +260,11 @@ public class Value extends AbstractCodeFunction {
 	// class Return(Optional<Expression> expression)
 	@Override
 	public Object visit(Return returnValue, Object param) {
-		
-		if(returnValue.getExpression().isPresent()) {
+
+		if (returnValue.getExpression().isPresent()) {
 			value(returnValue.getExpression().get());
 		}
-		
+
 		return null;
 	}
 
