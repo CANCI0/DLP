@@ -1,30 +1,8 @@
-var a:int;
-var b:float;
-
-struct Punto {
-	x:float;
-	y:float;
+suma(a:int, b:int) : int{
+	return a + b;
 }
-
-var v:[5]int;
-var p:Punto;
 
 main() {
-	var asdas : float;
-
-	a = 1111;
-	b = 2222.2;
-	v[3] = 3333;
-	p.y = 4444.4;
-		
-	print a;		    // 1111
-	print b + p.y;	// 6666.6
-	print v[3];		// 3333
-
-	print a > 0;	// 1
-	print <int>(b);			// 2222
-
-    // Al final debería salir:
-    // 1111 6666.6 3333
-    // 12222
+	print suma(5,4);
 }
+

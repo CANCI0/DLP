@@ -22,11 +22,11 @@ public class Address extends AbstractCodeFunction {
 		address(arrayAccess.getExpr1());
 
 		// value(arrayAccess.getExpr2());
-		address(arrayAccess.getExpr2());
+		value(arrayAccess.getExpr2());
 
 		out("pushi " + arrayAccess.getExpressionType().getSize());
 		out("muli");
-		out("pushi " + arrayAccess.getExpressionType().getSize());
+		out("addi");
 
 		return null;
 	}

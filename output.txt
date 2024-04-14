@@ -1,74 +1,22 @@
 #source "input.txt"
-#global a:int
-#global b:float
-#type Punto: {
-	x:float
-	y:float
-}
-#global v:5 * int
-#global p:Punto
+#func suma
+#ret int
 #func main
-#local asdas:float
 #ret void
 call main
 halt
+suma:
+pusha 6
+loadi
+pusha 4
+loadi
+addi
+ret 2,0,4
 main:
 
-#line 15
-pusha 0
-pushi 1111
-storei
-
-#line 16
-pusha 2
-pushf 2222.2
-storef
-
-#line 17
-pusha 6
-pushi 2
-muli
-pushi 2
-pushi 3333
-storei
-
-#line 18
-pusha 16
+#line 6
+pushi 5
 pushi 4
-addi
-pushf 4444.4
-storef
-
-#line 20
-pusha 0
-loadi
-out
-
-#line 21
-pusha 2
-loadf
-pusha 16
-pushi 4
-addi
-loadf
-addf
-out
-
-#line 22
-pusha 6
-pushi 2
-muli
-pushi 2
-loadi
-out
-
-#line 24
-pusha 0
-loadi
-pushi 0
-gti
-out
-
-#line 25
-out
-ret 0,4,0
+call suma
+outi
+ret 0,0,0
