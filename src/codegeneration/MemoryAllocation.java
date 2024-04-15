@@ -55,12 +55,6 @@ public class MemoryAllocation extends DefaultVisitor {
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
 		super.visit(functionDefinition, param);
 		
-		if(functionDefinition.getType().isPresent()) {
-			Type t =  functionDefinition.getType().get();
-			int size = t.getSize();
-			//Se reserva memoria para el tipo de retorno
-		}
-		
 		int definitionsAddress = 0;
 		
 		for(VarDefinition def : functionDefinition.getDefinitions()) {
@@ -68,7 +62,7 @@ public class MemoryAllocation extends DefaultVisitor {
 			def.setAddress(definitionsAddress);			
 		}
 		
-		//Se reserva memoria para la dirección de retorno
+		//Se reserva memoria para la direcciï¿½n de retorno
 		
 		int paramsAddress = 4;
 		

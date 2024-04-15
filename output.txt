@@ -1,32 +1,251 @@
 #source "input.txt"
-#func suma
-#param a:int
-#param b:int
-#ret void
+#func potencia
+#param base:float
+#param exponente:int
+#local total:float
+#ret float
+#func letraHipoteca
+#param capital:float
+#param meses:int
+#param interes:float
+#local mensual:float
+#ret float
 #func main
+#local precioVivienda:float
+#local mesesHipoteca:int
+#local interes:float
 #ret void
 call main
 halt
-suma:
-enter 0
+potencia:
+enter 4
 
-#line 2
+#line 21
 push bp
-push 6
-addi
-loadi
 push bp
 push 4
 addi
-loadi
 addi
-outi
-ret 0,0,4
-main:
-enter 0
+loadi
+pushi 0
+eqi
+jz label1
 
-#line 6
-pushi 5
-pushi 4
-call suma
-ret 0,0,0
+#line 13
+push bp
+push -4
+addi
+pushf 1.0
+storef
+jmp label2
+label1:
+
+#line 21
+push bp
+push bp
+push 4
+addi
+addi
+loadi
+pushi 0
+lti
+jz label3
+
+#line 16
+push bp
+push -4
+addi
+pushf 1.0
+push bp
+push bp
+push 6
+addi
+addi
+loadf
+pushi 0
+push bp
+push bp
+push 4
+addi
+addi
+loadi
+subi
+call potencia
+divf
+storef
+jmp label4
+label3:
+
+#line 18
+push bp
+push -4
+addi
+push bp
+push bp
+push 6
+addi
+addi
+loadf
+storef
+
+#line 21
+loop:
+push bp
+push bp
+push 4
+addi
+addi
+loadi
+pushi 1
+gti
+jz exit
+
+#line 20
+push bp
+push -4
+addi
+push bp
+push bp
+push -4
+addi
+addi
+loadf
+push bp
+push bp
+push 6
+addi
+addi
+loadf
+mulf
+storef
+
+#line 21
+push bp
+push 4
+addi
+push bp
+push bp
+push 4
+addi
+addi
+loadi
+pushi 1
+subi
+storei
+jmp loop
+exit:
+label4:
+label2:
+
+#line 25
+push bp
+push bp
+push -4
+addi
+addi
+loadf
+ret 4,4,6
+letraHipoteca:
+enter 4
+
+#line 32
+push bp
+push -4
+addi
+push bp
+push bp
+push 4
+addi
+addi
+loadf
+pushf 12.0
+divf
+storef
+
+#line 33
+push bp
+push bp
+push 10
+addi
+addi
+loadf
+push bp
+push bp
+push -4
+addi
+addi
+loadf
+mulf
+pushf 100.0
+pushf 1.0
+pushf 1.0
+push bp
+push bp
+push -4
+addi
+addi
+loadf
+pushf 100.0
+divf
+addf
+pushi 0
+push bp
+push bp
+push 8
+addi
+addi
+loadi
+subi
+call potencia
+subf
+mulf
+divf
+ret 4,4,10
+main:
+enter 10
+
+#line 47
+push bp
+push -4
+addi
+pushf 200000.0
+storef
+
+#line 48
+push bp
+push -6
+addi
+pushi 30
+pushi 12
+muli
+storei
+
+#line 49
+push bp
+push -10
+addi
+pushf 2.04
+storef
+
+#line 51
+push bp
+push bp
+push -4
+addi
+addi
+loadf
+push bp
+push bp
+push -6
+addi
+addi
+loadi
+push bp
+push bp
+push -10
+addi
+addi
+loadf
+call letraHipoteca
+outf
+ret 0,10,0

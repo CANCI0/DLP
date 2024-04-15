@@ -13,8 +13,15 @@ import codegeneration.mapl.*;
 
 public class Execute extends AbstractCodeFunction {
 
+	private int whileActualLabel;
+	
+	private int ifelseActualLabel;
+	
 	public Execute(MaplCodeSpecification specification) {
 		super(specification);
+		
+		whileActualLabel = 1;
+		ifelseActualLabel = 1;
 	}
 
 	@Override
@@ -140,7 +147,7 @@ public class Execute extends AbstractCodeFunction {
 	// class While(Expression expression, List<Statement> statements)
 	@Override
 	public Object visit(While whileValue, Object param) {
-
+		
 		line(whileValue);
 		
 		out("loop:");
@@ -159,16 +166,19 @@ public class Execute extends AbstractCodeFunction {
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
 
+		String jzLabel = "label" + ifelseActualLabel++;
+		String jmpLabel = "label" + ifelseActualLabel++;
+		
 		line(ifelse);
 
 		value(ifelse.getCond());
 		
-		out("jz label1");
+		out("jz " + jzLabel);
 		execute(ifelse.tr());
-		out("jmp label2");
-		out("label1:");
+		out("jmp " + jmpLabel);
+		out(jzLabel + ":");
 		execute(ifelse.fs());
-		out("label2:");
+		out(jmpLabel + ":");
 				
 		return null;
 	}
