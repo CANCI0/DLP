@@ -12,15 +12,12 @@ import ast.statement.*;
 import codegeneration.mapl.*;
 
 public class Execute extends AbstractCodeFunction {
-
-	private int whileActualLabel;
 	
 	private int ifelseActualLabel;
 	
 	public Execute(MaplCodeSpecification specification) {
 		super(specification);
 		
-		whileActualLabel = 1;
 		ifelseActualLabel = 1;
 	}
 
