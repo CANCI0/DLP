@@ -6,7 +6,6 @@ import ast.*;
 import ast.definition.FunctionDefinition;
 import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
-import ast.type.Type;
 import visitor.DefaultVisitor;
 
 // This class will be implemented in memory allocation phase
