@@ -44,6 +44,8 @@ public class Value extends AbstractCodeFunction {
 		logicOperators.put("<", "lt");
 		logicOperators.put("==", "eq");
 		logicOperators.put("!=", "ne");
+		logicOperators.put("&&", "and");
+		logicOperators.put("||", "or");
 
 		arithmeticOperators.put("+", "add");
 		arithmeticOperators.put("-", "sub");
@@ -76,7 +78,9 @@ public class Value extends AbstractCodeFunction {
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
 
-		out("pushb " + charLiteral);
+		int character = charLiteral.getName().charAt(1);
+		
+		out("pushb " + character);
 
 		return null;
 	}
@@ -122,8 +126,14 @@ public class Value extends AbstractCodeFunction {
 
 		value(logic.getLeft());
 		value(logic.getRight());
+		
+		String operator = logic.getOperator();
 
-		out(logicOperators.get(logic.getOperator()), logic.getExpressionType());
+		if(operator.equals("&&") || operator.equals("||")){
+			out(logicOperators.get(operator));
+		} else {
+			out(logicOperators.get(operator), logic.getExpressionType());
+		}
 
 		return null;
 	}
@@ -147,13 +157,7 @@ public class Value extends AbstractCodeFunction {
 	public Object visit(Variable variable, Object param) {
 
 		// Si es global la dirección es absoluta
-		if (variable.getVarDefinition().getScope() == 1) {
-			address(variable);
-		} else {
-			out("push bp");
-			address(variable);
-			out("addi");
-		}
+		address(variable);
 		out("load", variable.getExpressionType());
 
 		return null;

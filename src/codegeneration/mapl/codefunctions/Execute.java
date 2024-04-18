@@ -13,17 +13,17 @@ import codegeneration.mapl.*;
 
 public class Execute extends AbstractCodeFunction {
 	
-	private int ifelseActualLabel;
+	private int actualLabel;
 	
 	public Execute(MaplCodeSpecification specification) {
 		super(specification);
 		
-		ifelseActualLabel = 1;
+		actualLabel = 1;
 	}
 
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
-		execute(functionDefinition.getDefinitions().stream());
+		execute(functionDefinition.definitions());
 
 		out(functionDefinition.getName() + ":");
 
@@ -34,16 +34,17 @@ public class Execute extends AbstractCodeFunction {
 		}
 
 		// Local Variables size
-		int cte2 = functionDefinition.getDefinitions().stream().mapToInt(varDef -> varDef.getType().getSize()).sum();
+		int cte2 = functionDefinition.definitions().mapToInt(varDef -> varDef.getType().getSize()).sum();
 
 		// Function parameters size
-		int cte3 = functionDefinition.getParams().stream().mapToInt(paramDef -> paramDef.getType().getSize()).sum();
+		int cte3 = functionDefinition.params().mapToInt(paramDef -> paramDef.getType().getSize()).sum();
 
 		out("enter " + cte2);
 		
-		execute(functionDefinition.getStatements().stream());
+		int[] cts = new int[] {cte1, cte2, cte3};
+		execute(functionDefinition.statements(), cts);
 
-		out("ret " + cte1 + "," + cte2 + "," + cte3);
+		if(cte1 == 0)out("ret " + cte1 + "," + cte2 + "," + cte3);
 
 		return null;
 	}
@@ -64,11 +65,10 @@ public class Execute extends AbstractCodeFunction {
 	@Override
 	public Object visit(Read read, Object param) {
 
-		// value(read.getExpression());
-		// address(read.getExpression());
-
-		out("<instruction>");
-
+		address(read.getExpression());
+		out("in", read.getExpression().getExpressionType());
+		out("store", read.getExpression().getExpressionType());
+		
 		return null;
 	}
 
@@ -121,10 +121,14 @@ public class Execute extends AbstractCodeFunction {
 	@Override
 	public Object visit(Return returnValue, Object param) {
 
+		int[] ctes = (int[]) param;
 		line(returnValue);
 
-		value(returnValue.getExpression());
-
+		if(ctes[0] != 0) {
+			value(returnValue.getExpression());
+			out("ret " + ctes[0] + "," + ctes[1] + "," + ctes[2]);
+		}
+	
 		return null;
 	}
 
@@ -144,17 +148,19 @@ public class Execute extends AbstractCodeFunction {
 	// class While(Expression expression, List<Statement> statements)
 	@Override
 	public Object visit(While whileValue, Object param) {
+		String exit = "label" + actualLabel++;
+		String loop = "label" + actualLabel++;
 		
 		line(whileValue);
 		
-		out("loop:");
+		out(loop + ":");
 		value(whileValue.getExpression());
-		out("jz exit");
+		out("jz " + exit);
 		
-		execute(whileValue.statements());
+		execute(whileValue.statements(), param);
 		
-		out("jmp loop");
-		out("exit:");
+		out("jmp " + loop);
+		out(exit + ":");
 
 		return null;
 	}
@@ -163,18 +169,18 @@ public class Execute extends AbstractCodeFunction {
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
 
-		String jzLabel = "label" + ifelseActualLabel++;
-		String jmpLabel = "label" + ifelseActualLabel++;
+		String jzLabel = "label" + actualLabel++;
+		String jmpLabel = "label" + actualLabel++;
 		
 		line(ifelse);
 
 		value(ifelse.getCond());
 		
 		out("jz " + jzLabel);
-		execute(ifelse.tr());
+		execute(ifelse.tr(), param);
 		out("jmp " + jmpLabel);
 		out(jzLabel + ":");
-		execute(ifelse.fs());
+		execute(ifelse.fs(), param);
 		out(jmpLabel + ":");
 				
 		return null;
