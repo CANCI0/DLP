@@ -3,7 +3,6 @@
 package ast.definition;
 
 import ast.*;
-import org.antlr.v4.runtime.Token;
 
 // %% User Declarations -------------
 
