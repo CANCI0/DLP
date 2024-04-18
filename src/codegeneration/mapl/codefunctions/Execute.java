@@ -79,9 +79,8 @@ public class Execute extends AbstractCodeFunction {
 
 		line(print);
 
-		value(print.expressions());
-
 		print.getExpressions().stream().forEach(x -> {
+			value(x);
 			out("out", x.getExpressionType());
 		});
 
@@ -112,8 +111,6 @@ public class Execute extends AbstractCodeFunction {
 	public Object visit(Printsp printsp, Object param) {
 
 		line(printsp);
-
-		value(printsp.expressions());
 
 		printsp.expressions().forEach(x -> {
 			value(x);

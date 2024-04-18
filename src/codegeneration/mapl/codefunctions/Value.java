@@ -77,10 +77,13 @@ public class Value extends AbstractCodeFunction {
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
-
-		int character = charLiteral.getName().charAt(1);
-		
-		out("pushb " + character);
+		if (charLiteral.getName().equals("'\\n'")) {
+			char character = '\n';
+			out("pushb " + (int) character);
+		} else {
+			char character = charLiteral.getName().charAt(1);
+			out("pushb " + (int) character);
+		}
 
 		return null;
 	}
