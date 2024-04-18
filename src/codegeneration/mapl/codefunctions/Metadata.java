@@ -26,7 +26,7 @@ public class Metadata extends AbstractCodeFunction {
     public Object visit(Program program, Object param) {
 
         out("#source \"" + getSpecification().getSourceFile() + "\"");
-        metadata(program.getDefinitions().stream());
+        metadata(program.definitions());
 
         return null;
     }

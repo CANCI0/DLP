@@ -100,7 +100,7 @@ public class Identification extends DefaultVisitor {
         
         //Comprobamos que las varDefinitions de la funcion no coincidan con ningun parametro
         for(var varDefinition : functionDefinition.getDefinitions()) {
-        	if(functionDefinition.getParams().stream().anyMatch(x -> Objects.equals(x.getName(), varDefinition.getName()))) {
+        	if(functionDefinition.params().anyMatch(x -> Objects.equals(x.getName(), varDefinition.getName()))) {
         		notifyError("Variable already defined in params: " + varDefinition.getName(), varDefinition);
         	}
         }

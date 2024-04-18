@@ -93,7 +93,7 @@ public class Execute extends AbstractCodeFunction {
 
 		line(println);
 
-		println.getExpressions().stream().forEach(x -> {
+		println.expressions().forEach(x -> {
 			value(x);
 			out("out", x.getExpressionType());
 			outLn();

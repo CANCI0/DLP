@@ -1,55 +1,35 @@
-/*
- Hipoteca.txt v1.3
+// Este test no debe producir NINGÚN error de compilacion
 
-- Programa de ejemplo que muestra las características del lenguaje
-- La sintaxis tiene que ser obligatoriamente la que se muestra en este ejemplo
-
-*/
-
-potencia(base:float, exponente:int):float {
-	var total:float;
-
-	if (exponente == 0) {
-		total = 1.0;
-	} else {
-		if (exponente < 0) {
-			total = 1.0 / potencia(base, 0 - exponente);
-		} else { 
-			total = base;
-			while (exponente > 1) {
-				total = total * base;
-				exponente = exponente - 1;
-			}
-		}
-	}
-	return total;
+struct Nombre {
+    letras:[10]char;
 }
 
-	
-letraHipoteca(capital:float, meses:int, interes:float):float {
-	var mensual:float;
-
-	mensual = interes / 12.0;
-	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - meses)));
+struct Persona {
+    nombre:Nombre;
+    edad:int;
 }
-
 
 main() {
-	var precioVivienda:float;
-	var mesesHipoteca:int;
-	var interes:float;
+    var a:int;
+    var f:float;
+    var c:char;
+    var v:[10]int;
+    var v1:[10][10]int;
 
-/*
-	read precioVivienda;
-	read mesesHipoteca;
-	read interes;
-*/
-	precioVivienda = 200000.0;
-	mesesHipoteca = 30 * 12;
-	interes = 2.04;	
+    var raul:Persona;
 
-	println letraHipoteca(precioVivienda, mesesHipoteca, interes);
+    a = 1;
+    f = 1.0;
+    c = 'a';
+    c = '\n';
 
-//	Con los datos anteriores deberían salir (redondeando) 743 euros de letra al mes
+    v[0] = 1;
+    v1[0][0] = 1;
+
+    raul.edad = 1;
+    raul.nombre.letras[1] = 'a';
+
+    a = raul.edad;
+    c = raul.nombre.letras[1] ;
 
 }

@@ -20,7 +20,7 @@ public class Run extends AbstractCodeFunction {
 		metadata(program);
 		out("call main");
 		out("halt");
-        execute(program.getDefinitions().stream());
+        execute(program.definitions());
         
         
 		return null;
