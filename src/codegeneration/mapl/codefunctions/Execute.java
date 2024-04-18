@@ -9,6 +9,7 @@ import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
 import ast.expression.FunctionCallExpression;
 import ast.statement.*;
+import ast.type.CharType;
 import codegeneration.mapl.*;
 
 public class Execute extends AbstractCodeFunction {
@@ -93,12 +94,16 @@ public class Execute extends AbstractCodeFunction {
 
 		line(println);
 
-		value(println.expressions());
-
 		println.getExpressions().stream().forEach(x -> {
+			value(x);
 			out("out", x.getExpressionType());
+			outLn();
 		});
-
+	
+		if(println.getExpressions().isEmpty()) {
+			outLn();
+		}
+		
 		return null;
 	}
 
@@ -110,10 +115,16 @@ public class Execute extends AbstractCodeFunction {
 
 		value(printsp.expressions());
 
-		printsp.getExpressions().stream().forEach(x -> {
-			out("out", x.getExpressionType());
+		printsp.expressions().forEach(x -> {
+			value(x);
+			out("out", x.getExpressionType());				
+			outSp();
 		});
 
+		if(printsp.getExpressions().isEmpty()) {
+			outSp();
+		}
+		
 		return null;
 	}
 
@@ -194,6 +205,10 @@ public class Execute extends AbstractCodeFunction {
 		line(functionCallStatement);
 		
 		value(functionCallStatement);
+		
+		if(functionCallStatement.getFunctionDefinition().getType().isPresent()) {
+			out("pop", functionCallStatement.getFunctionDefinition().getType().get());
+		}
 
 		return null;
 	}
@@ -210,6 +225,18 @@ public class Execute extends AbstractCodeFunction {
 	}
 
 	// Auxiliary methods for the generation of code
+	private void outSp() {
+		int sp = ' ';
+		out("pushb " + sp);
+		out("out", new CharType());
+	}
+	
+	private void outLn() {
+		int ln = '\n';
+		out("pushb " + ln);
+		out("outb");
+	}
+	
 	private void line(AST node) {
 		line(node.end());
 	}
