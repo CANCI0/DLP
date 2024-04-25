@@ -159,7 +159,7 @@ public class Execute extends AbstractCodeFunction {
 		String exit = "label" + actualLabel++;
 		String loop = "label" + actualLabel++;
 		
-		line(whileValue);
+		line(whileValue.getExpression());
 		
 		out(loop + ":");
 		value(whileValue.getExpression());
@@ -180,7 +180,7 @@ public class Execute extends AbstractCodeFunction {
 		String jzLabel = "label" + actualLabel++;
 		String jmpLabel = "label" + actualLabel++;
 		
-		line(ifelse);
+		line(ifelse.getCond());
 
 		value(ifelse.getCond());
 		
