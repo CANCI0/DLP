@@ -80,10 +80,10 @@ expression returns[Expression ast]
     ;
 
 type returns[Type ast]
-	: 'int'																					{ $ast = new IntType(); }
-	| 'float'																				{ $ast = new FloatType(); }
-	| 'char'																				{ $ast = new CharType(); }
-	| 'void'																				{ $ast = new VoidType(); }
-	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); }
-	| IDENT																					{ $ast = new StructType($IDENT); }
+	: 'int'																					{ $ast = new IntType(); $ast.updatePositions($ctx.start); }
+	| 'float'																				{ $ast = new FloatType(); $ast.updatePositions($ctx.start); }
+	| 'char'																				{ $ast = new CharType(); $ast.updatePositions($ctx.start); }
+	| 'void'																				{ $ast = new VoidType(); $ast.updatePositions($ctx.start); }
+	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); $ast.updatePositions($ctx.start); }
+	| IDENT																					{ $ast = new StructType($IDENT); $ast.updatePositions($ctx.start); }
 	;
