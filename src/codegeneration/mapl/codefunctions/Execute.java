@@ -24,10 +24,9 @@ public class Execute extends AbstractCodeFunction {
 
 	@Override
 	public Object visit(FunctionDefinition functionDefinition, Object param) {
-		execute(functionDefinition.definitions());
-
+		
 		out(functionDefinition.getName() + ":");
-
+		
 		// Return type size
 		int cte1 = 0;
 		if (functionDefinition.getType().isPresent()) {
@@ -176,7 +175,6 @@ public class Execute extends AbstractCodeFunction {
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {
-
 		String jzLabel = "label" + actualLabel++;
 		String jmpLabel = "label" + actualLabel++;
 		

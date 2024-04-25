@@ -49,7 +49,7 @@ statement returns[Statement ast]
 	| 'print' expressions ';'																{ $ast = new Print($expressions.list); }
 	| 'println' expressions ';'																{ $ast = new Println($expressions.list); }
 	| 'printsp' expressions ';'																{ $ast = new Printsp($expressions.list); }
-	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); }
+	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); $ast.updatePositions($ctx.start); }
 	| IDENT '(' expressions ')' ';'?														{ $ast = new FunctionCallStatement($IDENT, $expressions.list); }	
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }

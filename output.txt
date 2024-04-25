@@ -114,6 +114,8 @@ pushi 4
 gei
 or
 jz label3
+
+#line 41
 jmp label4
 label3:
 label4:
