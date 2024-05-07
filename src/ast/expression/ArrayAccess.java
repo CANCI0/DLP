@@ -2,7 +2,9 @@
 
 package ast.expression;
 
+import ast.type.*;
 import ast.definition.*;
+import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
 // %% User Declarations -------------

@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
+
 import ast.expression.*;
 import ast.statement.*;
 import ast.definition.*;
@@ -771,7 +772,7 @@ public class GrammarParser extends Parser {
 
 				setState(145);
 				match(T__6);
-				 ((StatementContext)_localctx).ast =  new Return(((StatementContext)_localctx).expression != null ? ((StatementContext)_localctx).expression.ast : null); 
+				 ((StatementContext)_localctx).ast =  new Return(((StatementContext)_localctx).expression != null ? ((StatementContext)_localctx).expression.ast : null); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case 6:
@@ -1292,7 +1293,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(281);
 				match(T__35);
-				 ((TypeContext)_localctx).ast =  new IntType(); 
+				 ((TypeContext)_localctx).ast =  new IntType(); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case T__36:
@@ -1300,7 +1301,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(283);
 				match(T__36);
-				 ((TypeContext)_localctx).ast =  new FloatType(); 
+				 ((TypeContext)_localctx).ast =  new FloatType(); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case T__37:
@@ -1308,7 +1309,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(285);
 				match(T__37);
-				 ((TypeContext)_localctx).ast =  new CharType(); 
+				 ((TypeContext)_localctx).ast =  new CharType(); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case T__38:
@@ -1316,7 +1317,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(287);
 				match(T__38);
-				 ((TypeContext)_localctx).ast =  new VoidType(); 
+				 ((TypeContext)_localctx).ast =  new VoidType(); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case T__18:
@@ -1330,7 +1331,7 @@ public class GrammarParser extends Parser {
 				match(T__19);
 				setState(292);
 				((TypeContext)_localctx).type = type();
-				 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).INT_LITERAL, ((TypeContext)_localctx).type.ast); 
+				 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).INT_LITERAL, ((TypeContext)_localctx).type.ast); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			case IDENT:
@@ -1338,7 +1339,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(295);
 				((TypeContext)_localctx).IDENT = match(IDENT);
-				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).IDENT); 
+				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).IDENT); _localctx.ast.updatePositions(_localctx.start); 
 				}
 				break;
 			default:

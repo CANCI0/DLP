@@ -49,7 +49,7 @@ statement returns[Statement ast]
 	| 'print' expressions ';'																{ $ast = new Print($expressions.list); }
 	| 'println' expressions ';'																{ $ast = new Println($expressions.list); }
 	| 'printsp' expressions ';'																{ $ast = new Printsp($expressions.list); }
-	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); }
+	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); $ast.updatePositions($ctx.start); }
 	| IDENT '(' expressions ')' ';'?														{ $ast = new FunctionCallStatement($IDENT, $expressions.list); }	
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
@@ -80,10 +80,10 @@ expression returns[Expression ast]
     ;
 
 type returns[Type ast]
-	: 'int'																					{ $ast = new IntType(); }
-	| 'float'																				{ $ast = new FloatType(); }
-	| 'char'																				{ $ast = new CharType(); }
-	| 'void'																				{ $ast = new VoidType(); }
-	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); }
-	| IDENT																					{ $ast = new StructType($IDENT); }
+	: 'int'																					{ $ast = new IntType(); $ast.updatePositions($ctx.start); }
+	| 'float'																				{ $ast = new FloatType(); $ast.updatePositions($ctx.start); }
+	| 'char'																				{ $ast = new CharType(); $ast.updatePositions($ctx.start); }
+	| 'void'																				{ $ast = new VoidType(); $ast.updatePositions($ctx.start); }
+	| '[' INT_LITERAL ']' type																{ $ast = new ArrayType($INT_LITERAL, $type.ast); $ast.updatePositions($ctx.start); }
+	| IDENT																					{ $ast = new StructType($IDENT); $ast.updatePositions($ctx.start); }
 	;
