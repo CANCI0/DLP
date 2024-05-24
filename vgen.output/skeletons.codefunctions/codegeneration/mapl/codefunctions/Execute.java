@@ -118,6 +118,18 @@ public class Execute extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class Switch(Expression expression, List<Case> cases)
+	@Override
+	public Object visit(Switch switchValue, Object param) {
+
+		// value(switchValue.getExpression());
+		// address(switchValue.getExpression());
+
+		out("<instruction>");
+
+		return null;
+	}
+
 	// class FunctionCallStatement(String name, List<Expression> expressions)
 	// phase Identification { FunctionDefinition functionDefinition }
 	@Override

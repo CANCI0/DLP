@@ -138,6 +138,18 @@ Ifelse o-[#404040,thickness=2]-  Expression : cond >
 Ifelse o-[#404040,thickness=2]- "✱" Statement : tr >
 Ifelse o-[#404040,thickness=2]- "✱" Statement : fs >
 
+class Switch {
+}
+AbstractStatement <|-[#808080]- Switch
+Switch o-[#404040,thickness=2]-  Expression : expression >
+Switch o-[#404040,thickness=2]- "✱" Case : cases >
+
+class Case {
+}
+AbstractAST <|-[#808080]- Case
+Case o-[#404040,thickness=2]-  Expression : expression >
+Case o-[#404040,thickness=2]- "✱" Statement : statements >
+
 class FunctionCallStatement {
 	+String name
 }

@@ -239,6 +239,28 @@ public class MemoryAllocation extends DefaultVisitor {
 		return null;
 	}
 
+	// class Switch(Expression expression, List<Case> cases)
+	@Override
+	public Object visit(Switch switchValue, Object param) {
+
+		// switchValue.getExpression().accept(this, param);
+		// switchValue.getCases().forEach(caseValue -> caseValue.accept(this, param));
+		super.visit(switchValue, param);
+
+		return null;
+	}
+
+	// class Case(Expression expression, List<Statement> statements)
+	@Override
+	public Object visit(Case caseValue, Object param) {
+
+		// caseValue.getExpression().accept(this, param);
+		// caseValue.getStatements().forEach(statement -> statement.accept(this, param));
+		super.visit(caseValue, param);
+
+		return null;
+	}
+
 	// class FunctionCallStatement(String name, List<Expression> expressions)
 	// phase Identification { FunctionDefinition functionDefinition }
 	@Override

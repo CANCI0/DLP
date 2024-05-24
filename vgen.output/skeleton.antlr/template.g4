@@ -47,6 +47,7 @@ statement returns[Statement ast]
     | left=expression right=expression    { $ast = new Assignment($left.ast, $right.ast); }      
     | expression statements+=statement*   { $ast = new While($expression.ast, $statements); }    
     | expression tr+=statement* fs+=statement* { $ast = new Ifelse($expression.ast, $tr, $fs); }      
+    | expression cases+=case*             { $ast = new Switch($expression.ast, $cases); }        
     | name=IDENT expressions+=expression* { $ast = new FunctionCallStatement($name, $expressions); }
 	;
 
@@ -62,6 +63,10 @@ expression returns[Expression ast]
     | name=IDENT                          { $ast = new Variable($name); }                        
     | type expression                     { $ast = new Cast($type.ast, $expression.ast); }       
     | name=IDENT expressions+=expression* { $ast = new FunctionCallExpression($name, $expressions); }
+	;
+
+case returns[Case ast]
+    : expression statements+=statement*   { $ast = new Case($expression.ast, $statements); }     
 	;
 
 

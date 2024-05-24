@@ -21,6 +21,8 @@ return:statement -> expression?;
 assignment:statement -> left:expression right:expression;
 while:statement -> expression statement*;
 ifelse:statement -> cond:expression tr:statement* fs:statement*;
+switch:statement -> expression case*;
+case -> expression statement*;
 functionCallStatement:statement -> string expression*;
 
 intLiteral:expression -> int;

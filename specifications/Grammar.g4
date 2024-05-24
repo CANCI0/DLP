@@ -54,7 +54,16 @@ statement returns[Statement ast]
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
 	| 'if' '(' cond=expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?	{ $ast = new Ifelse($cond.ast, $tr.list, $fs.ctx != null ? $fs.list : null); }
+	| 'switch' '(' expression ')' '{' cases '}'												{ $ast = new Switch($expression.ast, $cases.list); }
     ;
+
+cases returns[List<Case> list = new ArrayList<Case>()]
+	: (case { $list.add($case.ast); })*
+	;
+	
+case returns[Case ast]
+	: 'case' expression ':' statements														{ $ast = new Case($expression.ast, $statements.list); }
+	;
 
 expressions returns[List<Expression> list = new ArrayList<Expression>()]
     : (expression { $list.add($expression.ast); } (',' expression { $list.add($expression.ast); })*)?

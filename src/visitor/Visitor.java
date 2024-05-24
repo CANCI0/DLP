@@ -46,6 +46,10 @@ public interface Visitor {
 
 	public Object visit(Ifelse ifelse, Object param);
 
+	public Object visit(Switch switchValue, Object param);
+
+	public Object visit(Case caseValue, Object param);
+
 	public Object visit(FunctionCallStatement functionCallStatement, Object param);
 
 	public Object visit(IntLiteral intLiteral, Object param);
@@ -83,6 +87,8 @@ public interface Visitor {
 	public Object visit(VoidType voidType, Object param);
 
 	public Object visit(ErrorType errorType, Object param);
+
+	Object visit();
 
     // %% User Members -------------------------
 

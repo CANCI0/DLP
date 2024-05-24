@@ -128,6 +128,22 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(Switch switchValue, Object param) {
+
+		switchValue.getExpression().accept(this, param);
+		switchValue.getCases().forEach(caseValue -> caseValue.accept(this, param));
+		return null;
+	}
+
+	@Override
+	public Object visit(Case caseValue, Object param) {
+
+		caseValue.getExpression().accept(this, param);
+		caseValue.getStatements().forEach(statement -> statement.accept(this, param));
+		return null;
+	}
+
+	@Override
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
 		functionCallStatement.getExpressions().forEach(expression -> expression.accept(this, param));
@@ -251,6 +267,12 @@ public class DefaultVisitor implements Visitor {
 	@Override
 	public Object visit(ErrorType errorType, Object param) {
 
+		return null;
+	}
+
+	@Override
+	public Object visit() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

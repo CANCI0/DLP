@@ -101,6 +101,18 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(Switch switchValue, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Switch)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(Case caseValue, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Case)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(FunctionCallStatement functionCallStatement, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(FunctionCallStatement)' has been invoked but it has not been implemented.");
@@ -212,6 +224,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	public Object visit(ErrorType errorType, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(ErrorType)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
     // %% User Members -------------------------

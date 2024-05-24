@@ -2,6 +2,10 @@
 
 package codegeneration.mapl.codefunctions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ast.*;
 import ast.AST;
 import ast.Position;
 import ast.definition.FunctionDefinition;
@@ -189,6 +193,42 @@ public class Execute extends AbstractCodeFunction {
 		execute(ifelse.fs(), param);
 		out(jmpLabel + ":");
 				
+		return null;
+	}
+	
+	//class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
+	@Override
+	public Object visit(Switch switch_, Object param) {
+		List<String> cases = new ArrayList<>();
+		for(int i = 0 ; i < switch_.getCases().size() ; i++) {
+			cases.add("label" + actualLabel++);
+		}
+		String endLabel = "label" + actualLabel++;
+		
+		value(switch_.getExpression());
+		for(int i = 0 ; i < switch_.getCases().size() ; i++) {
+			Case case_ = switch_.getCases().get(i);
+			String caseLabel = cases.get(i);
+			
+			out("dupi");
+			value(case_.getExpression());
+			out("eqi");
+			
+			out("jnz " + caseLabel);
+		}
+				
+		//Se crean los casos
+		for(int i = 0 ; i < switch_.getCases().size() ; i++) {
+			Case case_ = switch_.getCases().get(i);
+			String caseLabel = cases.get(i);
+			
+			out(caseLabel + ":");
+			execute(case_.statements());
+			out("jmp " + endLabel);
+		}
+		out(endLabel + ":");		
+		out("popi");
+		
 		return null;
 	}
 
