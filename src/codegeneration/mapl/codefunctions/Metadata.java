@@ -5,6 +5,7 @@ package codegeneration.mapl.codefunctions;
 import ast.*;
 import ast.definition.*;
 import ast.type.ArrayType;
+import ast.type.BoolType;
 import ast.type.CharType;
 import ast.type.FloatType;
 import ast.type.IntType;
@@ -81,7 +82,7 @@ public class Metadata extends AbstractCodeFunction {
     //# Auxiliary methods
 
     private String getTypeName(Type type) {
-        if (type instanceof IntType)
+        if (type instanceof IntType || type instanceof BoolType)
             return "int";
         if (type instanceof FloatType)
             return "float";

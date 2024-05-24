@@ -25,6 +25,7 @@ functionCallStatement:statement -> string expression*;
 
 intLiteral:expression -> int;
 floatLiteral:expression -> float;
+boolLiteral:expression -> boolean;
 charLiteral:expression -> string;
 arrayAccess:expression -> expr1:expression expr2:expression;
 fieldAccess:expression -> expr:expression string;
@@ -37,6 +38,7 @@ functionCallExpression:expression -> string expression*;
 
 intType:type -> ;
 floatType:type -> ;
+boolType:type -> ;
 charType:type -> ;
 arrayType:type -> int type;
 structType:type -> string;

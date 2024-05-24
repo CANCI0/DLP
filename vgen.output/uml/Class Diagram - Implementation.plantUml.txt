@@ -155,6 +155,11 @@ class FloatLiteral {
 }
 AbstractExpression <|-[#808080]- FloatLiteral
 
+class BoolLiteral {
+	+boolean booleanValue
+}
+AbstractExpression <|-[#808080]- BoolLiteral
+
 class CharLiteral {
 	+String name
 }
@@ -219,6 +224,10 @@ AbstractType <|-[#808080]- IntType
 class FloatType {
 }
 AbstractType <|-[#808080]- FloatType
+
+class BoolType {
+}
+AbstractType <|-[#808080]- BoolType
 
 class CharType {
 }

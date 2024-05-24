@@ -53,7 +53,7 @@ public abstract class AbstractCodeFunction extends ExceptionThrowerVisitor {
     }
 
     protected String suffixFor(Type type) {
-        if (type instanceof IntType)
+        if (type instanceof IntType || type instanceof BoolType)
             return "i";
         if (type instanceof FloatType)
             return "f";

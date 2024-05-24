@@ -178,7 +178,7 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(While whileValue, Object param) {
 		super.visit(whileValue, param);
 
-		predicate(isInt(whileValue.getExpression()), "ERROR: La condición debe ser int", whileValue);
+		predicate(isLogical(whileValue.getExpression()), "ERROR: La condición debe ser int", whileValue);
 		
 		return null;
 	}
@@ -188,7 +188,7 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(Ifelse ifelse, Object param) {
 		super.visit(ifelse, param);
 
-		predicate(isInt(ifelse.getCond()), "ERROR: La condición debe ser int", ifelse);
+		predicate(isLogical(ifelse.getCond()), "ERROR: La condición debe ser int", ifelse);
 		
 		return null;
 	}
@@ -230,6 +230,15 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(CharLiteral charLiteral, Object param) {
 		charLiteral.setExpressionType(new CharType());
 		charLiteral.setLvalue(false);
+		
+		return null;
+	}
+
+	// class BoolLiteral()
+	@Override
+	public Object visit(BoolLiteral boolLiteral, Object param) {
+		boolLiteral.setExpressionType(new BoolType());
+		boolLiteral.setLvalue(false);
 		
 		return null;
 	}
@@ -410,7 +419,8 @@ public class TypeChecking extends DefaultVisitor {
 	private boolean primitiveType(Type type) {
 		return (type.getClass() == IntType.class)
 				|| (type.getClass() == CharType.class)
-				|| (type.getClass() == FloatType.class);
+				|| (type.getClass() == FloatType.class)
+				|| (type.getClass() == BoolType.class);
 	}
 
 	private boolean primitiveOrVoid(Optional<Type> optional) {
@@ -505,6 +515,13 @@ public class TypeChecking extends DefaultVisitor {
 
 	private boolean isInt(Expression expr) {
 		if (expr.getExpressionType() instanceof IntType) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isLogical(Expression expr) {
+		if (expr.getExpressionType() instanceof IntType || expr.getExpressionType() instanceof BoolType) {
 			return true;
 		}
 		return false;

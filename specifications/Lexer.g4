@@ -13,6 +13,11 @@ CHAR_LITERAL
 	| '\'\\n\''
 	;
 
+BOOL_LITERAL	
+	: 'true'
+	| 'false'
+	;
+
 IDENT 
 	: [a-zA-Z][a-zA-Z0-9_]*
 	;

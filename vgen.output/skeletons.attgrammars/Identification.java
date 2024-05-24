@@ -246,6 +246,13 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	// class BoolLiteral(boolean booleanValue)
+	@Override
+	public Object visit(BoolLiteral boolLiteral, Object param) {
+
+		return null;
+	}
+
 	// class CharLiteral(String name)
 	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
@@ -356,6 +363,13 @@ public class Identification extends DefaultVisitor {
 	// class FloatType()
 	@Override
 	public Object visit(FloatType floatType, Object param) {
+
+		return null;
+	}
+
+	// class BoolType()
+	@Override
+	public Object visit(BoolType boolType, Object param) {
 
 		return null;
 	}

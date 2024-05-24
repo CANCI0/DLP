@@ -64,6 +64,7 @@ expression returns[Expression ast]
     : INT_LITERAL																			{ $ast = new IntLiteral($INT_LITERAL); }
     | REAL_LITERAL																			{ $ast = new FloatLiteral($REAL_LITERAL); }
     | CHAR_LITERAL																			{ $ast = new CharLiteral($CHAR_LITERAL); }
+	| BOOL_LITERAL																			{ $ast = new BoolLiteral($BOOL_LITERAL); }
 	| IDENT '(' expressions ')'																{ $ast = new FunctionCallExpression($IDENT, $expressions.list); }	
 	| IDENT																					{ $ast = new Variable($IDENT); }
 	| expression1=expression '[' expression2=expression ']'									{ $ast = new ArrayAccess($expression1.ast, $expression2.ast); }
@@ -81,6 +82,7 @@ expression returns[Expression ast]
 
 type returns[Type ast]
 	: 'int'																					{ $ast = new IntType(); $ast.updatePositions($ctx.start); }
+	| 'bool'																				{ $ast = new BoolType(); $ast.updatePositions($ctx.start); }
 	| 'float'																				{ $ast = new FloatType(); $ast.updatePositions($ctx.start); }
 	| 'char'																				{ $ast = new CharType(); $ast.updatePositions($ctx.start); }
 	| 'void'																				{ $ast = new VoidType(); $ast.updatePositions($ctx.start); }

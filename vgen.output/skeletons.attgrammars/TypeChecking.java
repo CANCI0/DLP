@@ -248,6 +248,17 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class BoolLiteral(boolean booleanValue)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(BoolLiteral boolLiteral, Object param) {
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// boolLiteral.setExpressionType(?);
+		// boolLiteral.setLvalue(?);
+		return null;
+	}
+
 	// class CharLiteral(String name)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
@@ -386,6 +397,13 @@ public class TypeChecking extends DefaultVisitor {
 	// class FloatType()
 	@Override
 	public Object visit(FloatType floatType, Object param) {
+
+		return null;
+	}
+
+	// class BoolType()
+	@Override
+	public Object visit(BoolType boolType, Object param) {
 
 		return null;
 	}

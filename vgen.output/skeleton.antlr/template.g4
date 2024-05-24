@@ -23,6 +23,7 @@ definition returns[Definition ast]
 type returns[Type ast]
     :                                     { $ast = new IntType(); }                              
     |                                     { $ast = new FloatType(); }                            
+    |                                     { $ast = new BoolType(); }                             
     |                                     { $ast = new CharType(); }                             
     | INT_LITERAL type                    { $ast = new ArrayType($INT_LITERAL, $type.ast); }     
     | name=IDENT                          { $ast = new StructType($name); }                      
@@ -53,6 +54,7 @@ statement returns[Statement ast]
 expression returns[Expression ast]
     : INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
     | FLOAT_LITERAL                       { $ast = new FloatLiteral($FLOAT_LITERAL); }           
+    | BOOLEAN_LITERAL                     { $ast = new BoolLiteral($BOOLEAN_LITERAL); }          
     | name=IDENT                          { $ast = new CharLiteral($name); }                     
     | expr1=expression expr2=expression   { $ast = new ArrayAccess($expr1.ast, $expr2.ast); }    
     | expression name=IDENT               { $ast = new FieldAccess($expression.ast, $name); }    
@@ -71,3 +73,4 @@ expression returns[Expression ast]
 IDENT: [a-zA-Z_][a-zA-Z0-9_]*;
 FLOAT_LITERAL: [0-9]+ '.' [0-9]+;
 INT_LITERAL: [0-9]+;
+BOOLEAN_LITERAL: 'true' | 'false';

@@ -72,6 +72,16 @@ public class Value extends AbstractCodeFunction {
 
 		return null;
 	}
+	
+	// class IntLiteral(int intValue)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(BoolLiteral boolLiteral, Object param) {
+
+		out("pushi " + (boolLiteral.isBooleanValue()? "1" : "0"));
+
+		return null;
+	}
 
 	// class CharLiteral(String name)
 	// phase TypeChecking { Type expressionType, boolean lvalue }

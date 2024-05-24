@@ -266,6 +266,14 @@ public class MemoryAllocation extends DefaultVisitor {
 		return null;
 	}
 
+	// class BoolLiteral(boolean booleanValue)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(BoolLiteral boolLiteral, Object param) {
+
+		return null;
+	}
+
 	// class CharLiteral(String name)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
@@ -377,6 +385,13 @@ public class MemoryAllocation extends DefaultVisitor {
 	// class FloatType()
 	@Override
 	public Object visit(FloatType floatType, Object param) {
+
+		return null;
+	}
+
+	// class BoolType()
+	@Override
+	public Object visit(BoolType boolType, Object param) {
 
 		return null;
 	}
