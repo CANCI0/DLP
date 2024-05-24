@@ -119,6 +119,16 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(For forValue, Object param) {
+
+		forValue.getInit().accept(this, param);
+		forValue.getCond().accept(this, param);
+		forValue.getUpdate().accept(this, param);
+		forValue.getStatements().forEach(statement -> statement.accept(this, param));
+		return null;
+	}
+
+	@Override
 	public Object visit(Ifelse ifelse, Object param) {
 
 		ifelse.getCond().accept(this, param);

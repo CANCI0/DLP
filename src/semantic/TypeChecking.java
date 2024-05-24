@@ -182,6 +182,16 @@ public class TypeChecking extends DefaultVisitor {
 		
 		return null;
 	}
+	
+	// class For(Expression expression, List<Statement> statements)
+	@Override
+	public Object visit(For forValue, Object param) {
+		super.visit(forValue, param);
+
+		predicate(isInt(forValue.getCond()), "ERROR: La condición debe ser int", forValue);
+		
+		return null;
+	}
 
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override

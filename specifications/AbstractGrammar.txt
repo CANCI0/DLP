@@ -20,6 +20,7 @@ printsp:statement -> expression*;
 return:statement -> expression?;
 assignment:statement -> left:expression right:expression;
 while:statement -> expression statement*;
+for:statement -> init:statement cond:expression update:statement statement*;
 ifelse:statement -> cond:expression tr:statement* fs:statement*;
 functionCallStatement:statement -> string expression*;
 

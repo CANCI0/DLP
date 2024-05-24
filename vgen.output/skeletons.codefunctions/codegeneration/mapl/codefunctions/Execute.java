@@ -102,6 +102,24 @@ public class Execute extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class For(Statement init, Expression cond, Statement update, List<Statement> statements)
+	@Override
+	public Object visit(For forValue, Object param) {
+
+		// execute(forValue.getInit());
+
+		// value(forValue.getCond());
+		// address(forValue.getCond());
+
+		// execute(forValue.getUpdate());
+
+		// execute(forValue.statements());
+
+		out("<instruction>");
+
+		return null;
+	}
+
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {

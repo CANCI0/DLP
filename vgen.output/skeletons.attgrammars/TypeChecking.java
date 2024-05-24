@@ -203,6 +203,19 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class For(Statement init, Expression cond, Statement update, List<Statement> statements)
+	@Override
+	public Object visit(For forValue, Object param) {
+
+		// forValue.getInit().accept(this, param);
+		// forValue.getCond().accept(this, param);
+		// forValue.getUpdate().accept(this, param);
+		// forValue.getStatements().forEach(statement -> statement.accept(this, param));
+		super.visit(forValue, param);
+
+		return null;
+	}
+
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override
 	public Object visit(Ifelse ifelse, Object param) {

@@ -95,6 +95,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(For forValue, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(For)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(Ifelse ifelse, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Ifelse)' has been invoked but it has not been implemented.");

@@ -171,6 +171,25 @@ public class Execute extends AbstractCodeFunction {
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(For forValue, Object param) {
+		String exit = "label" + actualLabel++;
+		String loop = "label" + actualLabel++;
+		
+		execute(forValue.getInit());
+		out(loop + ":");
+		value(forValue.getCond());
+		out("jz " + exit);
+		
+		execute(forValue.statements(), param);
+		
+		execute(forValue.getUpdate());
+		out("jmp " + loop);
+		out(exit + ":");
+		
+		return null;
+	}
 
 	// class Ifelse(Expression cond, List<Statement> tr, List<Statement> fs)
 	@Override

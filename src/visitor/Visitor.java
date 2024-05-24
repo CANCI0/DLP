@@ -44,6 +44,8 @@ public interface Visitor {
 
 	public Object visit(While whileValue, Object param);
 
+	public Object visit(For forValue, Object param);
+
 	public Object visit(Ifelse ifelse, Object param);
 
 	public Object visit(FunctionCallStatement functionCallStatement, Object param);

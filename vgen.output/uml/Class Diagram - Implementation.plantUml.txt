@@ -131,6 +131,14 @@ AbstractStatement <|-[#808080]- While
 While o-[#404040,thickness=2]-  Expression : expression >
 While o-[#404040,thickness=2]- "✱" Statement : statements >
 
+class For {
+}
+AbstractStatement <|-[#808080]- For
+For o-[#404040,thickness=2]-  Statement : init >
+For o-[#404040,thickness=2]-  Expression : cond >
+For o-[#404040,thickness=2]-  Statement : update >
+For o-[#404040,thickness=2]- "✱" Statement : statements >
+
 class Ifelse {
 }
 AbstractStatement <|-[#808080]- Ifelse
