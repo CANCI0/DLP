@@ -111,6 +111,23 @@ Statement <|-[#808080]- Assignment
 Assignment o-[#404040,thickness=2]-  Expression : left >
 Assignment o-[#404040,thickness=2]-  Expression : right >
 
+class SumAssignment {
+}
+Statement <|-[#808080]- SumAssignment
+SumAssignment o-[#404040,thickness=2]-  Expression : left >
+SumAssignment o-[#404040,thickness=2]-  Expression : right >
+
+class SubAssignment {
+}
+Statement <|-[#808080]- SubAssignment
+SubAssignment o-[#404040,thickness=2]-  Expression : left >
+SubAssignment o-[#404040,thickness=2]-  Expression : right >
+
+class Plus {
+}
+Statement <|-[#808080]- Plus
+Plus o-[#404040,thickness=2]-  Expression : expression >
+
 class While {
 }
 Statement <|-[#808080]- While

@@ -52,6 +52,9 @@ statement returns[Statement ast]
 	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); $ast.updatePositions($ctx.start); }
 	| IDENT '(' expressions ')' ';'?														{ $ast = new FunctionCallStatement($IDENT, $expressions.list); }	
     | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
+    | left=expression '+=' right=expression ';'												{ $ast = new SumAssignment($left.ast, $right.ast); }
+    | left=expression '-=' right=expression ';'												{ $ast = new SubAssignment($left.ast, $right.ast); }
+    | expression'++' ';'																	{ $ast = new Plus($expression.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
 	| 'if' '(' cond=expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?	{ $ast = new Ifelse($cond.ast, $tr.list, $fs.ctx != null ? $fs.list : null); }
     ;

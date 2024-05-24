@@ -151,7 +151,55 @@ public class Execute extends AbstractCodeFunction {
 
 		return null;
 	}
+	
+	// class SumAssignment(Expression left, Expression right)
+	@Override
+	public Object visit(SumAssignment assignment, Object param) {
 
+		line(assignment);
+
+		address(assignment.getLeft());
+		value(assignment.getLeft());
+		value(assignment.getRight());
+		
+		out("add", assignment.getLeft().getExpressionType());
+		out("store", assignment.getLeft().getExpressionType());
+
+		return null;
+	}
+
+	// class SumAssignment(Expression left, Expression right)
+	@Override
+	public Object visit(SubAssignment assignment, Object param) {
+
+		line(assignment);
+
+		address(assignment.getLeft());
+		value(assignment.getLeft());
+		value(assignment.getRight());
+		
+		out("sub", assignment.getLeft().getExpressionType());
+		out("store", assignment.getLeft().getExpressionType());
+
+		return null;
+	}
+	
+	// class SumAssignment(Expression left, Expression right)
+	@Override
+	public Object visit(Plus plus, Object param) {
+
+		line(plus);
+
+		address(plus.getExpression());
+		value(plus.getExpression());
+		
+		out("pushi 1");
+		out("addi");
+		out("store", plus.getExpression().getExpressionType());
+		
+		return null;
+	}
+		
 	// class While(Expression expression, List<Statement> statements)
 	@Override
 	public Object visit(While whileValue, Object param) {

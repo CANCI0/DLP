@@ -42,6 +42,12 @@ public interface Visitor {
 
 	public Object visit(Assignment assignment, Object param);
 
+	public Object visit(SumAssignment sumAssignment, Object param);
+
+	public Object visit(SubAssignment subAssignment, Object param);
+
+	public Object visit(Plus plus, Object param);
+
 	public Object visit(While whileValue, Object param);
 
 	public Object visit(Ifelse ifelse, Object param);

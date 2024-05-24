@@ -125,6 +125,23 @@ AbstractStatement <|-[#808080]- Assignment
 Assignment o-[#404040,thickness=2]-  Expression : left >
 Assignment o-[#404040,thickness=2]-  Expression : right >
 
+class SumAssignment {
+}
+AbstractStatement <|-[#808080]- SumAssignment
+SumAssignment o-[#404040,thickness=2]-  Expression : left >
+SumAssignment o-[#404040,thickness=2]-  Expression : right >
+
+class SubAssignment {
+}
+AbstractStatement <|-[#808080]- SubAssignment
+SubAssignment o-[#404040,thickness=2]-  Expression : left >
+SubAssignment o-[#404040,thickness=2]-  Expression : right >
+
+class Plus {
+}
+AbstractStatement <|-[#808080]- Plus
+Plus o-[#404040,thickness=2]-  Expression : expression >
+
 class While {
 }
 AbstractStatement <|-[#808080]- While

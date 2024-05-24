@@ -89,6 +89,24 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(SumAssignment sumAssignment, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(SumAssignment)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(SubAssignment subAssignment, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(SubAssignment)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
+	public Object visit(Plus plus, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(Plus)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(While whileValue, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(While)' has been invoked but it has not been implemented.");

@@ -192,6 +192,38 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class SumAssignment(Expression left, Expression right)
+	@Override
+	public Object visit(SumAssignment sumAssignment, Object param) {
+
+		// sumAssignment.getLeft().accept(this, param);
+		// sumAssignment.getRight().accept(this, param);
+		super.visit(sumAssignment, param);
+
+		return null;
+	}
+
+	// class SubAssignment(Expression left, Expression right)
+	@Override
+	public Object visit(SubAssignment subAssignment, Object param) {
+
+		// subAssignment.getLeft().accept(this, param);
+		// subAssignment.getRight().accept(this, param);
+		super.visit(subAssignment, param);
+
+		return null;
+	}
+
+	// class Plus(Expression expression)
+	@Override
+	public Object visit(Plus plus, Object param) {
+
+		// plus.getExpression().accept(this, param);
+		super.visit(plus, param);
+
+		return null;
+	}
+
 	// class While(Expression expression, List<Statement> statements)
 	@Override
 	public Object visit(While whileValue, Object param) {

@@ -45,6 +45,9 @@ statement returns[Statement ast]
     | expressions+=expression*            { $ast = new Printsp($expressions); }                  
     | expression?                         { $ast = new Return(($expression.ctx == null) ? null : $expression.ast); }
     | left=expression right=expression    { $ast = new Assignment($left.ast, $right.ast); }      
+    | left=expression right=expression    { $ast = new SumAssignment($left.ast, $right.ast); }   
+    | left=expression right=expression    { $ast = new SubAssignment($left.ast, $right.ast); }   
+    | expression                          { $ast = new Plus($expression.ast); }                  
     | expression statements+=statement*   { $ast = new While($expression.ast, $statements); }    
     | expression tr+=statement* fs+=statement* { $ast = new Ifelse($expression.ast, $tr, $fs); }      
     | name=IDENT expressions+=expression* { $ast = new FunctionCallStatement($name, $expressions); }

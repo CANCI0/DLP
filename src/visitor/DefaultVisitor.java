@@ -111,6 +111,29 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(SumAssignment sumAssignment, Object param) {
+
+		sumAssignment.getLeft().accept(this, param);
+		sumAssignment.getRight().accept(this, param);
+		return null;
+	}
+
+	@Override
+	public Object visit(SubAssignment subAssignment, Object param) {
+
+		subAssignment.getLeft().accept(this, param);
+		subAssignment.getRight().accept(this, param);
+		return null;
+	}
+
+	@Override
+	public Object visit(Plus plus, Object param) {
+
+		plus.getExpression().accept(this, param);
+		return null;
+	}
+
+	@Override
 	public Object visit(While whileValue, Object param) {
 
 		whileValue.getExpression().accept(this, param);

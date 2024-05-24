@@ -264,6 +264,47 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
+	public Object visit(SumAssignment sumAssignment, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "left", "Expression", sumAssignment.getLeft());
+        printNodeChild(indent + 1, "right", "Expression", sumAssignment.getRight());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, sumAssignment, "left", "right");
+		return null;
+	}
+
+	@Override
+	public Object visit(SubAssignment subAssignment, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "left", "Expression", subAssignment.getLeft());
+        printNodeChild(indent + 1, "right", "Expression", subAssignment.getRight());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, subAssignment, "left", "right");
+		return null;
+	}
+
+	@Override
+	public Object visit(Plus plus, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "expression", "Expression", plus.getExpression());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, plus, "expression");
+		return null;
+	}
+
+	@Override
 	public Object visit(While whileValue, Object param) {
 
 		int indent = ((Integer)param);
