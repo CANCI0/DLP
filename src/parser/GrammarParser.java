@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
+import ast.expression.*;
+import ast.statement.*;
+import ast.definition.*;
+import ast.type.*;
+import ast.*;
+
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class GrammarParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.11.1", RuntimeMetaData.VERSION); }
