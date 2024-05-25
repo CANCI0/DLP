@@ -155,6 +155,11 @@ class FloatLiteral {
 }
 AbstractExpression <|-[#808080]- FloatLiteral
 
+class StringLiteral {
+	+String name
+}
+AbstractExpression <|-[#808080]- StringLiteral
+
 class CharLiteral {
 	+String name
 }
@@ -223,6 +228,10 @@ AbstractType <|-[#808080]- FloatType
 class CharType {
 }
 AbstractType <|-[#808080]- CharType
+
+class StringType {
+}
+AbstractType <|-[#808080]- StringType
 
 class ArrayType {
 	+int intValue

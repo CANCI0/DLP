@@ -147,6 +147,12 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(StringLiteral stringLiteral, Object param) {
+
+		return null;
+	}
+
+	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
 
 		return null;
@@ -225,6 +231,12 @@ public class DefaultVisitor implements Visitor {
 
 	@Override
 	public Object visit(CharType charType, Object param) {
+
+		return null;
+	}
+
+	@Override
+	public Object visit(StringType stringType, Object param) {
 
 		return null;
 	}

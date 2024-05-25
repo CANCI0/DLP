@@ -52,6 +52,8 @@ public interface Visitor {
 
 	public Object visit(FloatLiteral floatLiteral, Object param);
 
+	public Object visit(StringLiteral stringLiteral, Object param);
+
 	public Object visit(CharLiteral charLiteral, Object param);
 
 	public Object visit(ArrayAccess arrayAccess, Object param);
@@ -75,6 +77,8 @@ public interface Visitor {
 	public Object visit(FloatType floatType, Object param);
 
 	public Object visit(CharType charType, Object param);
+
+	public Object visit(StringType stringType, Object param);
 
 	public Object visit(ArrayType arrayType, Object param);
 

@@ -24,6 +24,7 @@ type returns[Type ast]
     :                                     { $ast = new IntType(); }                              
     |                                     { $ast = new FloatType(); }                            
     |                                     { $ast = new CharType(); }                             
+    |                                     { $ast = new StringType(); }                           
     | INT_LITERAL type                    { $ast = new ArrayType($INT_LITERAL, $type.ast); }     
     | name=IDENT                          { $ast = new StructType($name); }                      
     |                                     { $ast = new VoidType(); }                             
@@ -53,6 +54,7 @@ statement returns[Statement ast]
 expression returns[Expression ast]
     : INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
     | FLOAT_LITERAL                       { $ast = new FloatLiteral($FLOAT_LITERAL); }           
+    | name=IDENT                          { $ast = new StringLiteral($name); }                   
     | name=IDENT                          { $ast = new CharLiteral($name); }                     
     | expr1=expression expr2=expression   { $ast = new ArrayAccess($expr1.ast, $expr2.ast); }    
     | expression name=IDENT               { $ast = new FieldAccess($expression.ast, $name); }    

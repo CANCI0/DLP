@@ -33,6 +33,16 @@ public class Address extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class StringLiteral(String name)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(StringLiteral stringLiteral, Object param) {
+
+		out("<instruction>");
+
+		return null;
+	}
+
 	// class CharLiteral(String name)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override

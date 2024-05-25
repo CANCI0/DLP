@@ -338,6 +338,21 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
+	public Object visit(StringLiteral stringLiteral, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNonNodeChild(indent + 1, "name", "String", stringLiteral.getName());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+        printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", stringLiteral.getExpressionType());
+        printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", stringLiteral.isLvalue());
+		printUnknownFields(indent + 1, stringLiteral, "name", "expressionType", "lvalue");
+		return null;
+	}
+
+	@Override
 	public Object visit(CharLiteral charLiteral, Object param) {
 
 		int indent = ((Integer)param);
@@ -517,6 +532,18 @@ public class AstPrinter implements Visitor {
 
 		// Imprimir el 'toString()' de los atributos (pero no recorrer)
 		printUnknownFields(indent + 1, charType, "");
+		return null;
+	}
+
+	@Override
+	public Object visit(StringType stringType, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+		printUnknownFields(indent + 1, stringType, "");
 		return null;
 	}
 

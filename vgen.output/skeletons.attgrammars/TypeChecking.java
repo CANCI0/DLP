@@ -248,6 +248,17 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class StringLiteral(String name)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(StringLiteral stringLiteral, Object param) {
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// stringLiteral.setExpressionType(?);
+		// stringLiteral.setLvalue(?);
+		return null;
+	}
+
 	// class CharLiteral(String name)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
@@ -393,6 +404,13 @@ public class TypeChecking extends DefaultVisitor {
 	// class CharType()
 	@Override
 	public Object visit(CharType charType, Object param) {
+
+		return null;
+	}
+
+	// class StringType()
+	@Override
+	public Object visit(StringType stringType, Object param) {
 
 		return null;
 	}

@@ -13,6 +13,10 @@ CHAR_LITERAL
 	| '\'\\n\''
 	;
 
+STRING 
+	: '"'~[\\"\r\n]'"' 
+	;
+
 IDENT 
 	: [a-zA-Z][a-zA-Z0-9_]*
 	;
