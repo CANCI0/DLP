@@ -212,6 +212,11 @@ AbstractExpression <|-[#808080]- FunctionCallExpression
 FunctionCallExpression o-[#404040,thickness=2]- "✱" Expression : expressions >
 FunctionCallExpression -[#ff6600,thickness=3]-  FunctionDefinition #text:ff6600 : functionDefinition >
 
+class MemAddress {
+}
+AbstractExpression <|-[#808080]- MemAddress
+MemAddress o-[#404040,thickness=2]-  Expression : expression >
+
 class IntType {
 }
 AbstractType <|-[#808080]- IntType

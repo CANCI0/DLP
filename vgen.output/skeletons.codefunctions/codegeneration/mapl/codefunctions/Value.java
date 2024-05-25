@@ -157,4 +157,17 @@ public class Value extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class MemAddress(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+
+		// value(memAddress.getExpression());
+		// address(memAddress.getExpression());
+
+		out("<instruction>");
+
+		return null;
+	}
+
 }

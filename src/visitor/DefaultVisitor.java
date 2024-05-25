@@ -212,6 +212,13 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+
+		memAddress.getExpression().accept(this, param);
+		return null;
+	}
+
+	@Override
 	public Object visit(IntType intType, Object param) {
 
 		return null;

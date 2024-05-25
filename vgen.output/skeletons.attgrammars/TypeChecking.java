@@ -376,6 +376,20 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class MemAddress(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+
+		// memAddress.getExpression().accept(this, param);
+		super.visit(memAddress, param);
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// memAddress.setExpressionType(?);
+		// memAddress.setLvalue(?);
+		return null;
+	}
+
 	// class IntType()
 	@Override
 	public Object visit(IntType intType, Object param) {

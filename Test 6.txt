@@ -34,15 +34,16 @@ con la del lenguaje que le corresponde.
 
 main() {
     var a:int;
-    var c:char;
     var f:float;
+    var c:char;
 
-    read f;
     read c;
+    read f;
     read a;
 
 
     println c;
+    c = <char>(f);
     println c;
     c = <char>(a);
     println c;
@@ -50,6 +51,8 @@ main() {
 
     println f;
     f = <float>(a);
+    println f;
+    f = <float>(c);
     println f;
     println;
 

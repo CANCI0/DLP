@@ -63,6 +63,16 @@ public class Address extends AbstractCodeFunction {
 		return null;
 	}
 	
+	// class MemAddress(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+
+		address(memAddress.getExpression());
+
+		return null;
+	}
+	
 	@Override
 	public Object visit(IntLiteral variable, Object param) {
 	

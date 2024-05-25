@@ -62,6 +62,7 @@ expression returns[Expression ast]
     | name=IDENT                          { $ast = new Variable($name); }                        
     | type expression                     { $ast = new Cast($type.ast, $expression.ast); }       
     | name=IDENT expressions+=expression* { $ast = new FunctionCallExpression($name, $expressions); }
+    | expression                          { $ast = new MemAddress($expression.ast); }            
 	;
 
 

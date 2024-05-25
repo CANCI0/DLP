@@ -233,6 +233,14 @@ public class TypeChecking extends DefaultVisitor {
 		
 		return null;
 	}
+	
+	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+		memAddress.setExpressionType(new IntType());
+		memAddress.setLvalue(false);
+		
+		return null;
+	}
 
 	// class ArrayAccess(Expression expr1, Expression expr2)
 	// var v:[10]int;

@@ -1,217 +1,103 @@
-#source "Hipoteca.txt"
-#func potencia
-#param base:float
-#param exponente:int
-#local total:float
-#ret float
-#func letraHipoteca
-#param capital:float
-#param meses:int
-#param interes:float
-#local mensual:float
-#ret float
+#source "Test 7.txt"
+#func tablaMultiplicar
+#param numero:int
+#local index:int
+#ret char
 #func main
-#local precioVivienda:float
-#local mesesHipoteca:int
-#local interes:float
 #ret void
 call main
 halt
-potencia:
-enter 4
+tablaMultiplicar:
+enter 2
 
-#line 12
+#line 30
 push bp
-push 4
+push -2
 addi
-loadi
-pushi 0
-eqi
-jz label1
-
-#line 13
-push bp
-push -4
-addi
-pushf 1.0
-storef
-jmp label2
-label1:
-
-#line 15
-push bp
-push 4
-addi
-loadi
-pushi 0
-lti
-jz label3
-
-#line 16
-push bp
-push -4
-addi
-pushf 1.0
-push bp
-push 6
-addi
-loadf
-pushi 0
-push bp
-push 4
-addi
-loadi
-subi
-call potencia
-divf
-storef
-jmp label4
-label3:
-
-#line 18
-push bp
-push -4
-addi
-push bp
-push 6
-addi
-loadf
-storef
-
-#line 19
-label6:
-push bp
-push 4
-addi
-loadi
 pushi 1
-gti
-jz label5
-
-#line 20
-push bp
-push -4
-addi
-push bp
-push -4
-addi
-loadf
-push bp
-push 6
-addi
-loadf
-mulf
-storef
-
-#line 21
-push bp
-push 4
-addi
-push bp
-push 4
-addi
-loadi
-pushi 1
-subi
 storei
-jmp label6
-label5:
-label4:
+
+#line 31
 label2:
-
-#line 25
-push bp
-push -4
-addi
-loadf
-ret 4,4,6
-letraHipoteca:
-enter 4
-
-#line 32
-push bp
-push -4
-addi
-push bp
-push 4
-addi
-loadf
-pushf 12.0
-divf
-storef
+pushi 1
+jz label1
 
 #line 33
 push bp
-push 10
-addi
-loadf
-push bp
-push -4
-addi
-loadf
-mulf
-pushf 100.0
-pushf 1.0
-pushf 1.0
-push bp
-push -4
-addi
-loadf
-pushf 100.0
-divf
-addf
-pushi 0
-push bp
-push 8
+push 4
 addi
 loadi
-subi
-call potencia
-subf
-mulf
-divf
-ret 4,4,10
-main:
-enter 10
-
-#line 47
+outi
+pushb 32
+outb
+pushb 42
+outb
+pushb 32
+outb
 push bp
-push -4
+push -2
 addi
-pushf 200000.0
-storef
-
-#line 48
+loadi
+outi
+pushb 32
+outb
+pushb 61
+outb
+pushb 32
+outb
 push bp
-push -6
+push 4
 addi
-pushi 30
-pushi 12
+loadi
+push bp
+push -2
+addi
+loadi
 muli
-storei
-
-#line 49
-push bp
-push -10
-addi
-pushf 2.04
-storef
-
-#line 51
-push bp
-push -4
-addi
-loadf
-push bp
-push -6
-addi
-loadi
-push bp
-push -10
-addi
-loadf
-call letraHipoteca
-outf
+outi
+pushb 32
+outb
 pushb 10
 outb
-ret 0,10,0
+
+#line 36
+push bp
+push -2
+addi
+loadi
+pushi 10
+eqi
+jz label3
+
+#line 37
+pushb 120
+ret 1,2,2
+jmp label4
+label3:
+label4:
+
+#line 40
+push bp
+push -2
+addi
+push bp
+push -2
+addi
+loadi
+pushi 1
+addi
+storei
+jmp label2
+label1:
+
+#line 42
+pushb 97
+ret 1,2,2
+main:
+enter 0
+
+#line 46
+pushi 6
+call tablaMultiplicar
+popb
+ret 0,0,0

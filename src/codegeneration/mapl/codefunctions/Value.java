@@ -180,6 +180,16 @@ public class Value extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class MemAddress(Expression expression)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(MemAddress memAddress, Object param) {
+
+		address(memAddress);
+
+		return null;
+	}
+		
 	// class FunctionCallExpression(String name, List<Expression> expressions)
 	// phase Identification { FunctionDefinition functionDefinition }
 	// phase TypeChecking { Type expressionType, boolean lvalue }

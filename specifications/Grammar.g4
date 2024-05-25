@@ -77,6 +77,7 @@ expression returns[Expression ast]
 	| left=expression op='||' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| '(' expression ')'																	{ $ast = $expression.ast; }
 	| '<' type '>' '(' expression ')'														{ $ast = new Cast($type.ast, $expression.ast); }
+	| '&' expression																		{ $ast = new MemAddress($expression.ast); }
     ;
 
 type returns[Type ast]
