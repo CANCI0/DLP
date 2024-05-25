@@ -72,6 +72,7 @@ expression returns[Expression ast]
 	| left=expression op=('*' | '/' | '%') right=expression									{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
 	| left=expression op=('+' | '-') right=expression										{ $ast = new Arithmetic($left.ast, $op, $right.ast); }
 	| left=expression op=('>=' | '<=' | '>' | '<') right=expression							{ $ast = new Logic($left.ast, $op, $right.ast); }
+	| left=expression op=('[]>' | '[]<') right=expression									{ $ast = new ArrayGt($left.ast, $op, $right.ast); }
 	| left=expression op=('==' | '!=' ) right=expression									{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| left=expression op='&&' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| left=expression op='||' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }

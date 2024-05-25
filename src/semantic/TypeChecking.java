@@ -88,6 +88,17 @@ public class TypeChecking extends DefaultVisitor {
 
 		return null;
 	}
+	
+	// class ArrayGt(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+		arrayGt.setLvalue(false);
+		arrayGt.setExpressionType(new IntType());
+
+		return null;
+	}
 
 	// class Read(Expression expression)
 	@Override

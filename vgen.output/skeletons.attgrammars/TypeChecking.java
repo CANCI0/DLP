@@ -376,6 +376,21 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class ArrayGt(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+		// arrayGt.getLeft().accept(this, param);
+		// arrayGt.getRight().accept(this, param);
+		super.visit(arrayGt, param);
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// arrayGt.setExpressionType(?);
+		// arrayGt.setLvalue(?);
+		return null;
+	}
+
 	// class IntType()
 	@Override
 	public Object visit(IntType intType, Object param) {

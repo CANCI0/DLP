@@ -173,6 +173,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(ArrayGt)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(IntType intType, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(IntType)' has been invoked but it has not been implemented.");

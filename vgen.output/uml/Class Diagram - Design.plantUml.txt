@@ -198,6 +198,13 @@ Expression <|-[#808080]- FunctionCallExpression
 FunctionCallExpression o-[#404040,thickness=2]- "✱" Expression : expressions >
 FunctionCallExpression -[#ff6600,thickness=3]-  FunctionDefinition #text:ff6600 : functionDefinition >
 
+class ArrayGt {
+	+String operator
+}
+Expression <|-[#808080]- ArrayGt
+ArrayGt o-[#404040,thickness=2]-  Expression : left >
+ArrayGt o-[#404040,thickness=2]-  Expression : right >
+
 class IntType {
 }
 Type <|-[#808080]- IntType

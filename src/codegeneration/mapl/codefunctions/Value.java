@@ -140,6 +140,34 @@ public class Value extends AbstractCodeFunction {
 
 		return null;
 	}
+	
+	// class ArrayGt(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+		// Tamaño del array
+		int size = ((Variable)arrayGt.getLeft()).getVarDefinition().getType().getSize();
+		
+		//Inicializamos el contador
+		out("pushi 0");
+		
+		for(int i = 0 ; i < size ; i+=2) {
+			//Obtenemos el n valor del array
+			address(arrayGt.getLeft());
+			out("pushi " + i);
+			out("addi");
+			out("loadi");
+			
+			//Comparamos con el valor proporcionado
+			value(arrayGt.getRight());
+			out("gti");
+			
+			//Añadimos al resultado
+			out("addi");
+		}
+		
+		return null;
+	}
 
 	// class Arithmetic(Expression left, String operator, Expression right)
 	// phase TypeChecking { Type expressionType, boolean lvalue }

@@ -485,6 +485,23 @@ public class AstPrinter implements Visitor {
 	}
 
 	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+		int indent = ((Integer)param);
+
+		// Imprimir los hijos (y recorrer si son nodos del AST)
+        printNodeChild(indent + 1, "left", "Expression", arrayGt.getLeft());
+        printNonNodeChild(indent + 1, "operator", "String", arrayGt.getOperator());
+        printNodeChild(indent + 1, "right", "Expression", arrayGt.getRight());
+
+		// Imprimir el 'toString()' de los atributos (pero no recorrer)
+        printToString(indent + 1, "vgen-attribute-phase-1", "expressionType", "Type", arrayGt.getExpressionType());
+        printToString(indent + 1, "vgen-attribute-phase-1", "lvalue", "boolean", arrayGt.isLvalue());
+		printUnknownFields(indent + 1, arrayGt, "left", "operator", "right", "expressionType", "lvalue");
+		return null;
+	}
+
+	@Override
 	public Object visit(IntType intType, Object param) {
 
 		int indent = ((Integer)param);

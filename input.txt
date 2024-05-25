@@ -1,35 +1,18 @@
 // Este test no debe producir NINGÚN error de compilacion
 
-struct Nombre {
-    letras:[10]char;
-}
-
-struct Persona {
-    nombre:Nombre;
-    edad:int;
-}
-
 main() {
-    var a:int;
-    var f:float;
-    var c:char;
-    var v:[10]int;
-    var v1:[10][10]int;
-
-    var raul:Persona;
-
-    a = 1;
-    f = 1.0;
-    c = 'a';
-    c = '\n';
-
-    v[0] = 1;
-    v1[0][0] = 1;
-
-    raul.edad = 1;
-    raul.nombre.letras[1] = 'a';
-
-    a = raul.edad;
-    c = raul.nombre.letras[1] ;
+    var a:[3]int;
+    var x:int;
+    var v:int;
+    
+    a[0] = 10;
+    
+    a[1] = 3;
+    
+    a[2] = 6;
+    
+    x = a []> 5;
+    
+    print x;
 
 }

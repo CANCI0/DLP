@@ -70,6 +70,8 @@ public interface Visitor {
 
 	public Object visit(FunctionCallExpression functionCallExpression, Object param);
 
+	public Object visit(ArrayGt arrayGt, Object param);
+
 	public Object visit(IntType intType, Object param);
 
 	public Object visit(FloatType floatType, Object param);

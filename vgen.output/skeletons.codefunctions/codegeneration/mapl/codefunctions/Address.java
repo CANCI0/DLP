@@ -157,4 +157,20 @@ public class Address extends AbstractCodeFunction {
 		return null;
 	}
 
+	// class ArrayGt(Expression left, String operator, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+		// value(arrayGt.getLeft());
+		// address(arrayGt.getLeft());
+
+		// value(arrayGt.getRight());
+		// address(arrayGt.getRight());
+
+		out("<instruction>");
+
+		return null;
+	}
+
 }

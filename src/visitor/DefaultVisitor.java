@@ -212,6 +212,14 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(ArrayGt arrayGt, Object param) {
+
+		arrayGt.getLeft().accept(this, param);
+		arrayGt.getRight().accept(this, param);
+		return null;
+	}
+
+	@Override
 	public Object visit(IntType intType, Object param) {
 
 		return null;

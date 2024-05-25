@@ -34,6 +34,7 @@ arithmetic:expression -> left:expression operator:string right:expression;
 variable:expression -> string;
 cast:expression -> type expression;
 functionCallExpression:expression -> string expression*;
+arrayGt:expression -> left:expression operator:string right:expression;
 
 intType:type -> ;
 floatType:type -> ;
