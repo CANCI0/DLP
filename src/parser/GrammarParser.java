@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
+
 import ast.expression.*;
 import ast.statement.*;
 import ast.definition.*;
@@ -1223,7 +1224,7 @@ public class GrammarParser extends Parser {
 						setState(267);
 						match(T__14);
 						setState(268);
-						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(2);
+						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(1);
 						 ((ExpressionContext)_localctx).ast =  new AssignmentExpression(((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
@@ -1569,7 +1570,7 @@ public class GrammarParser extends Parser {
 		"\u0000\u0106\u0107\u0005#\u0000\u0000\u0107\u0108\u0003\u0018\f\u0005"+
 		"\u0108\u0109\u0006\f\uffff\uffff\u0000\u0109\u011a\u0001\u0000\u0000\u0000"+
 		"\u010a\u010b\n\u0001\u0000\u0000\u010b\u010c\u0005\u000f\u0000\u0000\u010c"+
-		"\u010d\u0003\u0018\f\u0002\u010d\u010e\u0006\f\uffff\uffff\u0000\u010e"+
+		"\u010d\u0003\u0018\f\u0001\u010d\u010e\u0006\f\uffff\uffff\u0000\u010e"+
 		"\u011a\u0001\u0000\u0000\u0000\u010f\u0110\n\f\u0000\u0000\u0110\u0111"+
 		"\u0005\u0013\u0000\u0000\u0111\u0112\u0003\u0018\f\u0000\u0112\u0113\u0005"+
 		"\u0014\u0000\u0000\u0113\u0114\u0006\f\uffff\uffff\u0000\u0114\u011a\u0001"+

@@ -51,7 +51,7 @@ statement returns[Statement ast]
 	| 'printsp' expressions ';'																{ $ast = new Printsp($expressions.list); }
 	| 'return' expression? ';'																{ $ast = new Return($expression.ctx != null ? $expression.ast : null); $ast.updatePositions($ctx.start); }
 	| IDENT '(' expressions ')' ';'?														{ $ast = new FunctionCallStatement($IDENT, $expressions.list); }	
-    | left=expression '=' right=expression ';'												{ $ast = new Assignment($left.ast, $right.ast); }
+    | <assoc=right> left=expression '=' right=expression ';'								{ $ast = new Assignment($left.ast, $right.ast); }
     | 'while' '(' expression ')' '{' statements '}' 										{ $ast = new While($expression.ast, $statements.list); }
 	| 'if' '(' cond=expression ')' '{' tr=statements '}' ('else' '{' fs=statements '}')?	{ $ast = new Ifelse($cond.ast, $tr.list, $fs.ctx != null ? $fs.list : null); }
     ;
@@ -77,7 +77,7 @@ expression returns[Expression ast]
 	| left=expression op='||' right=expression												{ $ast = new Logic($left.ast, $op, $right.ast); }
 	| '(' expression ')'																	{ $ast = $expression.ast; }
 	| '<' type '>' '(' expression ')'														{ $ast = new Cast($type.ast, $expression.ast); }
-	| left=expression '=' right=expression													{ $ast = new AssignmentExpression($left.ast, $right.ast); }
+	| <assoc=right>left=expression '=' right=expression										{ $ast = new AssignmentExpression($left.ast, $right.ast); }
     ;
 
 type returns[Type ast]
