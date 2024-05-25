@@ -12,7 +12,6 @@ import ast.definition.FunctionDefinition;
 import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
 import ast.expression.*;
-import ast.statement.Assignment;
 import ast.statement.FunctionCallStatement;
 import ast.statement.Ifelse;
 import ast.statement.Print;

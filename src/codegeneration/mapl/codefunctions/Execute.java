@@ -7,6 +7,7 @@ import ast.Position;
 import ast.definition.FunctionDefinition;
 import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
+import ast.expression.Assignment;
 import ast.expression.AssignmentExpression;
 import ast.expression.FunctionCallExpression;
 import ast.expression.Variable;

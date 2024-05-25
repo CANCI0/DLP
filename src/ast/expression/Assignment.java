@@ -1,8 +1,10 @@
 // Generated with VGen 2.0.0
 
-package ast.statement;
+package ast.expression;
 
-import ast.expression.*;
+import ast.statement.*;
+import ast.type.*;
+import org.antlr.v4.runtime.Token;
 import visitor.Visitor;
 
 // %% User Declarations -------------
@@ -12,15 +14,20 @@ import visitor.Visitor;
 // %% -------------------------------
 
 /*
-	assignment: statement -> left:expression right:expression
+	assignment: expression, statement -> left:expression right:expression
+	expression -> 
 	statement -> 
+	
+	PHASE TypeChecking
+	expression -> expressionType:type
+	expression -> lvalue:boolean
 */
-public class Assignment extends AbstractStatement  {
+public class Assignment extends AbstractExpression  implements Statement {
 
     // ----------------------------------
     // Instance Variables
 
-	// assignment: statement -> left:expression right:expression
+	// assignment: expression, statement -> left:expression right:expression
 	private Expression left;
 	private Expression right;
 
@@ -57,7 +64,7 @@ public class Assignment extends AbstractStatement  {
 
 
     // ----------------------------------
-    // assignment: statement -> left:expression right:expression
+    // assignment: expression, statement -> left:expression right:expression
 
 	// Child 'left:expression' 
 
