@@ -51,7 +51,8 @@ statement returns[Statement ast]
 	;
 
 expression returns[Expression ast]
-    : INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
+    : left=expression right=expression    { $ast = new AssignmentExpression($left.ast, $right.ast); }
+    | INT_LITERAL                         { $ast = new IntLiteral($INT_LITERAL); }               
     | FLOAT_LITERAL                       { $ast = new FloatLiteral($FLOAT_LITERAL); }           
     | name=IDENT                          { $ast = new CharLiteral($name); }                     
     | expr1=expression expr2=expression   { $ast = new ArrayAccess($expr1.ast, $expr2.ast); }    

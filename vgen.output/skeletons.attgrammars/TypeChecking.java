@@ -226,6 +226,21 @@ public class TypeChecking extends DefaultVisitor {
 		return null;
 	}
 
+	// class AssignmentExpression(Expression left, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(AssignmentExpression assignmentExpression, Object param) {
+
+		// assignmentExpression.getLeft().accept(this, param);
+		// assignmentExpression.getRight().accept(this, param);
+		super.visit(assignmentExpression, param);
+
+		// TODO: Remember to initialize SYNTHESIZED attributes <-----
+		// assignmentExpression.setExpressionType(?);
+		// assignmentExpression.setLvalue(?);
+		return null;
+	}
+
 	// class IntLiteral(int intValue)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override

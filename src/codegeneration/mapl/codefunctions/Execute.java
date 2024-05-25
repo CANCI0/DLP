@@ -7,7 +7,9 @@ import ast.Position;
 import ast.definition.FunctionDefinition;
 import ast.definition.StructDefinition;
 import ast.definition.VarDefinition;
+import ast.expression.AssignmentExpression;
 import ast.expression.FunctionCallExpression;
+import ast.expression.Variable;
 import ast.statement.*;
 import ast.type.CharType;
 import codegeneration.mapl.*;
@@ -149,6 +151,23 @@ public class Execute extends AbstractCodeFunction {
 		value(assignment.getRight());
 		out("store", assignment.getLeft().getExpressionType());
 
+		execute(assignment.getLeft());
+		
+		return null;
+	}
+	
+	// class Assignment(Expression left, Expression right)
+	@Override
+	public Object visit(AssignmentExpression assignment, Object param) {
+
+		line(assignment);
+
+		address(assignment.getLeft());
+		value(assignment.getRight());
+		out("store", assignment.getLeft().getExpressionType());
+
+		execute(assignment.getLeft());
+		
 		return null;
 	}
 
@@ -205,6 +224,11 @@ public class Execute extends AbstractCodeFunction {
 			out("pop", functionCallStatement.getFunctionDefinition().getType().get());
 		}
 
+		return null;
+	}
+	
+	public Object visit(Variable variable, Object param) {
+		
 		return null;
 	}
 

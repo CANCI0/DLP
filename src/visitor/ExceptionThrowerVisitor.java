@@ -107,6 +107,12 @@ public class ExceptionThrowerVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(AssignmentExpression assignmentExpression, Object param) {
+
+        throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(AssignmentExpression)' has been invoked but it has not been implemented.");
+	}
+
+	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
 
         throw new UnsupportedOperationException("'ExceptionThrowerVisitor.visit(IntLiteral)' has been invoked but it has not been implemented.");

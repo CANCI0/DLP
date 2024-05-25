@@ -192,6 +192,14 @@ public class Value extends AbstractCodeFunction {
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(AssignmentExpression assignment, Object param) {
+		
+		value(assignment.getRight());
+		
+		return null;
+	}
 
 	// class Program(List<Definition> definitions)
 	@Override

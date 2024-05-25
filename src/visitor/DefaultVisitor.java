@@ -135,6 +135,14 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	@Override
+	public Object visit(AssignmentExpression assignmentExpression, Object param) {
+
+		assignmentExpression.getLeft().accept(this, param);
+		assignmentExpression.getRight().accept(this, param);
+		return null;
+	}
+
+	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {
 
 		return null;

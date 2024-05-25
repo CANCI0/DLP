@@ -172,6 +172,24 @@ public class TypeChecking extends DefaultVisitor {
 		
 		return null;
 	}
+	
+	// class Assignment(Expression left, Expression right)
+	@Override
+	public Object visit(AssignmentExpression assignment, Object param) {
+		// assignment.getLeft().accept(this, param);
+		// assignment.getRight().accept(this, param);
+		super.visit(assignment, param);
+		predicate(primitiveType(assignment.getLeft().getExpressionType()),
+				"ERROR: el de la izquierda no es un tipo simple", assignment);
+		predicate(areTypesEqual(assignment.getLeft().getExpressionType(), assignment.getRight().getExpressionType()),
+				"ERROR: no son del mismo tipo", assignment);
+		predicate(assignment.getLeft().isLvalue(), "ERROR: No es LValue", assignment);
+		
+		assignment.setLvalue(assignment.getLeft().isLvalue());
+		assignment.setExpressionType(assignment.getLeft().getExpressionType());
+		
+		return null;
+	}
 
 	// class While(Expression expression, List<Statement> statements)
 	@Override

@@ -23,6 +23,7 @@ while:statement -> expression statement*;
 ifelse:statement -> cond:expression tr:statement* fs:statement*;
 functionCallStatement:statement -> string expression*;
 
+assignmentExpression:expression -> left:expression right:expression;
 intLiteral:expression -> int;
 floatLiteral:expression -> float;
 charLiteral:expression -> string;

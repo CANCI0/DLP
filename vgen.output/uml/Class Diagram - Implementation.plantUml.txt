@@ -145,6 +145,12 @@ AbstractStatement <|-[#808080]- FunctionCallStatement
 FunctionCallStatement o-[#404040,thickness=2]- "✱" Expression : expressions >
 FunctionCallStatement -[#ff6600,thickness=3]-  FunctionDefinition #text:ff6600 : functionDefinition >
 
+class AssignmentExpression {
+}
+AbstractExpression <|-[#808080]- AssignmentExpression
+AssignmentExpression o-[#404040,thickness=2]-  Expression : left >
+AssignmentExpression o-[#404040,thickness=2]-  Expression : right >
+
 class IntLiteral {
 	+int intValue
 }

@@ -48,6 +48,8 @@ public interface Visitor {
 
 	public Object visit(FunctionCallStatement functionCallStatement, Object param);
 
+	public Object visit(AssignmentExpression assignmentExpression, Object param);
+
 	public Object visit(IntLiteral intLiteral, Object param);
 
 	public Object visit(FloatLiteral floatLiteral, Object param);

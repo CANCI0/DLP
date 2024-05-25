@@ -63,6 +63,14 @@ public class Address extends AbstractCodeFunction {
 		return null;
 	}
 	
+	@Override 
+	public Object visit(AssignmentExpression assignment, Object param) {
+		
+		address(assignment.getRight());
+		
+		return null;
+	}
+	
 	@Override
 	public Object visit(IntLiteral variable, Object param) {
 	

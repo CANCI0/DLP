@@ -232,6 +232,17 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	// class AssignmentExpression(Expression left, Expression right)
+	@Override
+	public Object visit(AssignmentExpression assignmentExpression, Object param) {
+
+		// assignmentExpression.getLeft().accept(this, param);
+		// assignmentExpression.getRight().accept(this, param);
+		super.visit(assignmentExpression, param);
+
+		return null;
+	}
+
 	// class IntLiteral(int intValue)
 	@Override
 	public Object visit(IntLiteral intLiteral, Object param) {

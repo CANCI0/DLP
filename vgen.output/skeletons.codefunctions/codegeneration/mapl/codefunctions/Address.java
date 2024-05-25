@@ -13,6 +13,22 @@ public class Address extends AbstractCodeFunction {
     }
 
 
+	// class AssignmentExpression(Expression left, Expression right)
+	// phase TypeChecking { Type expressionType, boolean lvalue }
+	@Override
+	public Object visit(AssignmentExpression assignmentExpression, Object param) {
+
+		// value(assignmentExpression.getLeft());
+		// address(assignmentExpression.getLeft());
+
+		// value(assignmentExpression.getRight());
+		// address(assignmentExpression.getRight());
+
+		out("<instruction>");
+
+		return null;
+	}
+
 	// class IntLiteral(int intValue)
 	// phase TypeChecking { Type expressionType, boolean lvalue }
 	@Override
